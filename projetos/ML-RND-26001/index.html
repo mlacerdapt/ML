@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Render Vivenda Moderna A | ML Portfólio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../portfolio_style.css">
+    <style>
+        /* Project-specific styles extending base style */
+        .project-header {
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            transition: var(--transition-smooth);
+        }
+        
+        .back-link:hover {
+            color: var(--accent);
+            transform: translateX(-4px);
+        }
+        
+        .project-title {
+            font-family: var(--font-heading);
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .project-meta-badges {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .badge-status-inprogress {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #F59E0B;
+            color: #060913;
+            font-weight: 800;
+            font-size: 0.8rem;
+            padding: 6px 14px;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 5;
+        }
+        
+        .project-hero-container {
+            position: relative;
+            width: 100%;
+            height: 480px;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+            margin-bottom: 48px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .project-hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-content-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .project-details {
+            grid-column: span 8;
+        }
+        
+        .project-sidebar {
+            grid-column: span 4;
+        }
+        
+        @media (max-width: 992px) {
+            .project-details, .project-sidebar {
+                grid-column: span 12;
+            }
+            .project-hero-container {
+                height: 320px;
+            }
+        }
+        
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent);
+            padding-left: 12px;
+        }
+        
+        .project-description {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            text-align: justify;
+        }
+        
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            background: rgba(13, 20, 38, 0.45);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .spec-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .spec-item span {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .spec-item strong {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            font-family: var(--font-heading);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .gallery-item {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            height: 300px;
+            transition: var(--transition-smooth);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="portfolio-container">
+        <!-- Navigation Link -->
+        <a href="../../index.html" class="back-link">
+            <span>←</span> Voltar ao Portfólio
+        </a>
+        
+        <article class="project-article">
+            <!-- Header section -->
+            <header class="project-header">
+                <div class="project-meta-badges">
+                    <span class="badge badge-category">Render</span>
+                    <span class="badge" style="background: rgba(255,255,255,0.05); color: var(--text-secondary);">ID: ML-RND-26001</span>
+                </div>
+                <h1 class="project-title">Render Vivenda Moderna A</h1>
+                <div style="color: var(--text-muted); font-size: 0.9rem;">
+                    Tags: <span style="color: var(--accent);">#arquitetura, #vray, #blender</span> | Tempo Investido: <strong>4.5h</strong>
+                </div>
+            </header>
+            
+            <!-- Hero Cover Container -->
+            <div class="project-hero-container">
+                <!-- Visual Badge status -->
+                <div class="badge-status-inprogress">Em Andamento</div>
+                <img class="project-hero-image" src="" alt="Capa do projeto" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200';">
+            </div>
+            
+            <!-- Details and specifications -->
+            <div class="project-content-grid">
+                <div class="project-details">
+                    <h2 class="section-title">Briefing do Projeto</h2>
+                    <p class="project-description">Um briefing detalhado sobre a modelagem externa de uma vivenda moderna utilizando iluminação natural HDRI e materiais físicos de alta qualidade.</p>
+                    
+                    <h2 class="section-title">Ficha Técnica</h2>
+                    
+            <div class="specs-grid">
+                <div class="spec-item"><span>Softwares</span><strong>Blender, Cycles, Photoshop</strong></div>
+                <div class="spec-item"><span>Vistas</span><strong>3</strong></div>
+                <div class="spec-item"><span>Setup/HDRI</span><strong>Studio Clear Sky 4K</strong></div>
+            </div>
+                </div>
+                
+                <div class="project-sidebar">
+                    <div style="background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 20px; padding: 24px; backdrop-filter: blur(10px);">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.1rem; color: var(--accent); margin-bottom: 12px;">Metadados Web</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px;">
+                            Este projeto foi publicado automaticamente via <strong>ML Gestor de Projetos</strong>.
+                        </p>
+                        <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.85rem;">
+                            <li>📅 <strong>Data:</strong> 2026</li>
+                            <li>✔️ <strong>Status:</strong> Em andamento</li>
+                            <li>🛠️ <strong>Criação:</strong> CMS Headless Python</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Media Section -->
+            <section style="border-top: 1px solid var(--border-light); padding-top: 40px;">
+                <h2 class="section-title">Processo de Criação e Resultado</h2>
+                
+                <div class="gallery-grid">
+                    {% if IMAGE_PROCESSO %}
+                    <div class="gallery-item">
+                        <img src="" alt="Imagem de Processo (Slicing/Wireframe)" onerror="this.src='https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800';">
+                    </div>
+                    {% endif %}
+                    
+                    {% if IMAGE_GALERIA %}
+                    <div class="gallery-item">
+                        <img src="" alt="Resultado Final / Galeria" onerror="this.src='https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=800';">
+                    </div>
+                    {% endif %}
+                </div>
+            </section>
+        </article>
+    </div>
+</body>
+</html>

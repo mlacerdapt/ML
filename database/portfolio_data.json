@@ -1,0 +1,21 @@
+{
+    "ML-RND-26001": {
+        "id": "ML-RND-26001",
+        "titulo": "Render Vivenda Moderna A",
+        "description": "Um briefing detalhado sobre a modelagem externa de uma vivenda moderna utilizando iluminação natural HDRI e materiais físicos de alta qualidade.",
+        "tags": "#arquitetura, #vray, #blender",
+        "categoria": "Render",
+        "status": "Em andamento",
+        "visibilidade": "Público",
+        "horas": 4.5,
+        "path_references": "",
+        "path_models": "",
+        "path_renders": "",
+        "path_capa": "",
+        "path_processo": "",
+        "path_galeria": "",
+        "rnd_softwares": "Blender, Cycles, Photoshop",
+        "rnd_vistas": 3,
+        "rnd_hdri": "Studio Clear Sky 4K"
+    }
+}

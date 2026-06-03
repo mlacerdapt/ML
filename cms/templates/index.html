@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Gestor de Projetos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar: List of Projects -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">ML</div>
+                <div class="brand-name">Gestor de Projetos</div>
+            </div>
+            
+            <button class="new-project-btn" id="btn-new-project">
+                <span>➕</span> Novo Projeto
+            </button>
+            
+            <div class="project-list-title">Meus Trabalhos</div>
+            <div class="project-list">
+                {% for pid, p in projetos.items() %}
+                <div class="project-item" data-id="{{ pid }}" id="item-{{ pid }}">
+                    <div class="project-item-header">
+                        <span class="project-item-id">{{ pid }}</span>
+                        <span class="project-item-status status-{{ p.status | lower | replace(' ', '-') }}">
+                            {{ p.status }}
+                        </span>
+                    </div>
+                    <div class="project-item-title">{{ p.titulo }}</div>
+                    <div class="project-item-meta">
+                        <span>{{ p.categoria }}</span>
+                        <span class="project-item-vis {% if p.visibilidade == 'Público' %}public{% endif %}">
+                            {{ p.visibilidade }}
+                        </span>
+                    </div>
+                </div>
+                {% else %}
+                <div style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 20px;">
+                    Nenhum projeto guardado.
+                </div>
+                {% endfor %}
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Navigation Header Tabs -->
+            <header class="tabs-header">
+                <button class="tab-btn active" data-tab="edit-tab">📝 Formulário</button>
+                <button class="tab-btn" data-tab="view-tab">👁️ Visualizador Interno</button>
+            </header>
+
+            <div class="tab-container">
+                <!-- TAB 1: Edit/Create Form -->
+                <div class="tab-content active" id="edit-tab">
+                    <div class="glass-panel">
+                        <div class="panel-header">
+                            <h2 class="panel-title">Ficha Técnica do Projeto</h2>
+                            <span class="panel-subtitle" id="form-id-display" style="display: none;">Novo Projeto</span>
+                        </div>
+                        
+                        <form action="/project/save" method="POST" id="form-project">
+                            <input type="hidden" name="id" id="form-id">
+                            
+                            <div class="form-grid">
+                                <!-- Base Metadata -->
+                                <div class="form-group col-6">
+                                    <label for="titulo">Título do Trabalho</label>
+                                    <input type="text" name="titulo" id="titulo" placeholder="Ex: Maquete Vivenda A" required>
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="tags">Tags (Separadas por vírgula)</label>
+                                    <input type="text" name="tags" id="tags" placeholder="Ex: #arquitetura, #render, #vray">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="description">Descrição Curta (Briefing)</label>
+                                    <textarea name="description" id="description" placeholder="Descreve brevemente o objetivo do projeto..." required></textarea>
+                                </div>
+                                
+                                <div class="form-group col-4">
+                                    <label for="categoria">Categoria</label>
+                                    <select name="categoria" id="categoria">
+                                        <option value="Impressão 3D">Impressão 3D</option>
+                                        <option value="Render">Render</option>
+                                        <option value="Venda">Venda</option>
+                                        <option value="Layout">Layout</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-4">
+                                    <label for="status">Status do Trabalho</label>
+                                    <select name="status" id="status">
+                                        <option value="Em andamento">Em andamento</option>
+                                        <option value="Finalizado">Finalizado</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-4">
+                                    <label>Visibilidade Web</label>
+                                    <div class="toggle-group">
+                                        <div class="toggle-label-container">
+                                            <span class="toggle-label">Público / Privado</span>
+                                            <span class="toggle-desc">Ativa publicação online</span>
+                                        </div>
+                                        <label class="switch">
+                                            <input type="checkbox" name="visibilidade" id="visibilidade" value="Público" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Dynamic Section Container -->
+                                <div class="col-12">
+                                    <!-- Dynamic 3D Print Field -->
+                                    <div class="dynamic-category-panel" id="sec-impressao3d" style="display: none;">
+                                        <div class="dynamic-title">🤖 Especificações de Impressão 3D</div>
+                                        <div class="form-grid">
+                                            <div class="form-group col-4">
+                                                <label for="maq_maquina">Máquina</label>
+                                                <input type="text" name="maq_maquina" id="maq_maquina" placeholder="Ex: Creality Ender 3" data-req>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="maq_material">Material</label>
+                                                <input type="text" name="maq_material" id="maq_material" placeholder="Ex: PLA Cinzento" data-req>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="maq_peso">Peso (gramas)</label>
+                                                <input type="number" step="0.1" name="maq_peso" id="maq_peso" placeholder="0.0" data-req>
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label for="maq_tempo">Tempo de Impressão (Horas)</label>
+                                                <input type="number" step="0.1" name="maq_tempo" id="maq_tempo" placeholder="0.0" data-req>
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label for="maq_custo">Custo Estimado (€)</label>
+                                                <input type="number" step="0.01" name="maq_custo" id="maq_custo" placeholder="0.00" data-req>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Dynamic Render Field -->
+                                    <div class="dynamic-category-panel" id="sec-render" style="display: none;">
+                                        <div class="dynamic-title">🎨 Especificações de Modelagem e Renders</div>
+                                        <div class="form-grid">
+                                            <div class="form-group col-4">
+                                                <label for="rnd_softwares">Softwares Utilizados</label>
+                                                <input type="text" name="rnd_softwares" id="rnd_softwares" placeholder="Ex: Blender, Photoshop" data-req>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="rnd_vistas">Nº de Vistas Geradas</label>
+                                                <input type="number" name="rnd_vistas" id="rnd_vistas" placeholder="0" data-req>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="rnd_hdri">Setup HDRI / Iluminação</label>
+                                                <input type="text" name="rnd_hdri" id="rnd_hdri" placeholder="Ex: Studio Softbox 2K" data-req>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Dynamic Sales Field -->
+                                    <div class="dynamic-category-panel" id="sec-venda" style="display: none;">
+                                        <div class="dynamic-title">🛒 Detalhes de Artigo para Venda</div>
+                                        <div class="form-grid">
+                                            <div class="form-group col-4">
+                                                <label for="vnd_plataforma">Plataforma de Venda</label>
+                                                <input type="text" name="vnd_plataforma" id="vnd_plataforma" placeholder="Ex: Etsy, Vinted" data-req>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="vnd_custo">Custo Total de Produção (€)</label>
+                                                <input type="number" step="0.01" name="vnd_custo" id="vnd_custo" placeholder="0.00" data-req>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="vnd_preco">Preço de Venda Final (€)</label>
+                                                <input type="number" step="0.01" name="vnd_preco" id="vnd_preco" placeholder="0.00" data-req>
+                                            </div>
+                                            <div class="form-group col-12">
+                                                <div class="margin-box" id="out_margem">
+                                                    Margem de Lucro: <strong>€0.00 (0.00%)</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Dynamic Layout Field -->
+                                    <div class="dynamic-category-panel" id="sec-layout" style="display: none;">
+                                        <div class="dynamic-title">📐 Especificações de Layout Gráfico</div>
+                                        <div class="form-grid">
+                                            <div class="form-group col-4">
+                                                <label for="lay_formato">Formato Físico/Digital</label>
+                                                <input type="text" name="lay_formato" id="lay_formato" placeholder="Ex: A4 Vertical, Instagram Post" data-req>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="lay_grelha">Grelha / Grid Layout</label>
+                                                <input type="text" name="lay_grelha" id="lay_grelha" placeholder="Ex: 12 Colunas, Margens 20mm" data-req>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="lay_tipografias">Tipografias Utilizadas</label>
+                                                <input type="text" name="lay_tipografias" id="lay_tipografias" placeholder="Ex: Inter, Montserrat" data-req>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Time Management and Local Directories Paths -->
+                                <div class="form-group col-12" style="margin-top: 12px;">
+                                    <h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--accent); margin-bottom: 8px;">⏳ Gestão de Tempo e Pastas de Trabalho</h3>
+                                </div>
+                                <div class="form-group col-4">
+                                    <label for="horas">Horas Investidas no Projeto</label>
+                                    <input type="number" step="0.1" name="horas" id="horas" placeholder="0.0" value="0.0">
+                                </div>
+                                <div class="form-group col-8">
+                                    <label for="path_references">Caminho Local da Pasta de Referências</label>
+                                    <input type="text" name="path_references" id="path_references" placeholder="C:\Users\... \Referencias">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="path_models">Caminho Local dos Modelos 3D / Ficheiros</label>
+                                    <input type="text" name="path_models" id="path_models" placeholder="C:\Users\... \Modelos">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="path_renders">Caminho Local dos Renders / Arte Final</label>
+                                    <input type="text" name="path_renders" id="path_renders" placeholder="C:\Users\... \Renders">
+                                </div>
+
+                                <!-- Upload/Selection of Local Images -->
+                                <div class="form-group col-12" style="margin-top: 12px;">
+                                    <h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--accent); margin-bottom: 8px;">🖼️ Caminhos de Ficheiros de Imagem (Para Publicação)</h3>
+                                </div>
+                                <div class="form-group col-4">
+                                    <label for="path_capa">Imagem de Capa (Caminho Absoluto)</label>
+                                    <input type="text" name="path_capa" id="path_capa" placeholder="C:\...\capa.jpg">
+                                </div>
+                                <div class="form-group col-4">
+                                    <label for="path_processo">Imagem de Processo/Slicing (Caminho Absoluto)</label>
+                                    <input type="text" name="path_processo" id="path_processo" placeholder="C:\...\processo.jpg">
+                                </div>
+                                <div class="form-group col-4">
+                                    <label for="path_galeria">Imagem Galeria Final (Caminho Absoluto)</label>
+                                    <input type="text" name="path_galeria" id="path_galeria" placeholder="C:\...\galeria.jpg">
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn-secondary" onclick="document.getElementById('form-project').reset(); document.getElementById('form-id-display').style.display='none';">Limpar</button>
+                                <button type="submit" class="btn-primary">Guardar Projeto</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- TAB 2: Private Summary and Preview -->
+                <div class="tab-content" id="view-tab">
+                    <div class="empty-state" id="empty-project-view">
+                        <div class="empty-state-icon">📂</div>
+                        <h2>Nenhum Projeto Selecionado</h2>
+                        <p>Escolhe um projeto na barra lateral para ver o seu resumo interno completo ou editar.</p>
+                    </div>
+
+                    <div class="view-grid" id="active-project-view" style="display: none;">
+                        <!-- Left Main Panel -->
+                        <div class="col-8">
+                            <div class="view-card">
+                                <div class="view-header">
+                                    <div class="view-title-group">
+                                        <h2 id="view-title">Projeto Exemplo</h2>
+                                        <div class="view-badges">
+                                            <span class="badge badge-category" id="view-cat-badge">Render</span>
+                                            <span class="badge" id="view-status-badge">Em andamento</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn-primary" id="btn-publish-action" style="display: none;">
+                                        🚀 Publicar na Web
+                                    </button>
+                                </div>
+
+                                <div class="view-briefing" id="view-briefing">
+                                    Carregando descrição do briefing do projeto...
+                                </div>
+
+                                <div class="view-specs-panel">
+                                    <div class="view-specs-title">Ficha Técnica Interna</div>
+                                    <div class="view-specs-grid" id="view-specs-content">
+                                        <!-- Dynamic Specs go here -->
+                                    </div>
+                                </div>
+
+                                <div class="view-specs-panel" style="background: rgba(99, 102, 241, 0.02);">
+                                    <div class="view-specs-title" style="color: var(--accent);">Pastas e Horas</div>
+                                    <div class="view-specs-grid" style="grid-template-columns: 1fr 2fr; gap: 20px; margin-bottom: 16px;">
+                                        <div class="view-spec-item">
+                                            <span class="view-spec-label">ID do Projeto</span>
+                                            <span class="view-spec-val" id="view-id">ML-XXX-XXXX</span>
+                                        </div>
+                                        <div class="view-spec-item">
+                                            <span class="view-spec-label">Tempo Investido</span>
+                                            <span class="view-spec-val" id="view-hours" style="color: var(--accent);">0 h</span>
+                                        </div>
+                                        <div class="view-spec-item">
+                                            <span class="view-spec-label">Visibilidade Web</span>
+                                            <span class="view-spec-val" id="view-visibilidade">Privado</span>
+                                        </div>
+                                        <div class="view-spec-item">
+                                            <span class="view-spec-label">Tags do Projeto</span>
+                                            <span class="view-spec-val" id="view-tag-badge" style="font-size: 0.85rem; font-weight: normal; color: var(--text-secondary);"></span>
+                                        </div>
+                                    </div>
+                                    <div class="view-paths-panel">
+                                        <div class="path-row">
+                                            <span class="path-label">Referências:</span>
+                                            <span class="path-value" id="view-path-ref">C:\...</span>
+                                        </div>
+                                        <div class="path-row">
+                                            <span class="path-label">Modelos:</span>
+                                            <span class="path-value" id="view-path-models">C:\...</span>
+                                        </div>
+                                        <div class="path-row">
+                                            <span class="path-label">Renders:</span>
+                                            <span class="path-value" id="view-path-renders">C:\...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Image Previews -->
+                        <div class="col-4 view-images-sidebar">
+                            <div class="image-preview-box">
+                                <span class="image-preview-label">Capa Principal</span>
+                                <div id="view-img-capa">
+                                    <div class="image-preview-placeholder">Nenhuma Imagem</div>
+                                </div>
+                            </div>
+                            <div class="image-preview-box">
+                                <span class="image-preview-label">Processo / Slicing</span>
+                                <div id="view-img-processo">
+                                    <div class="image-preview-placeholder">Nenhuma Imagem</div>
+                                </div>
+                            </div>
+                            <div class="image-preview-box">
+                                <span class="image-preview-label">Galeria Final</span>
+                                <div id="view-img-galeria">
+                                    <div class="image-preview-placeholder">Nenhuma Imagem</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

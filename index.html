@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Portfólio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="portfolio_style.css">
+</head>
+<body>
+    <div class="portfolio-wrapper">
+        <header class="portfolio-header">
+            <h1 class="portfolio-logo">ML Portfólio</h1>
+            <p class="portfolio-subtitle">Galeria de Impressões 3D, Renders, Designs e Artigos</p>
+            
+            <!-- Category Filters UI -->
+            <div class="filters-container">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="Impressão 3D">Impressão 3D</button>
+                <button class="filter-btn" data-filter="Render">Renders</button>
+                <button class="filter-btn" data-filter="Venda">Artigos de Venda</button>
+                <button class="filter-btn" data-filter="Layout">Layout Gráfico</button>
+            </div>
+        </header>
+        
+        <main class="portfolio-container">
+            <div class="portfolio-grid">
+                <!-- PORTFOLIO_GRID_START -->
+
+        <div class="portfolio-card" data-category="Render">
+            <div class="card-image-container">
+                <span class="card-badge">Em Andamento</span>
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500" alt="Render Vivenda Moderna A" loading="lazy">
+            </div>
+            <div class="card-content">
+                <span class="card-category">Render</span>
+                <h3 class="card-title">Render Vivenda Moderna A</h3>
+                <p class="card-description">Um briefing detalhado sobre a modelagem externa de uma vivenda moderna utilizando iluminação natural HDRI e materiais fí...</p>
+                <div class="card-tags"><span class="tag">#arquitetura</span><span class="tag">#vray</span><span class="tag">#blender</span></div>
+                <a href="projetos/ML-RND-26001/index.html" class="card-button">Ver Projeto</a>
+            </div>
+        </div>
+        
+<!-- PORTFOLIO_GRID_END -->
+            </div>
+        </main>
+        
+        <footer class="portfolio-footer">
+            <p>&copy; 2026 ML Portfólio. Todos os direitos reservados. Gerado por ML Gestor.</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Filters implementation
+        document.addEventListener("DOMContentLoaded", () => {
+            const filterBtns = document.querySelectorAll(".filter-btn");
+            const cards = document.querySelectorAll(".portfolio-card");
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    filterBtns.forEach(b => b.classList.remove("active"));
+                    btn.classList.add("active");
+                    
+                    const filter = btn.dataset.filter;
+                    const emptyState = document.querySelector(".empty-state-portfolio");
+                    
+                    let count = 0;
+                    cards.forEach(card => {
+                        if (filter === "all" || card.dataset.category === filter) {
+                            card.style.display = "flex";
+                            count++;
+                        } else {
+                            card.style.display = "none";
+                        }
+                    });
+                    
+                    if (emptyState) {
+                        emptyState.style.display = (count === 0 && cards.length > 0) ? "block" : "none";
+                    }}
+                );
+            });
+        });
+    </script>
+</body>
+</html>
