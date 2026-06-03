@@ -1,265 +1,385 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{TITLE}} | ML Portfólio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Carregando... | ML Portfólio</title>
+    
+    <!-- Meta tags SEO -->
+    <meta name="description" content="Explore este projeto em miniatura 3D/design do portfólio de Marcelo Lacerda.">
+    <meta name="author" content="Marcelo Lacerda">
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBlue: '#0058A3',
+                        brandMustard: '#F7C846',
+                        brandWhite: '#F5F5F7',
+                        cardBg: '#ffffff',
+                        charcoal: '#333333',
+                        textMuted: '#6B7280',
+                        borderColor: '#E0E0E0',
+                    },
+                    fontFamily: {
+                        title: ['Montserrat', 'sans-serif'],
+                        sans: ['Lato', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Estilos Japandi Premium -->
     <link rel="stylesheet" href="../../portfolio_style.css">
-    <style>
-        /* Project-specific styles extending base style */
-        .project-header {
-            margin-bottom: 40px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 24px;
-            transition: var(--transition-smooth);
-        }
-        
-        .back-link:hover {
-            color: var(--accent);
-            transform: translateX(-4px);
-        }
-        
-        .project-title {
-            font-family: var(--font-heading);
-            font-size: 2.8rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .project-meta-badges {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-
-        .badge-status-inprogress {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: #F59E0B;
-            color: #060913;
-            font-weight: 800;
-            font-size: 0.8rem;
-            padding: 6px 14px;
-            border-radius: 6px;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            z-index: 5;
-        }
-        
-        .project-hero-container {
-            position: relative;
-            width: 100%;
-            height: 480px;
-            border-radius: 24px;
-            overflow: hidden;
-            border: 1px solid var(--border-light);
-            margin-bottom: 48px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-        
-        .project-hero-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .project-content-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 40px;
-            margin-bottom: 60px;
-        }
-        
-        .project-details {
-            grid-column: span 8;
-        }
-        
-        .project-sidebar {
-            grid-column: span 4;
-        }
-        
-        @media (max-width: 992px) {
-            .project-details, .project-sidebar {
-                grid-column: span 12;
-            }
-            .project-hero-container {
-                height: 320px;
-            }
-        }
-        
-        .section-title {
-            font-family: var(--font-heading);
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 20px;
-            border-left: 4px solid var(--accent);
-            padding-left: 12px;
-        }
-        
-        .project-description {
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: var(--text-secondary);
-            margin-bottom: 40px;
-            text-align: justify;
-        }
-        
-        .specs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-            background: rgba(13, 20, 38, 0.45);
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
-            padding: 24px;
-            backdrop-filter: blur(10px);
-        }
-        
-        .spec-item {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        
-        .spec-item span {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-        
-        .spec-item strong {
-            font-size: 1.1rem;
-            color: var(--text-primary);
-            font-family: var(--font-heading);
-        }
-        
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-            margin-top: 40px;
-        }
-        
-        @media (max-width: 768px) {
-            .gallery-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .gallery-item {
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--border-light);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            height: 300px;
-            transition: var(--transition-smooth);
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-5px);
-            border-color: rgba(99, 102, 241, 0.3);
-        }
-        
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-    </style>
 </head>
-<body>
-    <div class="portfolio-container">
-        <!-- Navigation Link -->
-        <a href="../../index.html" class="back-link">
-            <span>←</span> Voltar ao Portfólio
-        </a>
-        
-        <article class="project-article">
-            <!-- Header section -->
-            <header class="project-header">
-                <div class="project-meta-badges">
-                    <span class="badge badge-category">{{CATEGORY}}</span>
-                    <span class="badge" style="background: rgba(255,255,255,0.05); color: var(--text-secondary);">ID: {{ID}}</span>
-                </div>
-                <h1 class="project-title">{{TITLE}}</h1>
-                <div style="color: var(--text-muted); font-size: 0.9rem;">
-                    Tags: <span style="color: var(--accent);">{{TAGS}}</span> | Tempo Investido: <strong>{{HOURS}}h</strong>
-                </div>
-            </header>
-            
-            <!-- Hero Cover Container -->
-            <div class="project-hero-container">
-                <!-- Visual Badge status -->
-                {{STATUS_BADGE}}
-                <img class="project-hero-image" src="{{IMAGE_CAPA}}" alt="Capa do projeto" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200';">
-            </div>
-            
-            <!-- Details and specifications -->
-            <div class="project-content-grid">
-                <div class="project-details">
-                    <h2 class="section-title">Briefing do Projeto</h2>
-                    <p class="project-description">{{DESCRIPTION}}</p>
-                    
-                    <h2 class="section-title">Ficha Técnica</h2>
-                    {{SPECIFICATIONS}}
-                </div>
-                
-                <div class="project-sidebar">
-                    <div style="background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 20px; padding: 24px; backdrop-filter: blur(10px);">
-                        <h3 style="font-family: var(--font-heading); font-size: 1.1rem; color: var(--accent); margin-bottom: 12px;">Metadados Web</h3>
-                        <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px;">
-                            Este projeto foi publicado automaticamente via <strong>ML Gestor de Projetos</strong>.
-                        </p>
-                        <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.85rem;">
-                            <li>📅 <strong>Data:</strong> 2026</li>
-                            <li>✔️ <strong>Status:</strong> {{STATUS}}</li>
-                            <li>🛠️ <strong>Criação:</strong> CMS Headless Python</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+<body class="bg-brandWhite min-h-screen py-10 md:py-20 px-4 md:px-8 flex flex-col items-center">
 
-            <!-- Media Section -->
-            <section style="border-top: 1px solid var(--border-light); padding-top: 40px;">
-                <h2 class="section-title">Processo de Criação e Resultado</h2>
-                
-                <div class="gallery-grid">
-                    {% if IMAGE_PROCESSO %}
-                    <div class="gallery-item">
-                        <img src="{{IMAGE_PROCESSO}}" alt="Imagem de Processo (Slicing/Wireframe)" onerror="this.src='https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800';">
-                    </div>
-                    {% endif %}
-                    
-                    {% if IMAGE_GALERIA %}
-                    <div class="gallery-item">
-                        <img src="{{IMAGE_GALERIA}}" alt="Resultado Final / Galeria" onerror="this.src='https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=800';">
-                    </div>
-                    {% endif %}
+    <!-- OBJETO DE CONFIGURAÇÃO DINÂMICO (INJETADO PELO CMS) -->
+    <script>
+        const MONUMENT_CONFIG = {{MONUMENT_CONFIG_JSON}};
+    </script>
+
+    <!-- CONTAINER CENTRAL (ESTILO EXPOSIÇÃO / APRESENTAÇÃO ARQUITETÔNICA) -->
+    <main class="w-full max-w-4xl flex flex-col gap-12 relative">
+
+        <!-- BOTÃO DE VOLTAR AO PORTFÓLIO -->
+        <div class="w-full text-left">
+            <a href="../../index.html" class="inline-flex items-center gap-2 font-title font-bold text-xs text-brandBlue uppercase tracking-widest hover:underline">
+                ← Voltar ao Portfólio
+            </a>
+        </div>
+
+        <!-- 1. HERO SLIDE (CAPA) -->
+        <header id="js-hero-slide" class="hero-slide w-full">
+            <div class="hero-slide-content">
+                <div class="mb-4 flex items-center gap-3">
+                    <span id="js-hero-badge" class="exhibition-tag">Carregando...</span>
+                    <span id="js-hero-serial" class="text-xs font-title font-bold text-brandMustard tracking-widest uppercase">000/000</span>
                 </div>
-            </section>
-        </article>
+                <h1 id="js-hero-title" class="hero-main-title my-2">
+                    <!-- Título dinâmico -->
+                </h1>
+                <h2 id="js-hero-subtitle" class="hero-sub-title mb-6">
+                    <!-- Subtítulo dinâmico -->
+                </h2>
+                <div class="smart-divider-mustard"></div>
+                <p id="js-hero-location" class="font-title text-xs tracking-widest uppercase text-white/95 mt-4">
+                    <!-- Localização -->
+                </p>
+            </div>
+        </header>
+
+        <!-- 2. SLIDE SOBRE & FATOS (METRICS) -->
+        <section id="about-section" class="exhibition-card w-full">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                <div>
+                    <h2 id="js-about-title" class="museum-title">Sobre a Obra</h2>
+                    <div class="smart-divider"></div>
+                    <p id="js-about-text" class="text-charcoal text-sm leading-relaxed mb-8">
+                        <!-- Texto sobre a obra -->
+                    </p>
+                    
+                    <!-- Container das Métricas -->
+                    <div id="js-metrics-container" class="flex flex-col">
+                        <!-- Gerado dinamicamente via JS -->
+                    </div>
+                </div>
+                
+                <div class="about-image-frame aspect-[4/3] overflow-hidden">
+                    <img id="js-about-image" src="" alt="Representação Digital">
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. SLIDE MARCOS HISTÓRICOS (TIMELINE / MILESTONES) -->
+        <section id="milestones-section" class="exhibition-card w-full">
+            <div>
+                <h2 class="museum-title">Fases & Processo de Desenvolvimento</h2>
+                <div class="smart-divider"></div>
+                
+                <!-- Grade 4 colunas simétricas -->
+                <div id="js-milestones-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+                    <!-- Marcos históricos gerados via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. SLIDE GALERIA TÉCNICA E PROCESSO 3D -->
+        <section id="gallery-section" class="exhibition-card w-full">
+            <div>
+                <h2 class="museum-title">Galeria de Imagens & Resultados</h2>
+                <div class="smart-divider"></div>
+                
+                <!-- Grid Assimétrico -->
+                <div id="js-gallery-grid" class="gallery-grid-custom mt-6">
+                    <!-- Os cards da galeria serão gerados dinamicamente -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. SLIDE LOCALIZAÇÃO E REDES SOCIAIS -->
+        <section id="location-social-section" class="exhibition-card w-full">
+            <div>
+                <h2 class="museum-title">Localização & Registro de Criação</h2>
+                <div class="smart-divider"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-8 mt-6">
+                    
+                    <!-- Mapa Embutido -->
+                    <div class="md:col-span-3 flex flex-col justify-between">
+                        <div class="map-outer-container relative w-full h-80 overflow-hidden">
+                            <iframe 
+                                id="js-map-iframe"
+                                src="" 
+                                width="100%" 
+                                height="100%" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                        <p class="font-sans italic text-xs text-center text-textMuted mt-4">
+                            Referência cartográfica do local do monumento / projeto
+                        </p>
+                    </div>
+
+                    <!-- Lateral: Instagram Post Simulado -->
+                    <div class="md:col-span-2 flex flex-col">
+                        <h3 class="font-title font-bold text-xs text-brandBlue uppercase tracking-widest mb-3">
+                            📍 Origem do Projeto
+                        </h3>
+                        
+                        <!-- Card Instagram Simulado Japandi -->
+                        <div class="instagram-outer-card p-4 flex flex-col gap-3">
+                            <div class="flex items-center gap-3">
+                                <img id="js-ig-avatar" src="" alt="Avatar" class="w-8 h-8 rounded-full border border-borderColor">
+                                <div class="flex flex-col">
+                                    <span id="js-ig-handle" class="font-title font-bold text-xs text-charcoal leading-tight"><!-- Handle --></span>
+                                    <span class="text-[10px] text-textMuted leading-none">Porto, Portugal</span>
+                                </div>
+                                <span class="ml-auto text-textMuted text-xs">•••</span>
+                            </div>
+                            
+                            <!-- Foto do Post -->
+                            <div class="relative bg-brandWhite aspect-square overflow-hidden instagram-img-container">
+                                <img id="js-ig-image" src="" alt="Foto Instagram" class="w-full h-full object-cover">
+                            </div>
+                            
+                            <!-- Ações -->
+                            <div class="flex gap-3 text-sm text-charcoal">
+                                <span class="cursor-pointer hover:text-brandBlue">❤️</span>
+                                <span class="cursor-pointer hover:text-brandBlue">💬</span>
+                                <span class="cursor-pointer hover:text-brandBlue">✈️</span>
+                                <span class="ml-auto cursor-pointer hover:text-brandBlue">🔖</span>
+                            </div>
+
+                            <!-- Likes e Legenda -->
+                            <div class="flex flex-col gap-1 text-[11px] text-textMuted leading-snug">
+                                <span id="js-ig-likes" class="font-bold text-charcoal"><!-- Curtidos --></span>
+                                <span>
+                                    <strong id="js-ig-caption-handle" class="mr-1 text-charcoal"><!-- Handle --></strong>
+                                    <span id="js-ig-caption-text"><!-- Legenda --></span>
+                                    <span id="js-ig-tags" class="text-brandBlue block mt-1"><!-- Tags --></span>
+                                </span>
+                                <span id="js-ig-date" class="text-[9px] text-textMuted uppercase tracking-wider mt-1"><!-- Data --></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="w-full text-center py-10 flex flex-col items-center gap-2 mt-4 border-t border-borderColor">
+            <span class="museum-footer-tagline">
+                Coleção de Arquitetura & Réplicas 3D
+            </span>
+            <span class="text-xs text-textMuted italic font-sans">
+                Modelado e publicado dinamicamente via ML Gestor de Projetos
+            </span>
+        </footer>
+
+    </main>
+
+    <!-- LIGHTBOX MODAL (JAPANDI LIGHTBOX OVERLAY) -->
+    <div id="js-lightbox" class="lightbox-overlay">
+        <button id="js-lightbox-close" class="lightbox-close-button" aria-label="Fechar galeria">&times;</button>
+        <button id="js-lightbox-prev" class="lightbox-navigation lightbox-previous-button" aria-label="Foto anterior">&#10094;</button>
+        <button id="js-lightbox-next" class="lightbox-navigation lightbox-next-button" aria-label="Próxima foto">&#10095;</button>
+
+        <div class="lightbox-content-wrapper">
+            <div class="lightbox-card">
+                <img id="js-lightbox-img" class="lightbox-img-element" src="" alt="Imagem ampliada">
+                <div id="js-lightbox-caption" class="lightbox-caption-text">
+                    <!-- Legenda da imagem -->
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- LÓGICA E RENDERIZAÇÃO JAPANDI -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. APLICAR CONFIGURAÇÕES NA PÁGINA DINAMICAMENTE
+            
+            // Slide 1: Hero / Capa
+            document.title = `${MONUMENT_CONFIG.hero.title} | ML Portfólio`;
+            document.getElementById("js-hero-slide").style.backgroundImage = `url('${MONUMENT_CONFIG.hero.bgImage}')`;
+            document.getElementById("js-hero-badge").textContent = MONUMENT_CONFIG.hero.category;
+            document.getElementById("js-hero-serial").textContent = MONUMENT_CONFIG.hero.serialNumber;
+            document.getElementById("js-hero-title").textContent = MONUMENT_CONFIG.hero.title;
+            document.getElementById("js-hero-subtitle").textContent = MONUMENT_CONFIG.hero.subtitle;
+            document.getElementById("js-hero-location").textContent = `📍 ${MONUMENT_CONFIG.hero.locationText}`;
+            
+            // Slide 2: Sobre & Fatos Relevantes
+            document.getElementById("js-about-title").textContent = MONUMENT_CONFIG.about.title;
+            document.getElementById("js-about-text").textContent = MONUMENT_CONFIG.about.description;
+            document.getElementById("js-about-image").src = MONUMENT_CONFIG.about.image;
+            document.getElementById("js-about-image").alt = MONUMENT_CONFIG.about.title;
+
+            // Injetar Métricas
+            const metricsContainer = document.getElementById("js-metrics-container");
+            metricsContainer.innerHTML = "";
+            MONUMENT_CONFIG.about.metrics.forEach(metric => {
+                const row = document.createElement("div");
+                row.className = "metric-row";
+                row.innerHTML = `
+                    <div class="metric-number">${metric.number}</div>
+                    <div class="metric-label">${metric.label}</div>
+                `;
+                metricsContainer.appendChild(row);
+            });
+
+            // Slide 3: Marcos Históricos (Timeline)
+            const milestonesGrid = document.getElementById("js-milestones-grid");
+            milestonesGrid.innerHTML = "";
+            MONUMENT_CONFIG.milestones.forEach(m => {
+                const card = document.createElement("div");
+                card.className = "milestone-card";
+                card.innerHTML = `
+                    <div class="milestone-image-wrapper">
+                        <span class="milestone-badge">${m.num}</span>
+                        <img src="${m.image}" alt="${m.title}">
+                    </div>
+                    <h4 class="milestone-title">${m.title}</h4>
+                    <p class="milestone-text">${m.text}</p>
+                `;
+                milestonesGrid.appendChild(card);
+            });
+
+            // Slide 4: Galeria Assimétrica
+            const galleryGrid = document.getElementById("js-gallery-grid");
+            galleryGrid.innerHTML = "";
+
+            MONUMENT_CONFIG.gallery.forEach((item, index) => {
+                const card = document.createElement("div");
+                card.className = `gallery-card ${item.spansLarge ? 'gallery-card-large' : ''}`;
+                card.setAttribute("data-index", index);
+
+                card.innerHTML = `
+                    <div class="gallery-image-wrapper">
+                        <img src="${item.url}" alt="${item.caption}">
+                    </div>
+                    <div class="gallery-info">
+                        <div class="gallery-title">${item.caption}</div>
+                        <div class="gallery-category">${item.tag}</div>
+                    </div>
+                `;
+
+                // Clique para abrir o Lightbox
+                card.addEventListener("click", () => {
+                    openLightbox(index);
+                });
+
+                galleryGrid.appendChild(card);
+            });
+
+            // Slide 5: Google Maps
+            document.getElementById("js-map-iframe").src = MONUMENT_CONFIG.mapsIframeUrl;
+
+            // Post do Instagram Simulado
+            const igConfig = MONUMENT_CONFIG.instagramPost;
+            document.getElementById("js-ig-avatar").src = igConfig.authorAvatar;
+            document.getElementById("js-ig-handle").textContent = igConfig.authorHandle;
+            document.getElementById("js-ig-caption-handle").textContent = igConfig.authorHandle;
+            document.getElementById("js-ig-likes").textContent = igConfig.likesCount;
+            document.getElementById("js-ig-caption-text").textContent = igConfig.captionText;
+            document.getElementById("js-ig-tags").textContent = igConfig.tags;
+            document.getElementById("js-ig-date").textContent = igConfig.date;
+            
+            // Usar a primeira imagem da galeria no post simulado
+            if (MONUMENT_CONFIG.gallery && MONUMENT_CONFIG.gallery.length > 0) {
+                document.getElementById("js-ig-image").src = MONUMENT_CONFIG.gallery[0].url;
+            }
+
+            // LIGHTBOX LÓGICA
+            const lightbox = document.getElementById("js-lightbox");
+            const lightboxImg = document.getElementById("js-lightbox-img");
+            const lightboxCaption = document.getElementById("js-lightbox-caption");
+            const btnClose = document.getElementById("js-lightbox-close");
+            const btnPrev = document.getElementById("js-lightbox-prev");
+            const btnNext = document.getElementById("js-lightbox-next");
+            
+            let activeIndex = 0;
+
+            function openLightbox(index) {
+                activeIndex = index;
+                updateLightboxContent();
+                lightbox.classList.add("active");
+                document.body.style.overflow = "hidden";
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove("active");
+                document.body.style.overflow = "";
+            }
+
+            function updateLightboxContent() {
+                const item = MONUMENT_CONFIG.gallery[activeIndex];
+                if (item) {
+                    lightboxImg.src = item.url;
+                    lightboxImg.alt = item.caption;
+                    lightboxCaption.textContent = item.caption;
+                }
+            }
+
+            function showNext() {
+                activeIndex = (activeIndex + 1) % MONUMENT_CONFIG.gallery.length;
+                updateLightboxContent();
+            }
+
+            btnClose.addEventListener("click", closeLightbox);
+            btnNext.addEventListener("click", showNext);
+            btnPrev.addEventListener("click", () => {
+                activeIndex = (activeIndex - 1 + MONUMENT_CONFIG.gallery.length) % MONUMENT_CONFIG.gallery.length;
+                updateLightboxContent();
+            });
+
+            lightbox.addEventListener("click", (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            document.addEventListener("keydown", (e) => {
+                if (!lightbox.classList.contains("active")) return;
+                
+                if (e.key === "Escape") {
+                    closeLightbox();
+                } else if (e.key === "ArrowRight") {
+                    showNext();
+                } else if (e.key === "ArrowLeft") {
+                    activeIndex = (activeIndex - 1 + MONUMENT_CONFIG.gallery.length) % MONUMENT_CONFIG.gallery.length;
+                    updateLightboxContent();
+                }
+            });
+        });
+    </script>
 </body>
 </html>

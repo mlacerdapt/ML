@@ -1,4 +1,36 @@
 {
+    "curriculo": {
+        "nome": "Marcelo Lacerda",
+        "titulo": "Engenheiro de Software & Designer 3D",
+        "email": "marcelo.lacerda@exemplo.com",
+        "github": "github.com/mlacerdapt",
+        "localizacao": "Porto, Portugal",
+        "avatar": "https://api.dicebear.com/7.x/identicon/svg?seed=mlacerda",
+        "resumo": "Engenheiro de Software Sénior com mais de 8 anos de experiência no desenvolvimento de aplicações eficientes e automatizações industriais. Paralelamente, atuo no design de réplicas físicas e virtuais de monumentos, combinando modelação tridimensional precisa, fabrico digital via impressão 3D e renderização fotorrealista.",
+        "skills": "Python & Flask, SQL & SQLite, Tailwind CSS, Impressão 3D, Slicing (Cura/PrusaSlicer), Modelação (Blender), Renderização (Cycles/V-Ray), Layout & Grelhas",
+        "experiencias": [
+            {
+                "date": "2023 - Presente",
+                "role": "Engenheiro de Software Sénior",
+                "company": "ENERCON",
+                "desc": "Desenvolvimento de sistemas internos, integrações de banco de dados e automações para logística de distribuição e controlo de materiais tridimensionais."
+            },
+            {
+                "date": "2020 - 2023",
+                "role": "Especialista em Modelação e Impressão 3D",
+                "company": "ML Smart Designs",
+                "desc": "Criação de maquetes físicas de alta precisão baseadas em monumentos históricos e modelos arquitetónicos neorromânicos, utilizando filamentos especiais e fatiamento avançado."
+            }
+        ],
+        "educacao": [
+            {
+                "date": "2014 - 2019",
+                "role": "Licenciatura em Engenharia de Computadores",
+                "company": "Universidade do Porto",
+                "desc": "Foco em desenvolvimento de software corporativo, banco de dados relacional e arquitetura de sistemas distribuídos."
+            }
+        ]
+    },
     "ML-RND-26001": {
         "id": "ML-RND-26001",
         "titulo": "Render Vivenda Moderna A",

@@ -1,18 +1,58 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ML Portfólio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Marcelo Lacerda | Portfólio & Currículo</title>
+    
+    <!-- Meta tags SEO -->
+    <meta name="description" content="Portfólio profissional e currículo de Marcelo Lacerda. Projetos de Impressão 3D, Renders, Vendas e Layouts Gráficos.">
+    <meta name="keywords" content="Impressão 3D, Renders, Layout Gráfico, CMS Headless, Python, Marcelo Lacerda">
+    <meta name="author" content="Marcelo Lacerda">
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBlue: '#0058A3',
+                        brandMustard: '#F7C846',
+                        brandWhite: '#F5F5F7',
+                        cardBg: '#ffffff',
+                        charcoal: '#333333',
+                        textMuted: '#6B7280',
+                        borderColor: '#E0E0E0',
+                    },
+                    fontFamily: {
+                        title: ['Montserrat', 'sans-serif'],
+                        sans: ['Lato', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Design System central -->
     <link rel="stylesheet" href="portfolio_style.css">
 </head>
 <body>
     <div class="portfolio-wrapper">
+        <!-- Header -->
         <header class="portfolio-header">
             <h1 class="portfolio-logo">ML Portfólio</h1>
-            <p class="portfolio-subtitle">Galeria de Impressões 3D, Renders, Designs e Artigos</p>
+            <p class="portfolio-subtitle">Galeria de Criações Estáticas e Ficha Curricular</p>
             
+            <!-- Tab Switcher -->
+            <nav class="tabs-navigation">
+                <button class="tab-trigger active" onclick="switchMainTab('tab-portfolio', this)">Portfólio</button>
+                <button class="tab-trigger" onclick="switchMainTab('tab-curriculo', this)">Currículo</button>
+            </nav>
+        </header>
+        
+        <!-- PANE 1: Portfólio -->
+        <div id="tab-portfolio" class="tab-pane active">
             <!-- Category Filters UI -->
             <div class="filters-container">
                 <button class="filter-btn active" data-filter="all">Todos</button>
@@ -21,11 +61,10 @@
                 <button class="filter-btn" data-filter="Venda">Artigos de Venda</button>
                 <button class="filter-btn" data-filter="Layout">Layout Gráfico</button>
             </div>
-        </header>
-        
-        <main class="portfolio-container">
-            <div class="portfolio-grid">
-                <!-- PORTFOLIO_GRID_START -->
+            
+            <main class="portfolio-container">
+                <div class="portfolio-grid">
+                    <!-- PORTFOLIO_GRID_START -->
 
         <div class="portfolio-card" data-category="Render">
             <div class="card-image-container">
@@ -42,16 +81,110 @@
         </div>
         
 <!-- PORTFOLIO_GRID_END -->
-            </div>
-        </main>
+                </div>
+            </main>
+        </div>
         
+        <!-- PANE 2: Currículo -->
+        <div id="tab-curriculo" class="tab-pane">
+            <!-- CURRICULO_START -->
+<div class="cv-grid">
+                <!-- Sidebar: Informações Pessoais e Competências -->
+                <aside class="cv-sidebar">
+                    <div class="flex flex-col items-center">
+                        <img class="profile-avatar" src="https://api.dicebear.com/7.x/identicon/svg?seed=mlacerda" alt="Marcelo Lacerda">
+                        <h2 class="profile-name">Marcelo Lacerda</h2>
+                        <div class="profile-title">Engenheiro de Software & Designer 3D</div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="cv-section-title">Contacto</h3>
+                        <div class="smart-divider"></div>
+                        <ul class="contact-list">
+                            <li class="contact-item">📧 marcelo.lacerda@exemplo.com</li><li class="contact-item">🔗 github.com/mlacerdapt</li><li class="contact-item">📍 Porto, Portugal</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="cv-section-title">Competências</h3>
+                        <div class="smart-divider"></div>
+                        <div class="skills-container">
+                            <span class="skill-tag">Python & Flask</span><span class="skill-tag">SQL & SQLite</span><span class="skill-tag">Tailwind CSS</span><span class="skill-tag">Impressão 3D</span><span class="skill-tag">Slicing (Cura/PrusaSlicer)</span><span class="skill-tag">Modelação (Blender)</span><span class="skill-tag">Renderização (Cycles/V-Ray)</span><span class="skill-tag">Layout & Grelhas</span>
+                        </div>
+                    </div>
+                </aside>
+                
+                <!-- Conteúdo Principal: Experiência e Educação -->
+                <main class="cv-main">
+                    <div>
+                        <h3 class="cv-section-title">Resumo Profissional</h3>
+                        <div class="smart-divider"></div>
+                        <p class="text-charcoal text-sm leading-relaxed text-justify mb-8">
+                            Engenheiro de Software Sénior com mais de 8 anos de experiência no desenvolvimento de aplicações eficientes e automatizações industriais. Paralelamente, atuo no design de réplicas físicas e virtuais de monumentos, combinando modelação tridimensional precisa, fabrico digital via impressão 3D e renderização fotorrealista.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="cv-section-title">Experiência Profissional</h3>
+                        <div class="smart-divider"></div>
+                        <div class="timeline">
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-date">2023 - Presente</div>
+                                <div class="timeline-role">Engenheiro de Software Sénior</div>
+                                <div class="timeline-company">ENERCON</div>
+                                <p class="timeline-desc">Desenvolvimento de sistemas internos, integrações de banco de dados e automações para logística de distribuição e controlo de materiais tridimensionais.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-date">2020 - 2023</div>
+                                <div class="timeline-role">Especialista em Modelação e Impressão 3D</div>
+                                <div class="timeline-company">ML Smart Designs</div>
+                                <p class="timeline-desc">Criação de maquetes físicas de alta precisão baseadas em monumentos históricos e modelos arquitetónicos neorromânicos, utilizando filamentos especiais e fatiamento avançado.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h3 class="cv-section-title">Formação</h3>
+                        <div class="smart-divider"></div>
+                        <div class="timeline">
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-date">2014 - 2019</div>
+                                <div class="timeline-role">Licenciatura em Engenharia de Computadores</div>
+                                <div class="timeline-company">Universidade do Porto</div>
+                                <p class="timeline-desc">Foco em desenvolvimento de software corporativo, banco de dados relacional e arquitetura de sistemas distribuídos.</p>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+<!-- CURRICULO_END -->
+        </div>
+        
+        <!-- Rodapé -->
         <footer class="portfolio-footer">
-            <p>&copy; 2026 ML Portfólio. Todos os direitos reservados. Gerado por ML Gestor.</p>
+            <span class="museum-footer-tagline">Coleção de Criações 3D & Layouts</span>
+            <p class="mt-2">&copy; 2026 Marcelo Lacerda. Todos os direitos reservados.</p>
         </footer>
     </div>
     
     <script>
-        // Filters implementation
+        // Tab switcher function
+        function switchMainTab(tabId, triggerBtn) {
+            // Remove active classes
+            document.querySelectorAll(".tab-pane").forEach(pane => pane.classList.remove("active"));
+            document.querySelectorAll(".tab-trigger").forEach(btn => btn.classList.remove("active"));
+            
+            // Set clicked active
+            document.getElementById(tabId).classList.add("active");
+            triggerBtn.classList.add("active");
+        }
+        
+        // Category Filters implementation
         document.addEventListener("DOMContentLoaded", () => {
             const filterBtns = document.querySelectorAll(".filter-btn");
             const cards = document.querySelectorAll(".portfolio-card");
@@ -63,8 +196,8 @@
                     
                     const filter = btn.dataset.filter;
                     const emptyState = document.querySelector(".empty-state-portfolio");
-                    
                     let count = 0;
+                    
                     cards.forEach(card => {
                         if (filter === "all" || card.dataset.category === filter) {
                             card.style.display = "flex";
@@ -76,8 +209,8 @@
                     
                     if (emptyState) {
                         emptyState.style.display = (count === 0 && cards.length > 0) ? "block" : "none";
-                    }}
-                );
+                    }
+                });
             });
         });
     </script>

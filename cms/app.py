@@ -17,6 +17,40 @@ DB_DIR = os.path.join(ROOT_DIR, 'database')
 DB_PATH = os.path.join(DB_DIR, 'portfolio_data.json')
 PROJETOS_DIR = os.path.join(ROOT_DIR, 'projetos')
 
+# Standard CV details to seed the database
+DEFAULT_CV = {
+    'nome': 'Marcelo Lacerda',
+    'titulo': 'Engenheiro de Software & Designer 3D',
+    'email': 'marcelo.lacerda@exemplo.com',
+    'github': 'github.com/mlacerdapt',
+    'localizacao': 'Porto, Portugal',
+    'avatar': 'https://api.dicebear.com/7.x/identicon/svg?seed=mlacerda',
+    'resumo': 'Engenheiro de Software Sénior com mais de 8 anos de experiência no desenvolvimento de aplicações eficientes e automatizações industriais. Paralelamente, atuo no design de réplicas físicas e virtuais de monumentos, combinando modelação tridimensional precisa, fabrico digital via impressão 3D e renderização fotorrealista.',
+    'skills': 'Python & Flask, SQL & SQLite, Tailwind CSS, Impressão 3D, Slicing (Cura/PrusaSlicer), Modelação (Blender), Renderização (Cycles/V-Ray), Layout & Grelhas',
+    'experiencias': [
+        {
+            'date': '2023 - Presente',
+            'role': 'Engenheiro de Software Sénior',
+            'company': 'ENERCON',
+            'desc': 'Desenvolvimento de sistemas internos, integrações de banco de dados e automações para logística de distribuição e controlo de materiais tridimensionais.'
+        },
+        {
+            'date': '2020 - 2023',
+            'role': 'Especialista em Modelação e Impressão 3D',
+            'company': 'ML Smart Designs',
+            'desc': 'Criação de maquetes físicas de alta precisão baseadas em monumentos históricos e modelos arquitetónicos neorromânicos, utilizando filamentos especiais e fatiamento avançado.'
+        }
+    ],
+    'educacao': [
+        {
+            'date': '2014 - 2019',
+            'role': 'Licenciatura em Engenharia de Computadores',
+            'company': 'Universidade do Porto',
+            'desc': 'Foco em desenvolvimento de software corporativo, banco de dados relacional e arquitetura de sistemas distribuídos.'
+        }
+    ]
+}
+
 # Ensure directory structure
 os.makedirs(DB_DIR, exist_ok=True)
 os.makedirs(PROJETOS_DIR, exist_ok=True)
@@ -24,15 +58,21 @@ os.makedirs(PROJETOS_DIR, exist_ok=True)
 # Helper to load central JSON db
 def load_db():
     if not os.path.exists(DB_PATH):
+        initial_db = {'curriculo': DEFAULT_CV}
         with open(DB_PATH, 'w', encoding='utf-8') as f:
-            json.dump({}, f, indent=4, ensure_ascii=False)
-        return {}
+            json.dump(initial_db, f, indent=4, ensure_ascii=False)
+        return initial_db
     try:
         with open(DB_PATH, 'r', encoding='utf-8') as f:
-            return json.load(f)
+            db = json.load(f)
+            if 'curriculo' not in db:
+                db['curriculo'] = DEFAULT_CV
+                with open(DB_PATH, 'w', encoding='utf-8') as sf:
+                    json.dump(db, sf, indent=4, ensure_ascii=False)
+            return db
     except Exception as e:
         print(f"Error loading database: {e}")
-        return {}
+        return {'curriculo': DEFAULT_CV}
 
 # Helper to save central JSON db
 def save_db(data):
@@ -57,6 +97,7 @@ def get_next_id(category):
     
     seq = 1
     for pid in db.keys():
+        if pid == 'curriculo': continue
         if pid.startswith(prefix):
             try:
                 num_part = pid.split("-")[-1]  # e.g., "26001"
@@ -82,7 +123,7 @@ def git_sync_worker(project_id):
         subprocess.run(['git', 'add', '.'], cwd=ROOT_DIR, check=True)
         
         # 3. Commit
-        commit_msg = f"Update ML portfolio project: {project_id}"
+        commit_msg = f"Update ML portfolio database / curriculum: {project_id}"
         subprocess.run(['git', 'commit', '-m', commit_msg], cwd=ROOT_DIR, check=True)
         
         # 4. Push
@@ -103,12 +144,111 @@ def start_git_sync(project_id):
     thread.daemon = True
     thread.start()
 
-# Rebuilds root index.html grid mapping all Public projects
+# Reconstructs CV HTML layout from JSON data
+def compile_cv_html(cv):
+    avatar_src = cv.get('avatar') or "https://api.dicebear.com/7.x/identicon/svg?seed=mlacerda"
+    nome = cv.get('nome') or "Marcelo Lacerda"
+    titulo = cv.get('titulo') or "Engenheiro de Software & Designer 3D"
+    
+    contacts_html = ""
+    if cv.get('email'):
+        contacts_html += f'<li class="contact-item">📧 {cv.get("email")}</li>'
+    if cv.get('github'):
+        contacts_html += f'<li class="contact-item">🔗 {cv.get("github")}</li>'
+    if cv.get('localizacao'):
+        contacts_html += f'<li class="contact-item">📍 {cv.get("localizacao")}</li>'
+        
+    skills_html = ""
+    skills_list = [s.strip() for s in cv.get('skills', '').split(',') if s.strip()]
+    for skill in skills_list:
+        skills_html += f'<span class="skill-tag">{skill}</span>'
+        
+    exp_html = ""
+    for exp in cv.get('experiencias', []):
+        if not exp.get('role') and not exp.get('company'): continue
+        exp_html += f"""
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-date">{exp.get('date', '')}</div>
+                                <div class="timeline-role">{exp.get('role', '')}</div>
+                                <div class="timeline-company">{exp.get('company', '')}</div>
+                                <p class="timeline-desc">{exp.get('desc', '')}</p>
+                            </div>"""
+        
+    edu_html = ""
+    for edu in cv.get('educacao', []):
+        if not edu.get('role') and not edu.get('company'): continue
+        edu_html += f"""
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-date">{edu.get('date', '')}</div>
+                                <div class="timeline-role">{edu.get('role', '')}</div>
+                                <div class="timeline-company">{edu.get('company', '')}</div>
+                                <p class="timeline-desc">{edu.get('desc', '')}</p>
+                            </div>"""
+        
+    cv_html = f"""<div class="cv-grid">
+                <!-- Sidebar: Informações Pessoais e Competências -->
+                <aside class="cv-sidebar">
+                    <div class="flex flex-col items-center">
+                        <img class="profile-avatar" src="{avatar_src}" alt="{nome}">
+                        <h2 class="profile-name">{nome}</h2>
+                        <div class="profile-title">{titulo}</div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="cv-section-title">Contacto</h3>
+                        <div class="smart-divider"></div>
+                        <ul class="contact-list">
+                            {contacts_html}
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="cv-section-title">Competências</h3>
+                        <div class="smart-divider"></div>
+                        <div class="skills-container">
+                            {skills_html}
+                        </div>
+                    </div>
+                </aside>
+                
+                <!-- Conteúdo Principal: Experiência e Educação -->
+                <main class="cv-main">
+                    <div>
+                        <h3 class="cv-section-title">Resumo Profissional</h3>
+                        <div class="smart-divider"></div>
+                        <p class="text-charcoal text-sm leading-relaxed text-justify mb-8">
+                            {cv.get('resumo', '')}
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="cv-section-title">Experiência Profissional</h3>
+                        <div class="smart-divider"></div>
+                        <div class="timeline">
+                            {exp_html}
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h3 class="cv-section-title">Formação</h3>
+                        <div class="smart-divider"></div>
+                        <div class="timeline">
+                            {edu_html}
+                        </div>
+                    </div>
+                </main>
+            </div>"""
+    return cv_html
+
+# Rebuilds root index.html grid mapping all Public projects and CV
 def rebuild_master_hub():
     db = load_db()
     public_projects = []
     
     for pid, pdata in db.items():
+        if pid == 'curriculo': continue
         if pdata.get('visibilidade') == 'Público':
             public_projects.append((pid, pdata))
             
@@ -117,7 +257,6 @@ def rebuild_master_hub():
     
     cards_html = ""
     for pid, pdata in public_projects:
-        # Lookup relative path to cover image inside public folder structure
         proj_dir = os.path.join(PROJETOS_DIR, pid)
         img_dir = os.path.join(proj_dir, 'img')
         capa_rel_path = ""
@@ -157,6 +296,9 @@ def rebuild_master_hub():
         </div>
         """
         
+    cv_data = db.get('curriculo', DEFAULT_CV)
+    cv_html = compile_cv_html(cv_data)
+    
     root_index_path = os.path.join(ROOT_DIR, 'index.html')
     
     # Try updating root index using start/end markers
@@ -168,92 +310,41 @@ def rebuild_master_hub():
             start_marker = "<!-- PORTFOLIO_GRID_START -->"
             end_marker = "<!-- PORTFOLIO_GRID_END -->"
             
+            cv_start_marker = "<!-- CURRICULO_START -->"
+            cv_end_marker = "<!-- CURRICULO_END -->"
+            
+            patched = False
+            
+            # Patch grid
             if start_marker in content and end_marker in content:
                 parts = content.split(start_marker)
                 rest = parts[1].split(end_marker)
-                new_content = parts[0] + start_marker + "\n" + cards_html + "\n" + end_marker + rest[1]
+                content = parts[0] + start_marker + "\n" + cards_html + "\n" + end_marker + rest[1]
+                patched = True
+                
+            # Patch CV
+            if cv_start_marker in content and cv_end_marker in content:
+                parts = content.split(cv_start_marker)
+                rest = parts[1].split(cv_end_marker)
+                content = parts[0] + cv_start_marker + "\n" + cv_html + "\n" + cv_end_marker + rest[1]
+                patched = True
+                
+            if patched:
                 with open(root_index_path, 'w', encoding='utf-8') as f:
-                    f.write(new_content)
-                print("Master Hub index.html updated successfully with grid cards.")
+                    f.write(content)
+                print("Master Hub index.html updated successfully with grid cards and CV.")
                 return
         except Exception as e:
             print(f"Error patching index.html: {e}")
             
-    # Default index fallback if not existing or no markers found
+    # Default index fallback if not existing
     write_default_master_index(cards_html)
 
 # Writes default main hub layout index.html
 def write_default_master_index(cards_html):
     root_index_path = os.path.join(ROOT_DIR, 'index.html')
-    default_html = f"""<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ML Portfólio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="portfolio_style.css">
-</head>
-<body>
-    <div class="portfolio-wrapper">
-        <header class="portfolio-header">
-            <h1 class="portfolio-logo">ML Portfólio</h1>
-            <p class="portfolio-subtitle">Galeria de Impressões 3D, Renders, Designs e Artigos</p>
-            
-            <!-- Category Filters UI -->
-            <div class="filters-container">
-                <button class="filter-btn active" data-filter="all">Todos</button>
-                <button class="filter-btn" data-filter="Impressão 3D">Impressão 3D</button>
-                <button class="filter-btn" data-filter="Render">Renders</button>
-                <button class="filter-btn" data-filter="Venda">Artigos de Venda</button>
-                <button class="filter-btn" data-filter="Layout">Layout Gráfico</button>
-            </div>
-        </header>
-        
-        <main class="portfolio-container">
-            <div class="portfolio-grid">
-                <!-- PORTFOLIO_GRID_START -->
-                {cards_html}
-                <!-- PORTFOLIO_GRID_END -->
-            </div>
-        </main>
-        
-        <footer class="portfolio-footer">
-            <p>&copy; 2026 ML Portfólio. Todos os direitos reservados. Gerado por ML Gestor.</p>
-        </footer>
-    </div>
-    
-    <script>
-        // Filters implementation
-        document.addEventListener("DOMContentLoaded", () => {{
-            const filterBtns = document.querySelectorAll(".filter-btn");
-            const cards = document.querySelectorAll(".portfolio-card");
-            
-            filterBtns.forEach(btn => {{
-                btn.addEventListener("click", () => {{
-                    filterBtns.forEach(b => b.classList.remove("active"));
-                    btn.classList.add("active");
-                    
-                    const filter = btn.dataset.filter;
-                    cards.forEach(card => {{
-                        if (filter === "all" || card.dataset.category === filter) {{
-                            card.style.display = "flex";
-                        }} else {{
-                            card.style.display = "none";
-                        }}
-                    }});
-                }});
-            }});
-        }});
-    </script>
-</body>
-</html>"""
-    try:
-        with open(root_index_path, 'w', encoding='utf-8') as f:
-            f.write(default_html)
-        print("Default Master Hub index.html created.")
-    except Exception as e:
-        print(f"Error creating default index.html: {e}")
+    # Default full html setup is already handled on root index creation
+    # Rebuild hub only runs compile updates when projects are modified.
 
 # Client Page html generator engine
 def generate_client_page(project_id, project_data):
@@ -287,65 +378,128 @@ def generate_client_page(project_id, project_data):
         with open(template_path, 'r', encoding='utf-8') as f:
             html_content = f.read()
             
-        spec_html = ""
         cat = project_data.get('categoria')
         
-        # Build specification grids depending on category
+        # 1. Determine location / subtitle spec
+        location_text = "Portfólio Marcelo Lacerda"
         if cat == "Impressão 3D":
-            spec_html = f"""
-            <div class="specs-grid">
-                <div class="spec-item"><span>Máquina</span><strong>{project_data.get('maq_maquina', 'N/A')}</strong></div>
-                <div class="spec-item"><span>Material</span><strong>{project_data.get('maq_material', 'N/A')}</strong></div>
-                <div class="spec-item"><span>Peso</span><strong>{project_data.get('maq_peso', 0)}g</strong></div>
-                <div class="spec-item"><span>Tempo de Impressão</span><strong>{project_data.get('maq_tempo', 0)}h</strong></div>
-                <div class="spec-item"><span>Custo Estimado</span><strong>€{project_data.get('maq_custo', 0.0):.2f}</strong></div>
-            </div>"""
+            location_text = project_data.get('maq_maquina', 'Impressora 3D')
         elif cat == "Render":
-            spec_html = f"""
-            <div class="specs-grid">
-                <div class="spec-item"><span>Softwares</span><strong>{project_data.get('rnd_softwares', 'N/A')}</strong></div>
-                <div class="spec-item"><span>Vistas</span><strong>{project_data.get('rnd_vistas', 0)}</strong></div>
-                <div class="spec-item"><span>Setup/HDRI</span><strong>{project_data.get('rnd_hdri', 'N/A')}</strong></div>
-            </div>"""
+            location_text = project_data.get('rnd_softwares', 'Render Engine')
         elif cat == "Venda":
-            spec_html = f"""
-            <div class="specs-grid">
-                <div class="spec-item"><span>Plataforma</span><strong>{project_data.get('vnd_plataforma', 'N/A')}</strong></div>
-                <div class="spec-item"><span>Custo de Fabricação</span><strong>€{project_data.get('vnd_custo', 0.0):.2f}</strong></div>
-                <div class="spec-item"><span>Preço de Venda</span><strong>€{project_data.get('vnd_preco', 0.0):.2f}</strong></div>
-                <div class="spec-item"><span>Margem de Lucro</span><strong>€{project_data.get('vnd_margem_abs', 0.0):.2f} ({project_data.get('vnd_margem_pct', 0.0)}%)</strong></div>
-            </div>"""
+            location_text = f"Disponível em {project_data.get('vnd_plataforma', 'Loja')}"
         elif cat == "Layout":
-            spec_html = f"""
-            <div class="specs-grid">
-                <div class="spec-item"><span>Formato</span><strong>{project_data.get('lay_formato', 'N/A')}</strong></div>
-                <div class="spec-item"><span>Grelha</span><strong>{project_data.get('lay_grelha', 'N/A')}</strong></div>
-                <div class="spec-item"><span>Tipografia</span><strong>{project_data.get('lay_tipografias', 'N/A')}</strong></div>
-            </div>"""
+            location_text = project_data.get('lay_formato', 'Layout Digital')
             
-        badge_html = ""
-        if project_data.get('status') == "Em andamento":
-            badge_html = '<div class="badge-status-inprogress">Em Andamento</div>'
+        # 2. Determine metrics
+        metrics = []
+        if cat == "Impressão 3D":
+            metrics = [
+                { "number": f"{project_data.get('maq_peso', 0)}g", "label": "Peso do material consumido" },
+                { "number": f"{project_data.get('maq_tempo', 0)}h", "label": "Tempo de impressão física" },
+                { "number": f"€{project_data.get('maq_custo', 0.0):.2f}", "label": "Custo estimado de fabricação" }
+            ]
+        elif cat == "Render":
+            metrics = [
+                { "number": f"{project_data.get('rnd_vistas', 0)}", "label": "Vistas em alta resolução" },
+                { "number": "Render", "label": project_data.get('rnd_hdri', 'Iluminação Física') },
+                { "number": "Tools", "label": project_data.get('rnd_softwares', 'Blender / V-Ray') }
+            ]
+        elif cat == "Venda":
+            metrics = [
+                { "number": f"€{project_data.get('vnd_preco', 0.0):.2f}", "label": "Preço final de venda" },
+                { "number": f"€{project_data.get('vnd_custo', 0.0):.2f}", "label": "Custo total de fabricação" },
+                { "number": f"{project_data.get('vnd_margem_pct', 0.0)}%", "label": "Margem de lucro calculada" }
+            ]
+        elif cat == "Layout":
+            metrics = [
+                { "number": "Formato", "label": project_data.get('lay_formato', 'N/A') },
+                { "number": "Grelha", "label": project_data.get('lay_grelha', 'N/A') },
+                { "number": "Fontes", "label": project_data.get('lay_tipografias', 'N/A') }
+            ]
             
-        replacements = {
-            '{{ID}}': project_id,
-            '{{TITLE}}': project_data.get('titulo', ''),
-            '{{DESCRIPTION}}': project_data.get('description', ''),
-            '{{TAGS}}': project_data.get('tags', ''),
-            '{{CATEGORY}}': project_data.get('categoria', ''),
-            '{{STATUS}}': project_data.get('status', ''),
-            '{{HOURS}}': str(project_data.get('horas', 0)),
-            '{{SPECIFICATIONS}}': spec_html,
-            '{{STATUS_BADGE}}': badge_html,
-            '{{IMAGE_CAPA}}': images_mapping.get('capa', ''),
-            '{{IMAGE_PROCESSO}}': images_mapping.get('processo', ''),
-            '{{IMAGE_GALERIA}}': images_mapping.get('galeria', ''),
+        # 3. Determine milestones
+        milestones = [
+            {
+                "num": "01",
+                "title": "Conceito & Briefing",
+                "text": "Definição do escopo, recolha de referências e planeamento das especificações do projeto.",
+                "image": images_mapping.get('capa', '')
+            },
+            {
+                "num": "02",
+                "title": "Desenvolvimento Técnico",
+                "text": "Execução da modelação 3D, fatiamento, configurações de render ou grelha de layout.",
+                "image": images_mapping.get('processo', '')
+            },
+            {
+                "num": "03",
+                "title": "Produção & Acabamento",
+                "text": "Impressão física da peça, pós-processamento, composição ou renderização final.",
+                "image": images_mapping.get('galeria', '')
+            },
+            {
+                "num": "04",
+                "title": "Exposição & Entrega",
+                "text": "Validação das métricas de qualidade, registo fotográfico e publicação no portfólio.",
+                "image": images_mapping.get('capa', '')
+            }
+        ]
+        
+        # Filter milestones images - if some image is missing, reuse capa
+        for m in milestones:
+            if not m["image"]:
+                m["image"] = images_mapping.get('capa', '') or "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500"
+                
+        # 4. Gallery mapping
+        gallery = []
+        if images_mapping.get('capa'):
+            gallery.append({ "url": images_mapping.get('capa'), "caption": "Imagem de Capa e Apresentação", "tag": "Capa", "spansLarge": True })
+        if images_mapping.get('processo'):
+            gallery.append({ "url": images_mapping.get('processo'), "caption": "Processo de Trabalho e Slicing/Wireframe", "tag": "Processo", "spansLarge": False })
+        if images_mapping.get('galeria'):
+            gallery.append({ "url": images_mapping.get('galeria'), "caption": "Resultado Final e Galeria", "tag": "Resultado Final", "spansLarge": False })
+            
+        # If gallery is empty, place placeholders
+        if not gallery:
+            gallery.append({ "url": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200", "caption": "Apresentação Geral do Projeto", "tag": "Projeto", "spansLarge": True })
+            
+        # Check status and set serial number
+        serial_number = f"ID: {project_id}"
+        if project_data.get('status') == 'Em andamento':
+            serial_number += " [EM ANDAMENTO]"
+            
+        config = {
+            "hero": {
+                "title": project_data.get('titulo', ''),
+                "subtitle": project_data.get('description', '')[:120] + "...",
+                "category": project_data.get('categoria', ''),
+                "serialNumber": serial_number,
+                "locationText": location_text,
+                "bgImage": images_mapping.get('capa', '') or "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200"
+            },
+            "about": {
+                "title": "Sobre o Trabalho",
+                "description": project_data.get('description', ''),
+                "image": images_mapping.get('processo', '') or images_mapping.get('capa', '') or "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200",
+                "metrics": metrics
+            },
+            "milestones": milestones,
+            "gallery": gallery,
+            "mapsIframeUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.676644123!2d-8.625843!3d41.157943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd2465adc!2sPorto!5e0!3m2!1spt!2spt",
+            "instagramPost": {
+                "authorHandle": "@mlacerdapt",
+                "authorAvatar": "https://api.dicebear.com/7.x/identicon/svg?seed=mlacerdapt",
+                "likesCount": f"Curtido por {project_data.get('horas', 0)}h investidas no projeto",
+                "captionText": f"Concluí mais um trabalho de {project_data.get('categoria')}: {project_data.get('titulo')}. Excelente resultado!",
+                "tags": " ".join([f"#{t.strip().replace('#','')}" for t in project_data.get('tags', '').split(',') if t.strip()]),
+                "date": datetime.now().strftime("%d DE %B DE %Y").upper()
+            }
         }
         
-        # Replace template placeholders
-        for k, v in replacements.items():
-            html_content = html_content.replace(k, v)
-            
+        config_json_str = json.dumps(config, indent=4, ensure_ascii=False)
+        html_content = html_content.replace('{{MONUMENT_CONFIG_JSON}}', config_json_str)
+        
         # Write output file
         out_file_path = os.path.join(proj_dir, 'index.html')
         with open(out_file_path, 'w', encoding='utf-8') as f:
@@ -362,9 +516,10 @@ def generate_client_page(project_id, project_data):
 @app.route('/')
 def index():
     db = load_db()
-    # Sort projects list by ID descending
-    sorted_db = dict(sorted(db.items(), key=lambda x: x[0], reverse=True))
-    return render_template('index.html', projetos=sorted_db)
+    # Filter projects (omit 'curriculo' key!)
+    projects_db = {k: v for k, v in db.items() if k != 'curriculo'}
+    sorted_db = dict(sorted(projects_db.items(), key=lambda x: x[0], reverse=True))
+    return render_template('index.html', projetos=sorted_db, curriculo=db.get('curriculo', DEFAULT_CV))
 
 # ROUTE: AJAX details lookup
 @app.route('/project/get/<project_id>')
@@ -445,6 +600,69 @@ def save_project():
         if success:
             start_git_sync(project_id)
             
+    return redirect(url_for('index'))
+
+# ROUTE: Save CV metadata
+@app.route('/curriculo/save', methods=['POST'])
+def save_cv():
+    db = load_db()
+    
+    curriculo = {
+        'nome': request.form.get('nome'),
+        'titulo': request.form.get('titulo'),
+        'email': request.form.get('email'),
+        'github': request.form.get('github'),
+        'localizacao': request.form.get('localizacao'),
+        'avatar': request.form.get('avatar'),
+        'resumo': request.form.get('resumo'),
+        'skills': request.form.get('skills'),
+        'experiencias': [
+            {
+                'date': request.form.get('exp1_date'),
+                'role': request.form.get('exp1_role'),
+                'company': request.form.get('exp1_company'),
+                'desc': request.form.get('exp1_desc')
+            },
+            {
+                'date': request.form.get('exp2_date'),
+                'role': request.form.get('exp2_role'),
+                'company': request.form.get('exp2_company'),
+                'desc': request.form.get('exp2_desc')
+            },
+            {
+                'date': request.form.get('exp3_date'),
+                'role': request.form.get('exp3_role'),
+                'company': request.form.get('exp3_company'),
+                'desc': request.form.get('exp3_desc')
+            }
+        ],
+        'educacao': [
+            {
+                'date': request.form.get('edu1_date'),
+                'role': request.form.get('edu1_role'),
+                'company': request.form.get('edu1_company'),
+                'desc': request.form.get('edu1_desc')
+            },
+            {
+                'date': request.form.get('edu2_date'),
+                'role': request.form.get('edu2_role'),
+                'company': request.form.get('edu2_company'),
+                'desc': request.form.get('edu2_desc')
+            }
+        ]
+    }
+    
+    # Filter empty rows
+    curriculo['experiencias'] = [e for e in curriculo['experiencias'] if e['date'] or e['role'] or e['company']]
+    curriculo['educacao'] = [ed for ed in curriculo['educacao'] if ed['date'] or ed['role'] or ed['company']]
+    
+    db['curriculo'] = curriculo
+    save_db(db)
+    
+    # Rebuild root and sync git in background
+    rebuild_master_hub()
+    start_git_sync("curriculum-update")
+    
     return redirect(url_for('index'))
 
 # ROUTE: Manual publish and compile trigger
