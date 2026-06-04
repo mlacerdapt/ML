@@ -69,7 +69,7 @@
         <div class="portfolio-card" data-category="Render">
             <div class="card-image-container">
                 <span class="card-badge">Em Andamento</span>
-                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500" alt="Render Vivenda Moderna A" loading="lazy">
+                <img src="projetos/ML-RND-26001/img/capa_vivenda.png" alt="Render Vivenda Moderna A" loading="lazy">
             </div>
             <div class="card-content">
                 <span class="card-category">Render</span>
@@ -186,6 +186,16 @@
         
         // Category Filters implementation
         document.addEventListener("DOMContentLoaded", () => {
+            // Check hash to activate correct tab on load
+            const hash = window.location.hash;
+            if (hash === "#tab-curriculo") {
+                const btn = document.querySelector('button[onclick*="tab-curriculo"]');
+                if (btn) switchMainTab('tab-curriculo', btn);
+            } else if (hash === "#tab-portfolio") {
+                const btn = document.querySelector('button[onclick*="tab-portfolio"]');
+                if (btn) switchMainTab('tab-portfolio', btn);
+            }
+
             const filterBtns = document.querySelectorAll(".filter-btn");
             const cards = document.querySelectorAll(".portfolio-card");
             

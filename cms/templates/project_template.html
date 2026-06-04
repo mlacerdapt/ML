@@ -55,6 +55,12 @@
 
         <!-- 1. HERO SLIDE (CAPA) -->
         <header id="js-hero-slide" class="hero-slide w-full">
+            <!-- Selo Visual de Status -->
+            <div id="js-status-badge-wrapper" class="absolute top-6 right-6 z-10 hidden">
+                <span class="bg-brandMustard text-charcoal font-title font-bold text-xs px-3 py-1 rounded-sm uppercase tracking-widest shadow-md border border-charcoal/10">
+                    ⚠️ Em Andamento
+                </span>
+            </div>
             <div class="hero-slide-content">
                 <div class="mb-4 flex items-center gap-3">
                     <span id="js-hero-badge" class="exhibition-tag">Carregando...</span>
@@ -236,6 +242,12 @@
             document.getElementById("js-hero-title").textContent = MONUMENT_CONFIG.hero.title;
             document.getElementById("js-hero-subtitle").textContent = MONUMENT_CONFIG.hero.subtitle;
             document.getElementById("js-hero-location").textContent = `📍 ${MONUMENT_CONFIG.hero.locationText}`;
+            
+            // Exibir selo de "Em andamento" se aplicável
+            if (MONUMENT_CONFIG.status === "Em andamento") {
+                const badge = document.getElementById("js-status-badge-wrapper");
+                if (badge) badge.classList.remove("hidden");
+            }
             
             // Slide 2: Sobre & Fatos Relevantes
             document.getElementById("js-about-title").textContent = MONUMENT_CONFIG.about.title;

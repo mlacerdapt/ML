@@ -5,7 +5,7 @@ import subprocess
 import threading
 import mimetypes
 from datetime import datetime
-from flask import Flask, render_template, request, jsonify, redirect, url_for, send_file
+from flask import Flask, render_template, request, jsonify, redirect, url_for, send_file, send_from_directory
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dev-secret-key-ml-gestor'
@@ -346,28 +346,114 @@ def write_default_master_index(cards_html):
     # Default full html setup is already handled on root index creation
     # Rebuild hub only runs compile updates when projects are modified.
 
+# Helper to optimize/compress images to fit GitHub limits and improve web speed
+def optimize_image(file_path, max_size_mb=10):
+    if not os.path.exists(file_path):
+        return
+        
+    file_size = os.path.getsize(file_path)
+    max_size_bytes = max_size_mb * 1024 * 1024
+    if file_size <= max_size_bytes:
+        return
+        
+    print(f"Image {file_path} size ({file_size / (1024*1024):.2f} MB) exceeds {max_size_mb}MB limit. Optimizing...")
+    try:
+        from PIL import Image
+        with Image.open(file_path) as img:
+            # Handle alpha transparency channels for JPEG compatibility
+            if img.mode in ('RGBA', 'LA'):
+                background = Image.new('RGB', img.size, (255, 255, 255))
+                # Paste using alpha channel as mask
+                background.paste(img, mask=img.split()[-1])
+                img = background
+            elif img.mode != 'RGB':
+                img = img.convert('RGB')
+                
+            # If resolution is ultra-high, scale down to fit max dimension of 2560px
+            max_dimension = 2560
+            width, height = img.size
+            if width > max_dimension or height > max_dimension:
+                if width > height:
+                    new_width = max_dimension
+                    new_height = int(height * (max_dimension / width))
+                else:
+                    new_height = max_dimension
+                    new_width = int(width * (max_dimension / height))
+                img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
+                print(f"Resized image to {new_width}x{new_height}")
+                
+            # Save back in JPEG format with high optimization
+            img.save(file_path, 'JPEG', quality=85, optimize=True)
+            print(f"Optimized image saved. New size: {os.path.getsize(file_path) / (1024*1024):.2f} MB")
+    except Exception as e:
+        print(f"Error optimizing image {file_path}: {e}")
+
 # Client Page html generator engine
 def generate_client_page(project_id, project_data):
     proj_dir = os.path.join(PROJETOS_DIR, project_id)
     img_dir = os.path.join(proj_dir, 'img')
     os.makedirs(img_dir, exist_ok=True)
     
-    # Copy files into local projects/ID/img/ preserving extensions
+    # Copy files into local projects/ID/img/ resolving names and extensions
     images_mapping = {}
     for img_key in ['capa', 'processo', 'galeria']:
         src_path = project_data.get(f'path_{img_key}')
-        if src_path and os.path.exists(src_path) and os.path.isfile(src_path):
-            ext = os.path.splitext(src_path)[1]
+        resolved_path = None
+        
+        if src_path:
+            src_path = src_path.strip()
+            # 1. Try directly as absolute/relative path
+            if os.path.exists(src_path) and os.path.isfile(src_path):
+                resolved_path = src_path
+            # 2. If it's just a filename (no slashes), search in local work directories
+            elif not os.path.isabs(src_path) and "/" not in src_path and "\\" not in src_path:
+                # First, check if the file already exists in the project's own img/ directory
+                candidate_img_path = os.path.join(img_dir, src_path)
+                if os.path.exists(candidate_img_path) and os.path.isfile(candidate_img_path):
+                    resolved_path = candidate_img_path
+                else:
+                    for folder_key in ['path_renders', 'path_models', 'path_references']:
+                        folder_path = project_data.get(folder_key)
+                        if folder_path:
+                            candidate_path = os.path.join(folder_path.strip(), src_path)
+                            if os.path.exists(candidate_path) and os.path.isfile(candidate_path):
+                                resolved_path = candidate_path
+                                break
+                            
+        # 3. If still not resolved, check if a file with the key name already exists in projects/ID/img/
+        if not resolved_path:
+            if os.path.exists(img_dir):
+                for f in os.listdir(img_dir):
+                    if os.path.splitext(f)[0] == img_key:
+                        resolved_path = os.path.join(img_dir, f)
+                        images_mapping[img_key] = f"img/{f}"
+                        break
+                        
+        if resolved_path and not images_mapping.get(img_key):
+            ext = os.path.splitext(resolved_path)[1].lower()
+            # If the source file is larger than 10MB, convert/save it as .jpg for optimal compression
+            file_size = os.path.getsize(resolved_path)
+            if file_size > 10 * 1024 * 1024:
+                ext = ".jpg"
+                
             dest_filename = f"{img_key}{ext}"
             dest_path = os.path.join(img_dir, dest_filename)
             try:
-                shutil.copy2(src_path, dest_path)
+                if os.path.abspath(resolved_path) != os.path.abspath(dest_path):
+                    shutil.copy2(resolved_path, dest_path)
+                # Optimize/Compress if it exceeds the limit
+                optimize_image(dest_path, max_size_mb=10)
                 images_mapping[img_key] = f"img/{dest_filename}"
             except Exception as e:
-                print(f"Error copying project image {img_key}: {e}")
+                print(f"Error copying/optimizing project image {img_key}: {e}")
                 images_mapping[img_key] = ""
+        elif resolved_path and images_mapping.get(img_key):
+            # Optimize in place if it already existed in the destination
+            dest_path = os.path.join(img_dir, os.path.basename(resolved_path))
+            optimize_image(dest_path, max_size_mb=10)
         else:
-            images_mapping[img_key] = ""
+            if not images_mapping.get(img_key):
+                images_mapping[img_key] = ""
             
     # Read the base template html
     template_path = os.path.join(CMS_DIR, 'templates/project_template.html')
@@ -470,6 +556,7 @@ def generate_client_page(project_id, project_data):
             serial_number += " [EM ANDAMENTO]"
             
         config = {
+            "status": project_data.get('status', 'Em andamento'),
             "hero": {
                 "title": project_data.get('titulo', ''),
                 "subtitle": project_data.get('description', '')[:120] + "...",
@@ -528,6 +615,29 @@ def get_project(project_id):
     if project_id in db:
         return jsonify(db[project_id])
     return jsonify({'error': f'Project {project_id} not found in database.'}), 404
+
+# ROUTE: AJAX local project images lookup
+@app.route('/project/images/<project_id>')
+def get_project_images(project_id):
+    proj_dir = os.path.join(PROJETOS_DIR, project_id)
+    img_dir = os.path.join(proj_dir, 'img')
+    if not os.path.exists(img_dir):
+        return jsonify([])
+        
+    try:
+        files = []
+        for f in os.listdir(img_dir):
+            if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif')):
+                size_bytes = os.path.getsize(os.path.join(img_dir, f))
+                files.append({
+                    'name': f,
+                    'path': os.path.join(img_dir, f),
+                    'url': f"/projetos/{project_id}/img/{f}",
+                    'size_mb': round(size_bytes / (1024 * 1024), 2)
+                })
+        return jsonify(files)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # ROUTE: Save project metadata
 @app.route('/project/save', methods=['POST'])
@@ -591,14 +701,31 @@ def save_project():
             'lay_tipografias': request.form.get('lay_tipografias')
         })
         
+    # Automatically create local directories on the filesystem if specified and they don't exist
+    for path_key in ['path_references', 'path_models', 'path_renders']:
+        path_val = pdata.get(path_key)
+        if path_val:
+            path_val_stripped = path_val.strip()
+            # If it's a simple filename (no separators), it's not a folder, so skip auto-creating
+            if not os.path.isabs(path_val_stripped) and "/" not in path_val_stripped and "\\" not in path_val_stripped:
+                continue
+            try:
+                # Expand user symbol (~), normalize path, and create directory tree
+                dir_path = os.path.abspath(os.path.expanduser(path_val_stripped))
+                os.makedirs(dir_path, exist_ok=True)
+                print(f"Local work directory created/verified: {dir_path}")
+            except Exception as e:
+                print(f"Error creating local work directory for {path_key} ({path_val}): {e}")
+        
     db[project_id] = pdata
     save_db(db)
     
-    # If project visibility is Public, generate static page and sync with Git repository
-    if pdata['visibilidade'] == 'Público':
-        success, err = generate_client_page(project_id, pdata)
-        if success:
-            start_git_sync(project_id)
+    # Always generate client web page locally for previewing
+    success, err = generate_client_page(project_id, pdata)
+    
+    # If project visibility is Public and generation succeeded, sync with Git repository
+    if success and pdata['visibilidade'] == 'Público':
+        start_git_sync(project_id)
             
     return redirect(url_for('index'))
 
@@ -697,6 +824,21 @@ def local_image():
     if not mime_type:
         mime_type = 'image/jpeg'
     return send_file(img_path, mimetype=mime_type)
+
+# ROUTE: Serve root css file for local previews
+@app.route('/portfolio_style.css')
+def serve_root_css():
+    return send_file(os.path.join(ROOT_DIR, 'portfolio_style.css'))
+
+# ROUTE: Serve the compiled master portfolio/curriculum hub
+@app.route('/portfolio')
+def serve_portfolio_hub():
+    return send_file(os.path.join(ROOT_DIR, 'index.html'))
+
+# ROUTE: Serve client pages locally for previewing
+@app.route('/projetos/<path:filename>')
+def serve_projetos(filename):
+    return send_from_directory(PROJETOS_DIR, filename)
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)

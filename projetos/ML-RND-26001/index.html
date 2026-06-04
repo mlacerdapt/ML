@@ -41,18 +41,19 @@
     <!-- OBJETO DE CONFIGURAÇÃO DINÂMICO (INJETADO PELO CMS) -->
     <script>
         const MONUMENT_CONFIG = {
+    "status": "Em andamento",
     "hero": {
         "title": "Render Vivenda Moderna A",
         "subtitle": "Um briefing detalhado sobre a modelagem externa de uma vivenda moderna utilizando iluminação natural HDRI e materiais fí...",
         "category": "Render",
         "serialNumber": "ID: ML-RND-26001 [EM ANDAMENTO]",
         "locationText": "Blender, Cycles, Photoshop",
-        "bgImage": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200"
+        "bgImage": "img/capa.png"
     },
     "about": {
         "title": "Sobre o Trabalho",
         "description": "Um briefing detalhado sobre a modelagem externa de uma vivenda moderna utilizando iluminação natural HDRI e materiais físicos de alta qualidade.",
-        "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200",
+        "image": "img/capa.png",
         "metrics": [
             {
                 "number": "3",
@@ -73,32 +74,32 @@
             "num": "01",
             "title": "Conceito & Briefing",
             "text": "Definição do escopo, recolha de referências e planeamento das especificações do projeto.",
-            "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500"
+            "image": "img/capa.png"
         },
         {
             "num": "02",
             "title": "Desenvolvimento Técnico",
             "text": "Execução da modelação 3D, fatiamento, configurações de render ou grelha de layout.",
-            "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500"
+            "image": "img/capa.png"
         },
         {
             "num": "03",
             "title": "Produção & Acabamento",
             "text": "Impressão física da peça, pós-processamento, composição ou renderização final.",
-            "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500"
+            "image": "img/capa.png"
         },
         {
             "num": "04",
             "title": "Exposição & Entrega",
             "text": "Validação das métricas de qualidade, registo fotográfico e publicação no portfólio.",
-            "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500"
+            "image": "img/capa.png"
         }
     ],
     "gallery": [
         {
-            "url": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200",
-            "caption": "Apresentação Geral do Projeto",
-            "tag": "Projeto",
+            "url": "img/capa.png",
+            "caption": "Imagem de Capa e Apresentação",
+            "tag": "Capa",
             "spansLarge": true
         }
     ],
@@ -109,7 +110,7 @@
         "likesCount": "Curtido por 4.5h investidas no projeto",
         "captionText": "Concluí mais um trabalho de Render: Render Vivenda Moderna A. Excelente resultado!",
         "tags": "#arquitetura #vray #blender",
-        "date": "03 DE JUNE DE 2026"
+        "date": "04 DE JUNE DE 2026"
     }
 };
     </script>
@@ -126,6 +127,12 @@
 
         <!-- 1. HERO SLIDE (CAPA) -->
         <header id="js-hero-slide" class="hero-slide w-full">
+            <!-- Selo Visual de Status -->
+            <div id="js-status-badge-wrapper" class="absolute top-6 right-6 z-10 hidden">
+                <span class="bg-brandMustard text-charcoal font-title font-bold text-xs px-3 py-1 rounded-sm uppercase tracking-widest shadow-md border border-charcoal/10">
+                    ⚠️ Em Andamento
+                </span>
+            </div>
             <div class="hero-slide-content">
                 <div class="mb-4 flex items-center gap-3">
                     <span id="js-hero-badge" class="exhibition-tag">Carregando...</span>
@@ -307,6 +314,12 @@
             document.getElementById("js-hero-title").textContent = MONUMENT_CONFIG.hero.title;
             document.getElementById("js-hero-subtitle").textContent = MONUMENT_CONFIG.hero.subtitle;
             document.getElementById("js-hero-location").textContent = `📍 ${MONUMENT_CONFIG.hero.locationText}`;
+            
+            // Exibir selo de "Em andamento" se aplicável
+            if (MONUMENT_CONFIG.status === "Em andamento") {
+                const badge = document.getElementById("js-status-badge-wrapper");
+                if (badge) badge.classList.remove("hidden");
+            }
             
             // Slide 2: Sobre & Fatos Relevantes
             document.getElementById("js-about-title").textContent = MONUMENT_CONFIG.about.title;

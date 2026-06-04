@@ -19,10 +19,15 @@
                 <span>➕</span> Novo Projeto
             </button>
             
+            <!-- Campo de Pesquisa de Projetos -->
+            <div class="search-box-wrapper" style="margin-bottom: 1.5rem;">
+                <input type="text" id="sidebar-search" placeholder="🔍 Pesquisar por código, texto ou #..." style="font-size: 0.8rem; padding: 10px 12px; background: var(--bg-base); border: 1px solid var(--border-color); border-radius: 2px; width: 100%; transition: var(--transition-smart);">
+            </div>
+            
             <div class="project-list-title">Meus Trabalhos</div>
             <div class="project-list">
                 {% for pid, p in projetos.items() %}
-                <div class="project-item" data-id="{{ pid }}" id="item-{{ pid }}">
+                <div class="project-item" data-id="{{ pid }}" data-tags="{{ p.tags }}" id="item-{{ pid }}">
                     <div class="project-item-header">
                         <span class="project-item-id">{{ pid }}</span>
                         <span class="project-item-status status-{{ p.status | lower | replace(' ', '-') }}">
@@ -208,7 +213,7 @@
                                     <h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--accent); margin-bottom: 8px;">⏳ Gestão de Tempo e Pastas de Trabalho</h3>
                                 </div>
                                 <div class="form-group col-4">
-                                    <label for="horas">Horas Investidas no Projeto</label>
+                                    <label for="horas">Horas Investidas <span style="font-size: 0.72rem; color: var(--accent); font-weight: bold; text-transform: none;">(Meta: 2h/dia)</span></label>
                                     <input type="number" step="0.1" name="horas" id="horas" placeholder="0.0" value="0.0">
                                 </div>
                                 <div class="form-group col-8">
@@ -239,6 +244,14 @@
                                 <div class="form-group col-4">
                                     <label for="path_galeria">Imagem Galeria Final (Caminho Absoluto)</label>
                                     <input type="text" name="path_galeria" id="path_galeria" placeholder="C:\...\galeria.jpg">
+                                </div>
+                                 
+                                <!-- Galeria de Imagens locais já detetadas -->
+                                <div class="form-group col-12" id="local-img-gallery-container" style="display: none; margin-top: 12px;">
+                                    <label>🖼️ Imagens Detetadas na Pasta local `img/` do Projeto</label>
+                                    <div id="local-img-gallery-grid" style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; background: var(--bg-base); border: 1px solid var(--border-color); border-radius: 2px; min-height: 80px; align-items: center;">
+                                        <!-- Miniaturas geradas dinamicamente via JS -->
+                                    </div>
                                 </div>
                             </div>
 
@@ -392,7 +405,10 @@
                                 </div>
                             </div>
 
-                            <div class="form-actions">
+                            <div class="form-actions" style="display: flex; gap: 10px; align-items: center;">
+                                <a href="/portfolio#tab-curriculo" target="_blank" class="btn-secondary" style="text-decoration: none; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 700; display: inline-flex;">
+                                    👁️ Visualizar Currículo Ativo
+                                </a>
                                 <button type="submit" class="btn-primary">Guardar Currículo</button>
                             </div>
                         </form>
@@ -419,9 +435,14 @@
                                             <span class="badge" id="view-status-badge">Em andamento</span>
                                         </div>
                                     </div>
-                                    <button class="btn-primary" id="btn-publish-action" style="display: none;">
-                                        🚀 Publicar na Web
-                                    </button>
+                                    <div class="view-actions" style="display: flex; gap: 10px; align-items: center;">
+                                        <a href="#" target="_blank" class="btn-secondary" id="btn-preview-action" style="display: none; text-decoration: none; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 700;">
+                                            👁️ Pré-visualizar Cliente
+                                        </a>
+                                        <button class="btn-primary" id="btn-publish-action" style="display: none; align-items: center; gap: 6px;">
+                                            🚀 Publicar na Web
+                                        </button>
+                                    </div>
                                 </div>
 
                                 <div class="view-briefing" id="view-briefing">

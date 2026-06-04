@@ -259,7 +259,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 viewSpecsContainer.innerHTML = specsHtml;
 
                 // Render Paths in Private View
-                document.getElementById("view-path-ref").innerText = data.path_references || "Não definido";
+                const pathRefEl = document.getElementById("view-path-ref");
+                if (data.path_references) {
+                    if (data.path_references.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+                        const isSimpleName = !data.path_references.includes("/") && !data.path_references.includes("\\");
+                        const imageUrl = isSimpleName 
+                            ? `/projetos/${data.id}/img/${data.path_references}` 
+                            : `/local-image?path=${encodeURIComponent(data.path_references)}`;
+                        pathRefEl.innerHTML = `<a href="${imageUrl}" target="_blank" style="color: var(--accent); text-decoration: underline; font-weight: bold;">${data.path_references} 🖼️</a>`;
+                    } else {
+                        pathRefEl.innerText = data.path_references;
+                    }
+                } else {
+                    pathRefEl.innerText = "Não definido";
+                }
                 document.getElementById("view-path-models").innerText = data.path_models || "Não definido";
                 document.getElementById("view-path-renders").innerText = data.path_renders || "Não definido";
 
@@ -272,12 +285,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 emptyProjectView.style.display = "none";
                 activeProjectView.style.display = "block";
                 
-                // Show view action buttons (like Publish/Generate)
+                // Show view action buttons (like Publish/Generate and Preview)
                 const actionPublishBtn = document.getElementById("btn-publish-action");
                 if (actionPublishBtn) {
                     actionPublishBtn.style.display = "inline-flex";
                     actionPublishBtn.onclick = () => { publishProject(data.id); };
                 }
+                const actionPreviewBtn = document.getElementById("btn-preview-action");
+                if (actionPreviewBtn) {
+                    actionPreviewBtn.href = `/projetos/${data.id}/index.html`;
+                    actionPreviewBtn.style.display = "inline-flex";
+                }
+                
+                // Load local thumbnail gallery for this project
+                loadLocalImages(data.id);
             })
             .catch(err => {
                 showToast("Erro ao buscar detalhes do projeto: " + err.message, "danger");
@@ -308,6 +329,10 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("form-id-display").innerText = "Novo Projeto";
             document.getElementById("form-id-display").style.display = "none";
             document.getElementById("form-project").reset();
+            
+            // Hide local image gallery container
+            const galleryContainer = document.getElementById("local-img-gallery-container");
+            if (galleryContainer) galleryContainer.style.display = "none";
             
             // Reset Margin Output
             outMargem.innerHTML = "Margem de Lucro: <strong>€0.00 (0.00%)</strong>";
@@ -365,4 +390,97 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => toast.remove(), 500);
         }, 4000);
     };
+
+    // Helper to fetch and display thumbnails from the project's local img/ directory
+    function loadLocalImages(projectId) {
+        const galleryContainer = document.getElementById("local-img-gallery-container");
+        const galleryGrid = document.getElementById("local-img-gallery-grid");
+        if (!projectId) {
+            galleryContainer.style.display = "none";
+            return;
+        }
+        
+        fetch(`/project/images/${projectId}`)
+            .then(res => res.json())
+            .then(files => {
+                if (!files || files.length === 0) {
+                    galleryContainer.style.display = "none";
+                    return;
+                }
+                
+                galleryContainer.style.display = "block";
+                galleryGrid.innerHTML = "";
+                
+                files.forEach(file => {
+                    const card = document.createElement("div");
+                    card.style.cssText = "display: flex; flex-direction: column; align-items: center; gap: 6px; background: white; border: 1px solid var(--border-color); border-radius: 2px; padding: 8px; width: 140px; position: relative; box-shadow: 0 2px 6px rgba(0,0,0,0.03);";
+                    
+                    card.innerHTML = `
+                        <img src="${file.url}" style="width: 120px; height: 80px; object-fit: cover; border-radius: 2px; border: 1px solid var(--border-color);" alt="Thumbnail" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500';">
+                        <span style="font-size: 0.65rem; color: var(--text-primary); text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 120px;" title="${file.name}">${file.name}</span>
+                        <span style="font-size: 0.55rem; color: var(--text-secondary); margin-top: -4px;">${file.size_mb} MB</span>
+                        <div style="display: flex; gap: 4px; margin-top: 4px; width: 100%;">
+                            <button type="button" class="btn-assign-capa" style="flex: 1; font-size: 0.52rem; padding: 4px 0; background: var(--accent); color: white; border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Definir como Capa">Capa</button>
+                            <button type="button" class="btn-assign-proc" style="flex: 1; font-size: 0.52rem; padding: 4px 0; background: var(--text-secondary); color: white; border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Definir como Processo">Proc.</button>
+                            <button type="button" class="btn-assign-gal" style="flex: 1; font-size: 0.52rem; padding: 4px 0; background: var(--accent-mustard); color: var(--text-primary); border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Definir como Galeria">Gal.</button>
+                            <button type="button" class="btn-assign-ref" style="flex: 1; font-size: 0.52rem; padding: 4px 0; background: #6B7280; color: white; border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Definir como Referência">Ref.</button>
+                        </div>
+                    `;
+                    
+                    // Bind button clicks to assign paths using simple filenames
+                    card.querySelector(".btn-assign-capa").onclick = () => {
+                        document.getElementById("path_capa").value = file.name;
+                        showToast(`Definido "${file.name}" como Imagem de Capa!`, "success");
+                    };
+                    card.querySelector(".btn-assign-proc").onclick = () => {
+                        document.getElementById("path_processo").value = file.name;
+                        showToast(`Definido "${file.name}" como Imagem de Processo!`, "success");
+                    };
+                    card.querySelector(".btn-assign-gal").onclick = () => {
+                        document.getElementById("path_galeria").value = file.name;
+                        showToast(`Definido "${file.name}" como Imagem de Galeria!`, "success");
+                    };
+                    card.querySelector(".btn-assign-ref").onclick = () => {
+                        document.getElementById("path_references").value = file.name;
+                        showToast(`Definido "${file.name}" como Referência!`, "success");
+                    };
+                    
+                    galleryGrid.appendChild(card);
+                });
+            })
+            .catch(err => {
+                console.error("Erro ao carregar galeria de miniaturas locais:", err);
+                galleryContainer.style.display = "none";
+            });
+    }
+
+    // 8. Sidebar Search Filter
+    const searchInput = document.getElementById("sidebar-search");
+    if (searchInput) {
+        searchInput.addEventListener("input", () => {
+            const query = searchInput.value.toLowerCase().trim();
+            const items = document.querySelectorAll(".project-item");
+            
+            items.forEach(item => {
+                const id = item.dataset.id.toLowerCase();
+                const tags = (item.dataset.tags || "").toLowerCase();
+                const title = item.querySelector(".project-item-title").textContent.toLowerCase();
+                const status = item.querySelector(".project-item-status").textContent.toLowerCase();
+                const category = item.querySelector(".project-item-meta span").textContent.toLowerCase();
+                
+                // Matches if search query is found in ID, tags, title, status, or category
+                const matches = id.includes(query) || 
+                                tags.includes(query) || 
+                                title.includes(query) || 
+                                status.includes(query) || 
+                                category.includes(query);
+                                
+                if (matches) {
+                    item.style.display = "flex";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        });
+    }
 });
