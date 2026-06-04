@@ -1,4 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Lógica para Redes Sociais Dinâmicas no Formulário
+    window.addSocialLinkRow = function(platform = "Instagram", url = "") {
+        const container = document.getElementById("social-links-container");
+        if (!container) return;
+        const row = document.createElement("div");
+        row.className = "social-link-row";
+        row.style.cssText = "display: flex; gap: 10px; margin-bottom: 8px; align-items: center; width: 100%;";
+        row.innerHTML = `
+            <select name="social_plataforma[]" style="flex: 1; min-width: 120px; padding: 12px 14px;">
+                <option value="Instagram" ${platform === 'Instagram' ? 'selected' : ''}>Instagram</option>
+                <option value="Facebook" ${platform === 'Facebook' ? 'selected' : ''}>Facebook</option>
+                <option value="X" ${platform === 'X' ? 'selected' : ''}>X (Twitter)</option>
+                <option value="Behance" ${platform === 'Behance' ? 'selected' : ''}>Behance</option>
+                <option value="Pinterest" ${platform === 'Pinterest' ? 'selected' : ''}>Pinterest</option>
+                <option value="YouTube" ${platform === 'YouTube' ? 'selected' : ''}>YouTube</option>
+                <option value="LinkedIn" ${platform === 'LinkedIn' ? 'selected' : ''}>LinkedIn</option>
+                <option value="Outro" ${platform === 'Outro' ? 'selected' : ''}>Outro</option>
+            </select>
+            <input type="text" name="social_url[]" value="${url}" placeholder="https://..." style="flex: 2;">
+            <button type="button" class="btn-remove-social" style="background: var(--danger); color: white; border: none; padding: 12px 16px; border-radius: 2px; cursor: pointer; font-weight: bold; line-height: 1;">✕</button>
+        `;
+        row.querySelector(".btn-remove-social").onclick = () => row.remove();
+        container.appendChild(row);
+    };
+
+    const btnAddSocial = document.getElementById("btn-add-social");
+    if (btnAddSocial) {
+        btnAddSocial.addEventListener("click", () => {
+            addSocialLinkRow();
+        });
+    }
+
     // 1. Tab Switching Logic
     const tabButtons = document.querySelectorAll(".tab-btn");
     const tabContents = document.querySelectorAll(".tab-content");
@@ -137,6 +169,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("path_capa").value = data.path_capa || "";
                 document.getElementById("path_processo").value = data.path_processo || "";
                 document.getElementById("path_galeria").value = data.path_galeria || "";
+                
+                // Carregar mapa e redes sociais
+                document.getElementById("link_mapa").value = data.link_mapa || "";
+                const socialContainer = document.getElementById("social-links-container");
+                if (socialContainer) {
+                    socialContainer.innerHTML = "";
+                    if (data.social_links && data.social_links.length > 0) {
+                        data.social_links.forEach(link => {
+                            addSocialLinkRow(link.plataforma, link.url);
+                        });
+                    }
+                }
 
                 // Populate dynamic fields depending on category
                 if (data.categoria === "Impressão 3D") {
@@ -276,6 +320,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("view-path-models").innerText = data.path_models || "Não definido";
                 document.getElementById("view-path-renders").innerText = data.path_renders || "Não definido";
 
+                // Render Map and Social Links in Private View
+                document.getElementById("view-link-mapa").innerText = data.link_mapa || "Não definido";
+                const viewSocialLinks = document.getElementById("view-social-links");
+                if (viewSocialLinks) {
+                    viewSocialLinks.innerHTML = "";
+                    if (data.social_links && data.social_links.length > 0) {
+                        data.social_links.forEach(link => {
+                            const badge = document.createElement("a");
+                            badge.href = link.url;
+                            badge.target = "_blank";
+                            badge.className = "badge badge-category";
+                            badge.style.cssText = "text-decoration: none; display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; margin-right: 4px; margin-bottom: 4px;";
+                            badge.innerText = `${link.plataforma} 🔗`;
+                            viewSocialLinks.appendChild(badge);
+                        });
+                    } else {
+                        viewSocialLinks.innerHTML = "<span style='font-size: 0.78rem; color: var(--text-secondary);'>Nenhuma rede social associada.</span>";
+                    }
+                }
+
                 // Images Previews
                 updateImagePreview("view-img-capa", data.path_capa);
                 updateImagePreview("view-img-processo", data.path_processo);
@@ -329,6 +393,11 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("form-id-display").innerText = "Novo Projeto";
             document.getElementById("form-id-display").style.display = "none";
             document.getElementById("form-project").reset();
+            
+            // Limpar redes sociais e link do mapa
+            const socialContainer = document.getElementById("social-links-container");
+            if (socialContainer) socialContainer.innerHTML = "";
+            document.getElementById("link_mapa").value = "";
             
             // Hide local image gallery container
             const galleryContainer = document.getElementById("local-img-gallery-container");

@@ -554,6 +554,18 @@ def generate_client_page(project_id, project_data):
         serial_number = f"ID: {project_id}"
         if project_data.get('status') == 'Em andamento':
             serial_number += " [EM ANDAMENTO]"
+
+        # Resolve Map Link
+        maps_url = project_data.get('link_mapa')
+        if not maps_url or not maps_url.strip():
+            maps_url = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.676644123!2d-8.625843!3d41.157943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd2465adc!2sPorto!5e0!3m2!1spt!2spt"
+
+        # Resolve Instagram Post URL
+        instagram_url = ""
+        for sl in project_data.get('social_links', []):
+            if sl.get('plataforma') == 'Instagram':
+                instagram_url = sl.get('url', '')
+                break
             
         config = {
             "status": project_data.get('status', 'Em andamento'),
@@ -573,14 +585,16 @@ def generate_client_page(project_id, project_data):
             },
             "milestones": milestones,
             "gallery": gallery,
-            "mapsIframeUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.676644123!2d-8.625843!3d41.157943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd2465adc!2sPorto!5e0!3m2!1spt!2spt",
+            "mapsIframeUrl": maps_url,
+            "socialLinks": project_data.get('social_links', []),
             "instagramPost": {
                 "authorHandle": "@mlacerdapt",
                 "authorAvatar": "https://api.dicebear.com/7.x/identicon/svg?seed=mlacerdapt",
                 "likesCount": f"Curtido por {project_data.get('horas', 0)}h investidas no projeto",
                 "captionText": f"Concluí mais um trabalho de {project_data.get('categoria')}: {project_data.get('titulo')}. Excelente resultado!",
                 "tags": " ".join([f"#{t.strip().replace('#','')}" for t in project_data.get('tags', '').split(',') if t.strip()]),
-                "date": datetime.now().strftime("%d DE %B DE %Y").upper()
+                "date": datetime.now().strftime("%d DE %B DE %Y").upper(),
+                "postUrl": instagram_url
             }
         }
         
@@ -650,6 +664,17 @@ def save_project():
     if is_new:
         project_id = get_next_id(categoria)
         
+    # Parse dynamic list of social links
+    social_plataformas = request.form.getlist('social_plataforma[]')
+    social_urls = request.form.getlist('social_url[]')
+    social_links = []
+    for plat, url in zip(social_plataformas, social_urls):
+        if url.strip():
+            social_links.append({
+                'plataforma': plat,
+                'url': url.strip()
+            })
+
     pdata = {
         'id': project_id,
         'titulo': request.form.get('titulo'),
@@ -665,6 +690,8 @@ def save_project():
         'path_capa': request.form.get('path_capa'),
         'path_processo': request.form.get('path_processo'),
         'path_galeria': request.form.get('path_galeria'),
+        'link_mapa': request.form.get('link_mapa'),
+        'social_links': social_links
     }
     
     # Process dynamic data category details

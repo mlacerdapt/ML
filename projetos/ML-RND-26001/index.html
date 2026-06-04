@@ -104,13 +104,24 @@
         }
     ],
     "mapsIframeUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.676644123!2d-8.625843!3d41.157943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd2465adc!2sPorto!5e0!3m2!1spt!2spt",
+    "socialLinks": [
+        {
+            "plataforma": "Behance",
+            "url": "https://behance.net/mlacerdapt"
+        },
+        {
+            "plataforma": "Instagram",
+            "url": "https://instagram.com/mlacerda"
+        }
+    ],
     "instagramPost": {
         "authorHandle": "@mlacerdapt",
         "authorAvatar": "https://api.dicebear.com/7.x/identicon/svg?seed=mlacerdapt",
         "likesCount": "Curtido por 4.5h investidas no projeto",
         "captionText": "Concluí mais um trabalho de Render: Render Vivenda Moderna A. Excelente resultado!",
         "tags": "#arquitetura #vray #blender",
-        "date": "04 DE JUNE DE 2026"
+        "date": "04 DE JUNE DE 2026",
+        "postUrl": "https://instagram.com/mlacerda"
     }
 };
     </script>
@@ -233,38 +244,50 @@
                         </h3>
                         
                         <!-- Card Instagram Simulado Japandi -->
-                        <div class="instagram-outer-card p-4 flex flex-col gap-3">
-                            <div class="flex items-center gap-3">
-                                <img id="js-ig-avatar" src="" alt="Avatar" class="w-8 h-8 rounded-full border border-borderColor">
-                                <div class="flex flex-col">
-                                    <span id="js-ig-handle" class="font-title font-bold text-xs text-charcoal leading-tight"><!-- Handle --></span>
-                                    <span class="text-[10px] text-textMuted leading-none">Porto, Portugal</span>
+                        <a id="js-ig-post-link" href="#" target="_blank" style="text-decoration: none; display: block;">
+                            <div class="instagram-outer-card p-4 flex flex-col gap-3 transition-transform hover:scale-[1.01]">
+                                <div class="flex items-center gap-3">
+                                    <img id="js-ig-avatar" src="" alt="Avatar" class="w-8 h-8 rounded-full border border-borderColor">
+                                    <div class="flex flex-col">
+                                        <span id="js-ig-handle" class="font-title font-bold text-xs text-charcoal leading-tight"><!-- Handle --></span>
+                                        <span class="text-[10px] text-textMuted leading-none">Porto, Portugal</span>
+                                    </div>
+                                    <span class="ml-auto text-textMuted text-xs">•••</span>
                                 </div>
-                                <span class="ml-auto text-textMuted text-xs">•••</span>
-                            </div>
-                            
-                            <!-- Foto do Post -->
-                            <div class="relative bg-brandWhite aspect-square overflow-hidden instagram-img-container">
-                                <img id="js-ig-image" src="" alt="Foto Instagram" class="w-full h-full object-cover">
-                            </div>
-                            
-                            <!-- Ações -->
-                            <div class="flex gap-3 text-sm text-charcoal">
-                                <span class="cursor-pointer hover:text-brandBlue">❤️</span>
-                                <span class="cursor-pointer hover:text-brandBlue">💬</span>
-                                <span class="cursor-pointer hover:text-brandBlue">✈️</span>
-                                <span class="ml-auto cursor-pointer hover:text-brandBlue">🔖</span>
-                            </div>
+                                
+                                <!-- Foto do Post -->
+                                <div class="relative bg-brandWhite aspect-square overflow-hidden instagram-img-container">
+                                    <img id="js-ig-image" src="" alt="Foto Instagram" class="w-full h-full object-cover">
+                                </div>
+                                
+                                <!-- Ações -->
+                                <div class="flex gap-3 text-sm text-charcoal">
+                                    <span class="cursor-pointer hover:text-brandBlue">❤️</span>
+                                    <span class="cursor-pointer hover:text-brandBlue">💬</span>
+                                    <span class="cursor-pointer hover:text-brandBlue">✈️</span>
+                                    <span class="ml-auto cursor-pointer hover:text-brandBlue">🔖</span>
+                                </div>
 
-                            <!-- Likes e Legenda -->
-                            <div class="flex flex-col gap-1 text-[11px] text-textMuted leading-snug">
-                                <span id="js-ig-likes" class="font-bold text-charcoal"><!-- Curtidos --></span>
-                                <span>
-                                    <strong id="js-ig-caption-handle" class="mr-1 text-charcoal"><!-- Handle --></strong>
-                                    <span id="js-ig-caption-text"><!-- Legenda --></span>
-                                    <span id="js-ig-tags" class="text-brandBlue block mt-1"><!-- Tags --></span>
-                                </span>
-                                <span id="js-ig-date" class="text-[9px] text-textMuted uppercase tracking-wider mt-1"><!-- Data --></span>
+                                <!-- Likes e Legenda -->
+                                <div class="flex flex-col gap-1 text-[11px] text-textMuted leading-snug">
+                                    <span id="js-ig-likes" class="font-bold text-charcoal"><!-- Curtidos --></span>
+                                    <span>
+                                        <strong id="js-ig-caption-handle" class="mr-1 text-charcoal"><!-- Handle --></strong>
+                                        <span id="js-ig-caption-text"><!-- Legenda --></span>
+                                        <span id="js-ig-tags" class="text-brandBlue block mt-1"><!-- Tags --></span>
+                                    </span>
+                                    <span id="js-ig-date" class="text-[9px] text-textMuted uppercase tracking-wider mt-1"><!-- Data --></span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Outros Links de Redes Sociais do Projeto -->
+                        <div id="js-social-links-container" class="mt-6 flex flex-col gap-3">
+                            <h4 class="font-title font-bold text-[10px] text-charcoal uppercase tracking-wider">
+                                Links Adicionais
+                            </h4>
+                            <div id="js-social-links-list" class="flex flex-wrap gap-2">
+                                <!-- Redes sociais geradas via JS -->
                             </div>
                         </div>
                     </div>
@@ -400,6 +423,64 @@
             // Usar a primeira imagem da galeria no post simulado
             if (MONUMENT_CONFIG.gallery && MONUMENT_CONFIG.gallery.length > 0) {
                 document.getElementById("js-ig-image").src = MONUMENT_CONFIG.gallery[0].url;
+            }
+
+            // Associar link real ao card do Instagram
+            const igLink = document.getElementById("js-ig-post-link");
+            if (igLink) {
+                if (igConfig.postUrl && igConfig.postUrl.trim()) {
+                    igLink.href = igConfig.postUrl;
+                } else {
+                    igLink.href = "https://instagram.com/mlacerdapt";
+                }
+            }
+
+            // Renderizar Redes Sociais do Projeto
+            const socialLinksList = document.getElementById("js-social-links-list");
+            if (socialLinksList) {
+                socialLinksList.innerHTML = "";
+                const links = MONUMENT_CONFIG.socialLinks || [];
+                if (links.length > 0) {
+                    links.forEach(link => {
+                        const a = document.createElement("a");
+                        a.href = link.url;
+                        a.target = "_blank";
+                        
+                        let icon = "🔗";
+                        let colorClass = "bg-charcoal text-white";
+                        if (link.plataforma === "Instagram") {
+                            icon = "📷";
+                            colorClass = "bg-[#E1306C] text-white";
+                        } else if (link.plataforma === "Facebook") {
+                            icon = "📘";
+                            colorClass = "bg-[#1877F2] text-white";
+                        } else if (link.plataforma === "X") {
+                            icon = "𝕏";
+                            colorClass = "bg-black text-white font-bold";
+                        } else if (link.plataforma === "Behance") {
+                            icon = "🎨";
+                            colorClass = "bg-[#0057ff] text-white";
+                        } else if (link.plataforma === "Pinterest") {
+                            icon = "📌";
+                            colorClass = "bg-[#BD081C] text-white";
+                        } else if (link.plataforma === "YouTube") {
+                            icon = "🎥";
+                            colorClass = "bg-[#FF0000] text-white";
+                        } else if (link.plataforma === "LinkedIn") {
+                            icon = "💼";
+                            colorClass = "bg-[#0077B5] text-white";
+                        }
+                        
+                        a.className = `inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm text-[10px] font-title font-bold uppercase tracking-widest transition-all hover:opacity-90 hover:scale-105 ${colorClass}`;
+                        a.innerHTML = `<span>${icon}</span> <span>${link.plataforma}</span>`;
+                        socialLinksList.appendChild(a);
+                    });
+                } else {
+                    const noLinks = document.createElement("span");
+                    noLinks.className = "text-[10px] text-textMuted italic";
+                    noLinks.textContent = "Nenhuma rede social adicional configurada.";
+                    socialLinksList.appendChild(noLinks);
+                }
             }
 
             // LIGHTBOX LÓGICA
