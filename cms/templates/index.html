@@ -57,6 +57,7 @@
                 <button class="tab-btn active" data-tab="edit-tab">📝 Projetos</button>
                 <button class="tab-btn" data-tab="cv-tab">🎓 Editar Currículo</button>
                 <button class="tab-btn" data-tab="view-tab">👁️ Visualizador Interno</button>
+                <button class="tab-btn" data-tab="guide-tab">💡 Guia de Orientação</button>
             </header>
 
             <div class="tab-container">
@@ -547,6 +548,102 @@
                                 <div id="view-img-galeria">
                                     <div class="image-preview-placeholder">Nenhuma Imagem</div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: Guia de Orientação -->
+                <div class="tab-content" id="guide-tab">
+                    <div class="glass-panel" style="max-width: 900px; margin: 0 auto;">
+                        <div class="panel-header" style="margin-bottom: 1.5rem;">
+                            <h2 class="panel-title">💡 Guia de Orientação Rápida</h2>
+                            <span class="panel-subtitle">Método de Trabalho</span>
+                        </div>
+                        
+                        <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 2rem;">
+                            Segue este guia sempre que clicares em <strong>"Novo Projeto"</strong> no teu CMS para manteres o foco, gerires o tempo de forma eficiente e garantires a máxima qualidade no teu portfólio.
+                        </p>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 24px;">
+                            <!-- Card 1 -->
+                            <div style="background: var(--bg-base); border: 1px solid var(--border-color); border-radius: 4px; padding: 20px; position: relative;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                    <h3 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: var(--accent);">1. Metadados e Briefing (O Arranque)</h3>
+                                    <span style="font-size: 0.72rem; font-weight: bold; background: rgba(0, 88, 163, 0.08); color: var(--accent); padding: 4px 10px; border-radius: 2px;">⏱️ 5 MINUTOS</span>
+                                </div>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 10px;">
+                                    O objetivo aqui é definir o limite do projeto para não te perderes.
+                                </p>
+                                <ul style="font-size: 0.85rem; padding-left: 20px; line-height: 1.6; color: var(--text-primary);">
+                                    <li><strong>Briefing:</strong> Máximo de 3 linhas. Responde apenas: O que é? Qual é o estilo? Qual o objetivo (ex: testar iluminação, peça para venda)?</li>
+                                    <li><strong>Tags:</strong> Usa apenas 3 a 5 tags estratégicas (ex: #Japandi, #Vray, #BambuLab, #Interiores). Mais do que isso polui a pesquisa.</li>
+                                    <li><strong>Status:</strong> Começa sempre em "Em andamento" e "Privado". Só mudas para "Público" quando estiveres 100% orgulhoso do resultado.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div style="background: var(--bg-base); border: 1px solid var(--border-color); border-radius: 4px; padding: 20px; position: relative;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                    <h3 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: var(--accent);">2. Referências e Moodboard (O Foco)</h3>
+                                    <span style="font-size: 0.72rem; font-weight: bold; background: rgba(239, 68, 68, 0.08); color: var(--danger); padding: 4px 10px; border-radius: 2px;">⏱️ Estritamente 20 MIN</span>
+                                </div>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 10px;">
+                                    A internet é um buraco negro de tempo. Esta é a fase onde deves ser mais implacável. Usa um cronómetro.
+                                </p>
+                                <ul style="font-size: 0.85rem; padding-left: 20px; line-height: 1.6; color: var(--text-primary);">
+                                    <li><strong>Quantidade de Imagens:</strong> Seleciona um máximo de 5 imagens.</li>
+                                    <li>1 para iluminação/clima, 1 para paleta de cores, 2 para estética/arquitetura/detalhe, 1 planta ou croqui técnico (se aplicável).</li>
+                                    <li><strong>Ação Final:</strong> Guarda-as na pasta do projeto gerada pelo CMS, atribui no painel e fecha o navegador. A partir desse minuto, a tua única referência visual são essas 5 imagens.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div style="background: var(--bg-base); border: 1px solid var(--border-color); border-radius: 4px; padding: 20px; position: relative;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                    <h3 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: var(--accent);">3. Campos Dinâmicos (A Execução)</h3>
+                                    <span style="font-size: 0.72rem; font-weight: bold; background: rgba(0, 88, 163, 0.08); color: var(--accent); padding: 4px 10px; border-radius: 2px;">⚙️ REGRAS</span>
+                                </div>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 10px;">
+                                    Regras para preencher a secção de dados consoante o que estás a produzir:
+                                </p>
+                                <ul style="font-size: 0.85rem; padding-left: 20px; line-height: 1.6; color: var(--text-primary);">
+                                    <li><strong>Para Renders:</strong> Define um limite à partida. Sugestão: 3 vistas (1 Ângulo Principal, 1 Close-up/Detalhe, 1 Vista Ortogonal ou Noturna). Não tentes renderizar a casa toda.</li>
+                                    <li><strong>Para Impressão 3D:</strong> Tem o preço padrão dos teus rolos de filamento afixados perto de ti (ex: Bambu PLA Matte ~20€/kg) para inserires o custo de material em segundos com base na estimativa do Bambu Studio.</li>
+                                    <li><strong>Para Vendas (Artigos):</strong> Define uma margem mínima inegociável (ex: no mínimo 50% de margem sobre o custo total, incluindo desgaste da máquina e eletricidade). Se o cálculo mostrar menos, o projeto precisa de reengenharia geométrica.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Card 4 -->
+                            <div style="background: var(--bg-base); border: 1px solid var(--border-color); border-radius: 4px; padding: 20px; position: relative;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                    <h3 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: var(--accent);">4. Gestão de Horas (O Cronómetro)</h3>
+                                    <span style="font-size: 0.72rem; font-weight: bold; background: rgba(247, 200, 70, 0.15); color: #B38600; padding: 4px 10px; border-radius: 2px;">⏳ META: 2H/DIA</span>
+                                </div>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 10px;">
+                                    Esta é a tua bússola de produtividade.
+                                </p>
+                                <ul style="font-size: 0.85rem; padding-left: 20px; line-height: 1.6; color: var(--text-primary);">
+                                    <li><strong>A Regra:</strong> Regista o tempo no final de cada sessão diária. Se trabalhaste 1h45m, anota 1.75.</li>
+                                    <li><strong>A Meta das 2h:</strong> O indicador visual não serve para te punir, mas para te obrigar a tomar decisões técnicas mais rápidas. Se o V-Ray está a demorar demasiado a afinar um reflexo, simplifica o material. A perfeição é inimiga do portfólio feito.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Card 5 -->
+                            <div style="background: var(--bg-base); border: 1px solid var(--border-color); border-radius: 4px; padding: 20px; position: relative;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                    <h3 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: var(--accent);">5. Galeria de Imagens (A Montra)</h3>
+                                    <span style="font-size: 0.72rem; font-weight: bold; background: rgba(16, 185, 129, 0.08); color: var(--success); padding: 4px 10px; border-radius: 2px;">🖼️ MAX: 6-8 IMGS</span>
+                                </div>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 10px;">
+                                    Não sobrecarregues a página do cliente. A tua arte 3D precisa de espaço para "respirar" no ecrã.
+                                </p>
+                                <ul style="font-size: 0.85rem; padding-left: 20px; line-height: 1.6; color: var(--text-primary);">
+                                    <li><strong>Capa (1 Imagem):</strong> A "Mona Lisa". A imagem com melhor iluminação e composição.</li>
+                                    <li><strong>Processo (1 a 2 Imagens):</strong> O breakdown. Pode ser metade clay / metade fotorrealista, ou uma foto da peça a sair da impressora.</li>
+                                    <li><strong>Galeria Final (3 a 4 Imagens):</strong> Vistas complementares.</li>
+                                    <li><strong>Minimalismo:</strong> Mesmo com o script Pillow a comprimir tudo perfeitamente, o minimalismo do teu design exige pouca quantidade e altíssima qualidade.</li>
+                                </ul>
                             </div>
                         </div>
                     </div>

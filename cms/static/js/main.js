@@ -399,6 +399,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (socialContainer) socialContainer.innerHTML = "";
             document.getElementById("link_mapa").value = "";
             
+            // Mostrar sugestão do guia
+            showToast("Novo projeto iniciado! Siga a metodologia no separador '💡 Guia de Orientação'.", "info");
+            
             // Hide local image gallery container
             const galleryContainer = document.getElementById("local-img-gallery-container");
             if (galleryContainer) galleryContainer.style.display = "none";

@@ -30,35 +30,5 @@
                 "desc": "Foco em desenvolvimento de software corporativo, banco de dados relacional e arquitetura de sistemas distribuídos."
             }
         ]
-    },
-    "ML-RND-26001": {
-        "id": "ML-RND-26001",
-        "titulo": "Render Vivenda Moderna A",
-        "description": "Um briefing detalhado sobre a modelagem externa de uma vivenda moderna utilizando iluminação natural HDRI e materiais físicos de alta qualidade.",
-        "tags": "#arquitetura, #vray, #blender",
-        "categoria": "Render",
-        "status": "Em andamento",
-        "visibilidade": "Público",
-        "horas": 4.5,
-        "path_references": "processo_vivenda.png",
-        "path_models": "",
-        "path_renders": "",
-        "path_capa": "capa_vivenda.png",
-        "path_processo": "",
-        "path_galeria": "",
-        "link_mapa": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.676644123!2d-8.625843!3d41.157943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd2465adc!2sPorto!5e0!3m2!1spt!2spt",
-        "social_links": [
-            {
-                "plataforma": "Behance",
-                "url": "https://behance.net/mlacerdapt"
-            },
-            {
-                "plataforma": "Instagram",
-                "url": "https://instagram.com/mlacerda"
-            }
-        ],
-        "rnd_softwares": "Blender, Cycles, Photoshop",
-        "rnd_vistas": 3,
-        "rnd_hdri": "Studio Clear Sky 4K"
     }
 }
