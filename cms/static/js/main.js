@@ -31,6 +31,50 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // ── Redes Sociais do CURRÍCULO ──────────────────────────────────────────
+    window.addCvSocialLinkRow = function(platform = "LinkedIn", url = "") {
+        const container = document.getElementById("cv-social-links-container");
+        if (!container) return;
+        const row = document.createElement("div");
+        row.className = "cv-social-link-row";
+        row.style.cssText = "display: flex; gap: 10px; margin-bottom: 8px; align-items: center; width: 100%;";
+        row.innerHTML = `
+            <select name="cv_social_plataforma[]" style="flex: 1; min-width: 120px; padding: 12px 14px;">
+                <option value="LinkedIn"   ${platform === 'LinkedIn'   ? 'selected' : ''}>LinkedIn</option>
+                <option value="GitHub"     ${platform === 'GitHub'     ? 'selected' : ''}>GitHub</option>
+                <option value="Instagram"  ${platform === 'Instagram'  ? 'selected' : ''}>Instagram</option>
+                <option value="Behance"    ${platform === 'Behance'    ? 'selected' : ''}>Behance</option>
+                <option value="Facebook"   ${platform === 'Facebook'   ? 'selected' : ''}>Facebook</option>
+                <option value="X"          ${platform === 'X'          ? 'selected' : ''}>X (Twitter)</option>
+                <option value="YouTube"    ${platform === 'YouTube'    ? 'selected' : ''}>YouTube</option>
+                <option value="Portfolio"  ${platform === 'Portfolio'  ? 'selected' : ''}>Portfolio</option>
+                <option value="Outro"      ${platform === 'Outro'      ? 'selected' : ''}>Outro</option>
+            </select>
+            <input type="text" name="cv_social_url[]" value="${url}" placeholder="https://..." style="flex: 2;">
+            <button type="button" class="btn-cv-remove-social" style="background: var(--danger); color: white; border: none; padding: 12px 16px; border-radius: 2px; cursor: pointer; font-weight: bold; line-height: 1;">✕</button>
+        `;
+        row.querySelector(".btn-cv-remove-social").onclick = () => row.remove();
+        container.appendChild(row);
+    };
+
+    const btnCvAddSocial = document.getElementById("cv-btn-add-social");
+    if (btnCvAddSocial) {
+        btnCvAddSocial.addEventListener("click", () => addCvSocialLinkRow());
+    }
+
+    // Carregar redes sociais existentes do currículo
+    const initialCvSocialEl = document.getElementById("initial-cv-social-data");
+    if (initialCvSocialEl) {
+        try {
+            const initialCvSocial = JSON.parse(initialCvSocialEl.textContent);
+            if (Array.isArray(initialCvSocial) && initialCvSocial.length > 0) {
+                initialCvSocial.forEach(link => addCvSocialLinkRow(link.plataforma, link.url));
+            }
+        } catch(e) {
+            console.warn("Erro ao carregar redes sociais do currículo:", e);
+        }
+    }
+
     // Lógica para Experiências Dinâmicas no Currículo
     window.addExperienceRow = function(date = "", role = "", company = "", desc = "") {
         const container = document.getElementById("cv-experiencias-container");
@@ -85,7 +129,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnAddSkillCategory = document.getElementById("btn-add-skill-category");
 
     window.addSkillCategory = function(categoryName = "", items = []) {
-        if (!skillsContainer) return;
+        const skillsContainer = document.getElementById("cv-skills-builder-container");
+        if (!skillsContainer) { console.error("cv-skills-builder-container not found"); return; }
+
         const categoryId = "cat-" + Date.now() + "-" + Math.random().toString(36).substr(2, 5);
         const card = document.createElement("div");
         card.className = "cv-skill-category-block";
