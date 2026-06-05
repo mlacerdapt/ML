@@ -78,6 +78,132 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     });
 
+    // ==========================================================================
+    // GESTOR DINÂMICO DE COMPETÊNCIAS POR CATEGORIA (CLASSIFICAÇÃO 0 A 5)
+    // ==========================================================================
+    const skillsContainer = document.getElementById("cv-skills-builder-container");
+    const btnAddSkillCategory = document.getElementById("btn-add-skill-category");
+
+    window.addSkillCategory = function(categoryName = "", items = []) {
+        if (!skillsContainer) return;
+        const categoryId = "cat-" + Date.now() + "-" + Math.random().toString(36).substr(2, 5);
+        const card = document.createElement("div");
+        card.className = "cv-skill-category-block";
+        card.dataset.id = categoryId;
+        card.style.cssText = "background: var(--bg-base); border: 1px solid var(--border-color); border-radius: 4px; padding: 20px; position: relative; display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px;";
+        
+        card.innerHTML = `
+            <button type="button" class="btn-remove-category" style="position: absolute; right: 10px; top: 10px; background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 2px; cursor: pointer; font-size: 0.75rem; font-weight: bold; transition: var(--transition-smart);">Remover Categoria</button>
+            <div class="form-group col-12" style="width: calc(100% - 140px); margin-bottom: 10px;">
+                <label style="font-size: 0.72rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase;">Nome da Categoria</label>
+                <input type="text" class="cat-name-input" value="${categoryName}" placeholder="Ex: Automação, Web Dev & Ciência de Dados" required style="width: 100%;">
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+                <label style="font-size: 0.72rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 4px; display: block;">Competências e Avaliação (0 a 5)</label>
+                <div class="skills-rows-list" style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+                    <!-- Skill rows go here -->
+                </div>
+            </div>
+            
+            <button type="button" class="btn-add-skill-row btn-secondary" style="align-self: flex-start; padding: 8px 16px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; font-weight: bold;">
+                ➕ Adicionar Competência
+            </button>
+        `;
+        
+        const removeBtn = card.querySelector(".btn-remove-category");
+        removeBtn.onclick = () => card.remove();
+        
+        const addRowBtn = card.querySelector(".btn-add-skill-row");
+        const rowsList = card.querySelector(".skills-rows-list");
+        
+        addRowBtn.onclick = () => {
+            addSkillRow(rowsList);
+        };
+        
+        skillsContainer.appendChild(card);
+        
+        // Render initial skill items
+        if (items && items.length > 0) {
+            items.forEach(item => {
+                addSkillRow(rowsList, item.name, item.desc, item.level);
+            });
+        } else {
+            // Add at least one empty row by default
+            addSkillRow(rowsList);
+        }
+    };
+
+    window.addSkillRow = function(container, name = "", desc = "", level = 4.0) {
+        const row = document.createElement("div");
+        row.className = "skill-row-item";
+        row.style.cssText = "display: flex; gap: 10px; align-items: center; width: 100%; flex-wrap: wrap; margin-bottom: 8px;";
+        
+        row.innerHTML = `
+            <input type="text" class="skill-name-input" value="${name}" placeholder="Competência (Ex: Python & Flask)" style="flex: 2; min-width: 150px;" required>
+            <input type="text" class="skill-desc-input" value="${desc}" placeholder="Descrição opcional (Ex: APIs e Web Apps)" style="flex: 3; min-width: 200px;">
+            <div style="display: flex; align-items: center; gap: 8px; flex: 1.2; min-width: 140px;">
+                <input type="range" class="skill-level-input" min="0" max="5" step="0.5" value="${level}" style="width: 100%; height: auto; padding: 0; cursor: pointer;" oninput="this.nextElementSibling.innerText = parseFloat(this.value).toFixed(1)">
+                <span class="level-value-display" style="font-size: 0.85rem; font-weight: 800; width: 25px; text-align: right;">${parseFloat(level).toFixed(1)}</span>
+            </div>
+            <button type="button" class="btn-remove-skill-row" style="background: var(--danger); color: white; border: none; padding: 10px 14px; border-radius: 2px; cursor: pointer; font-weight: bold; height: 44px; display: flex; align-items: center; justify-content: center;">✕</button>
+        `;
+        
+        row.querySelector(".btn-remove-skill-row").onclick = () => row.remove();
+        container.appendChild(row);
+    };
+
+    // Load initial data
+    const initialSkillsDataEl = document.getElementById("initial-skills-data");
+    if (initialSkillsDataEl) {
+        try {
+            const initialSkills = JSON.parse(initialSkillsDataEl.textContent);
+            if (initialSkills && initialSkills.length > 0) {
+                initialSkills.forEach(cat => {
+                    addSkillCategory(cat.category, cat.items);
+                });
+            } else {
+                // Add a default category on startup if database is empty
+                addSkillCategory();
+            }
+        } catch (e) {
+            console.error("Erro ao carregar dados iniciais de competências:", e);
+            addSkillCategory();
+        }
+    }
+
+    if (btnAddSkillCategory) {
+        btnAddSkillCategory.onclick = () => {
+            addSkillCategory();
+        };
+    }
+
+    // Form Cv submit serialization logic
+    const formCv = document.getElementById("form-cv");
+    if (formCv) {
+        formCv.addEventListener("submit", (e) => {
+            const skillsData = [];
+            const categoryBlocks = document.querySelectorAll(".cv-skill-category-block");
+            categoryBlocks.forEach(block => {
+                const categoryName = block.querySelector(".cat-name-input").value.trim();
+                const skillRows = block.querySelectorAll(".skill-row-item");
+                const items = [];
+                skillRows.forEach(row => {
+                    const name = row.querySelector(".skill-name-input").value.trim();
+                    const desc = row.querySelector(".skill-desc-input").value.trim();
+                    const level = parseFloat(row.querySelector(".skill-level-input").value) || 0.0;
+                    if (name) {
+                        items.push({ name, desc, level });
+                    }
+                });
+                if (categoryName || items.length > 0) {
+                    skillsData.push({ category: categoryName, items });
+                }
+            });
+            document.getElementById("skills_json").value = JSON.stringify(skillsData);
+        });
+    }
+
     // 1. Tab Switching Logic
     const tabButtons = document.querySelectorAll(".tab-btn");
     const tabContents = document.querySelectorAll(".tab-content");

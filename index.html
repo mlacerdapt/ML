@@ -74,106 +74,367 @@
         <!-- PANE 2: Currículo -->
         <div id="tab-curriculo" class="tab-pane">
             <!-- CURRICULO_START -->
-<div class="cv-new-layout">
-                <!-- Left rotated title "CURRICULO" -->
-                <div class="cv-vertical-title">CURRICULO</div>
-                
-                <!-- Main content grid -->
-                <div class="cv-main-grid">
-                    <!-- Left Column -->
-                    <div class="cv-left-col">
-                        <!-- Avatar Frame -->
-                        <div class="cv-avatar-card">
-                            <img class="cv-profile-avatar" src="uploads/profile_avatar.png" alt="Marcelo de Melo Lacerda ">
-                        </div>
-                        
-                        <!-- Summary Card (Dark Background) -->
-                        <div class="cv-summary-card">
-                            <div class="cv-quote-mark">“</div>
-                            <p class="cv-summary-text">Profissional polivalente e focado em eficiência operacional, com sólida trajetória no setor industrial e de automação (Enercon), transitando com sucesso entre Garantia da Qualidade, Planeamento de Processos e Automação Industrial. Especialista no desenvolvimento de sistemas web completos e soluções de RPA (Robotic Process Automation) em Python (Flask) integradas ao ecossistema SAP, modelagem de dados e inteligência de negócios (Power BI) para otimização de processos e Working Capital.
-
-Em paralelo, atua de forma empreendedora como desenvolvedor de software independente (criando sistemas personalizados de gestão e fluxo de caixa de ponta a ponta) e no desenvolvimento de projetos de arquitetura, maquetes eletrónicas tridimensionais (SketchUp, V-Ray, Blender) e manufatura aditiva (Impressão 3D). Combina rigor analítico, engenharia de software e competências de design 3D para materializar projetos complexos, automatizar rotinas e gerar impacto estratégico contínuo.</p>
-                        </div>
-                        
-                        <!-- Skills Card -->
-                        <div class="cv-skills-card">
-                            <h3 class="cv-card-subtitle">Competências</h3>
-                            <div class="cv-skills-list">
-                                <span class="skill-tag">Python & Flask</span><span class="skill-tag">Análise de Dados (Pandas)</span><span class="skill-tag">Automação de Processos (RPA)</span><span class="skill-tag">SAP (ERP & MES)</span><span class="skill-tag">Microsoft Excel (VBA & Macros)</span><span class="skill-tag">Power BI (Dashboards & KPIs)</span><span class="skill-tag">Gestão de Estoque & Working Capital</span><span class="skill-tag">Controle de Qualidade (Metrologia)</span><span class="skill-tag">Protocolo Digital & Indústria 4.0</span>
-                            </div>
-                        </div>
+<div class="cv-modern-split">
+                <!-- Left Sidebar Column (Dark/Charcoal Background below photo) -->
+                <aside class="cv-split-sidebar">
+                    <div class="cv-sidebar-header">
+                        <h2 class="cv-name-display">Marcelo de Melo Lacerda </h2>
+                        <div class="cv-title-display">Técnico de Planeamento e Processos</div>
                     </div>
                     
-                    <!-- Right Column -->
-                    <div class="cv-right-col">
-                        <!-- Name & Title -->
-                        <div class="cv-header-block">
-                            <h2 class="cv-profile-name">Marcelo de Melo Lacerda </h2>
-                            <div class="cv-profile-title">Técnico de Planeamento e Processos</div>
+                    <!-- Profile Picture container with diagonal clip-path -->
+                    <div class="cv-photo-container">
+                        <img class="cv-photo-img" src="uploads/profile_avatar.png" alt="Marcelo de Melo Lacerda ">
+                    </div>
+                    
+                    <!-- Dark Area below the photo -->
+                    <div class="cv-sidebar-dark-content">
+                        <div class="cv-sidebar-section">
+                            <h3 class="cv-sidebar-section-title">Sobre Mim</h3>
+                            <p class="cv-about-text">Engenheiro de Software Sénior com mais de 8 anos de experiência no desenvolvimento de aplicações eficientes e automatizações industriais. Paralelamente, atuo no design de réplicas físicas e virtuais de monumentos, combinando modelação tridimensional precisa, fabrico digital via impressão 3D e renderização fotorrealista.</p>
                         </div>
                         
-                        <!-- Contacts Pill Box (Dark Background) -->
-                        <div class="cv-contacts-card">
-                            <div class="cv-arrow-accent">→</div>
-                            <div class="cv-contacts-info">
-                                <span class="cv-contacts-badge">Contacto</span>
-                                <ul class="cv-contact-list">
-                                    <li class="contact-item">📧 marcelo.melo.lacerda@gmail.com</li><li class="contact-item">🔗 github.com/mlacerdapt</li><li class="contact-item">📍 Viana do Castelo, Portugal</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <!-- Details Grid (Experience & Education Side-by-Side) -->
-                        <div class="cv-details-grid">
-                            <!-- Column 1: Education -->
-                            <div class="cv-details-col">
-                                <h3 class="cv-details-title">Formação</h3>
-                                <div class="cv-timeline-new">
-                                    
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-date">2014 - 2019</div>
-                                <div class="timeline-role">Licenciatura em Engenharia de Computadores</div>
-                                <div class="timeline-company">Universidade do Porto</div>
-                                <p class="timeline-desc">Foco em desenvolvimento de software corporativo, banco de dados relacional e arquitetura de sistemas distribuídos.</p>
-                            </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Column 2: Experience -->
-                            <div class="cv-details-col">
-                                <h3 class="cv-details-title">Experiência</h3>
-                                <div class="cv-timeline-new">
-                                    
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-date">2020 - Presente</div>
-                                <div class="timeline-role">Técnico de Planeamento e Processos</div>
-                                <div class="timeline-company">Enercon</div>
-                                <p class="timeline-desc">Engenheiro de Planeamento e Processos (Abril de 2022 – Presente)
-
-Liderança na implementação global do sistema MES e Protocolo Digital (2022–2024), englobando o estudo prévio, plano de transição e capacitação das equipas de produção.
-Desenvolvimento de robôs em Python (Pandas, PyAutoGUI, Win32) integrados ao SAP para extração automatizada de dados, com visualização de indicadores operacionais via Power BI.
-Criação e gestão de relatórios de Working Capital e faróis de desvio de consumo, focados na otimização de stock e redução de capital imobilizado.
-
-Técnico  de Qualidade (Julho de 2020 – Abril de 2022)
-
-Responsável pela inspeção de pás e realização de testes de qualidade especializados (como ensaios DSC).
-Definição de métodos para tratamento de defeitos em linha e operação de equipamentos de medição industrial de alta precisão (paquímetro, nível a laser, trena).
-
-Desenho Arquitetónico & Manufatura Aditiva
-
-Em paralelo com a minha atuação corporativa, desenvolvo projetos autorais de arquitetura e maquetes eletrónicas sob medida, explorando profundamente a intersecção entre a modelação virtual de alta fidelidade e a materialização física dos projetos.
-
-Utilizo o SketchUp aliado ao LayOut para documentação técnica rigorosa, desenvolvendo simulações realistas e renders dinâmicos no V-Ray. Complementarmente, aprofundo-me no uso do Blender para renderizações de alto nível e animações de produto.
-
-Com foco em empreendedorismo e geração de renda extra, atuo ativamente no ecossistema de impressão 3D personalizada, otimizando os processos de fabrico e fatiamento tridimensional.</p>
-                            </div>
-                                </div>
-                            </div>
+                        <div class="cv-sidebar-section">
+                            <h3 class="cv-sidebar-section-title">Contacto</h3>
+                            <ul class="cv-contact-items-list">
+                                <li class="contact-li">📧 <span class="contact-txt">marcelo.melo.lacerda@gmail.com</span></li>
+                                <li class="contact-li">🔗 <span class="contact-txt">github.com/mlacerdapt</span></li>
+                                <li class="contact-li">📍 <span class="contact-txt">Viana do Castelo, Portugal</span></li>
+                            </ul>
                         </div>
                     </div>
+                </aside>
+                
+                <!-- Right Main Column (Light background) -->
+                <main class="cv-split-main">
+                    <!-- Education Section -->
+                    <section class="cv-main-section">
+                        <div class="cv-section-header-styled">
+                            <h3 class="cv-section-title-text">Educação</h3>
+                            <div class="cv-section-header-line"></div>
+                        </div>
+                        <div class="cv-timeline-vertical-styled">
+                            
+                            <div class="timeline-row-item">
+                                <div class="timeline-left-date">2014 - 2019</div>
+                                <div class="timeline-center-line">
+                                    <div class="timeline-node-dot"></div>
+                                </div>
+                                <div class="timeline-right-content">
+                                    <div class="timeline-title-company">
+                                        <span class="timeline-role-name">Licenciatura em Engenharia de Computadores</span>
+                                        <span class="timeline-sep">|</span>
+                                        <span class="timeline-company-name">Universidade do Porto</span>
+                                    </div>
+                                    <div class="timeline-description-text">Foco em desenvolvimento de software corporativo, banco de dados relacional e arquitetura de sistemas distribuídos.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Experience Section -->
+                    <section class="cv-main-section">
+                        <div class="cv-section-header-styled">
+                            <h3 class="cv-section-title-text">Experiência</h3>
+                            <div class="cv-section-header-line"></div>
+                        </div>
+                        <div class="cv-timeline-vertical-styled">
+                            
+                            <div class="timeline-row-item">
+                                <div class="timeline-left-date">2020 - Presente</div>
+                                <div class="timeline-center-line">
+                                    <div class="timeline-node-dot"></div>
+                                </div>
+                                <div class="timeline-right-content">
+                                    <div class="timeline-title-company">
+                                        <span class="timeline-role-name">Técnico de Planeamento e Processos</span>
+                                        <span class="timeline-sep">|</span>
+                                        <span class="timeline-company-name">Enercon</span>
+                                    </div>
+                                    <div class="timeline-description-text">Engenheiro de Planeamento e Processos (Abril de 2022 – Presente)<br><br>Liderança na implementação global do sistema MES e Protocolo Digital (2022–2024), englobando o estudo prévio, plano de transição e capacitação das equipas de produção.<br>Desenvolvimento de robôs em Python (Pandas, PyAutoGUI, Win32) integrados ao SAP para extração automatizada de dados, com visualização de indicadores operacionais via Power BI.<br>Criação e gestão de relatórios de Working Capital e faróis de desvio de consumo, focados na otimização de stock e redução de capital imobilizado.<br><br>Técnico  de Qualidade (Julho de 2020 – Abril de 2022)<br><br>Responsável pela inspeção de pás e realização de testes de qualidade especializados (como ensaios DSC).<br>Definição de métodos para tratamento de defeitos em linha e operação de equipamentos de medição industrial de alta precisão (paquímetro, nível a laser, trena).<br><br>Desenho Arquitetónico & Manufatura Aditiva<br><br>Em paralelo com a minha atuação corporativa, desenvolvo projetos autorais de arquitetura e maquetes eletrónicas sob medida, explorando profundamente a intersecção entre a modelação virtual de alta fidelidade e a materialização física dos projetos.<br><br>Utilizo o SketchUp aliado ao LayOut para documentação técnica rigorosa, desenvolvendo simulações realistas e renders dinâmicos no V-Ray. Complementarmente, aprofundo-me no uso do Blender para renderizações de alto nível e animações de produto.<br><br>Com foco em empreendedorismo e geração de renda extra, atuo ativamente no ecossistema de impressão 3D personalizada, otimizando os processos de fabrico e fatiamento tridimensional.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Skills Section -->
+                    <section class="cv-main-section">
+                        <div class="cv-section-header-styled">
+                            <h3 class="cv-section-title-text">Competências</h3>
+                            <div class="cv-section-header-line"></div>
+                        </div>
+                        <div class="cv-skills-radial-wrapper">
+                            <div class="cv-skills-category-group">
+  <h4 class="cv-skills-category-header">Automação, Web Dev & Ciência de Dados</h4>
+  <div class="cv-skills-category-grid">
+
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="126" stroke-dashoffset="0.0" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">5</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">Python & Flask</div>
+                        <div class="skill-radial-desc">Desenvolvimento de Web Apps, APIs e Sistemas de Gestão</div>
+                    </div>
                 </div>
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="126" stroke-dashoffset="12.599999999999994" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">4.5</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">Pandas & NumPy</div>
+                        <div class="skill-radial-desc">Análise, tratamento de dados complexos e ETL</div>
+                    </div>
+                </div>
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="126" stroke-dashoffset="0.0" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">5</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">RPA / Automatismos</div>
+                        <div class="skill-radial-desc">PyAutoGUI, Win32, extração SAP automatizada</div>
+                    </div>
+                </div>
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="126" stroke-dashoffset="25.19999999999999" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">4</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">Desenvolvimento Full-Stack</div>
+                        <div class="skill-radial-desc">Integração de Front-end, Back-end e Base de Dados</div>
+                    </div>
+                </div>
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="126" stroke-dashoffset="0.0" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">5</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">Microsoft Excel Avançado</div>
+                        <div class="skill-radial-desc">Macros, Automações & VBA</div>
+                    </div>
+                </div>
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="126" stroke-dashoffset="12.599999999999994" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">4.5</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">Power BI</div>
+                        <div class="skill-radial-desc">Criação de faróis operacionais, Dashboards & KPIs</div>
+                    </div>
+                </div>  </div>
+</div>
+<div class="cv-skills-category-group">
+  <h4 class="cv-skills-category-header">Engenharia de Processos & Qualidade Industrial</h4>
+  <div class="cv-skills-category-grid">
+
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="126" stroke-dashoffset="25.19999999999999" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">4</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">Planeamento de Produção</div>
+                        <div class="skill-radial-desc">Controle e otimização de fluxo fabril</div>
+                    </div>
+                </div>
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="126" stroke-dashoffset="12.599999999999994" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">4.5</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">Gestão de Stock & Working Capital</div>
+                        <div class="skill-radial-desc">Minimização de capital imobilizado</div>
+                    </div>
+                </div>
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="126" stroke-dashoffset="12.599999999999994" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">4.5</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">Garantia da Qualidade</div>
+                        <div class="skill-radial-desc">Inspeção de produto e tratamento de desvios</div>
+                    </div>
+                </div>
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="126" stroke-dashoffset="0.0" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">5</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">Metrologia Industrial</div>
+                        <div class="skill-radial-desc">Uso de paquímetro, nível a laser, trena digital</div>
+                    </div>
+                </div>
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="126" stroke-dashoffset="25.19999999999999" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">4</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">Ensaios Térmicos DSC</div>
+                        <div class="skill-radial-desc">Verificação de cura de materiais compostos</div>
+                    </div>
+                </div>
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="126" stroke-dashoffset="0.0" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">5</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">MES & Protocolo Digital</div>
+                        <div class="skill-radial-desc">Liderança e capacitação na transição tecnológica</div>
+                    </div>
+                </div>  </div>
+</div>
+<div class="cv-skills-category-group">
+  <h4 class="cv-skills-category-header">Desenho Tridimensional & Manufatura Aditiva</h4>
+  <div class="cv-skills-category-grid">
+
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="126" stroke-dashoffset="0.0" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">5</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">SketchUp Pro</div>
+                        <div class="skill-radial-desc">Modelagem de maquetes eletrónicas e projetos 3D</div>
+                    </div>
+                </div>
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="126" stroke-dashoffset="0.0" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">5</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">LayOut</div>
+                        <div class="skill-radial-desc">Documentação técnica, escalas e grelhas rigorosas</div>
+                    </div>
+                </div>
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="126" stroke-dashoffset="12.599999999999994" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">4.5</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">Renderização V-Ray</div>
+                        <div class="skill-radial-desc">Visualização fotorrealista de alta qualidade</div>
+                    </div>
+                </div>
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="126" stroke-dashoffset="37.80000000000001" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">3.5</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">Blender (Nível Intermediário)</div>
+                        <div class="skill-radial-desc">Modelação orgânica, renderização Cycles e animações</div>
+                    </div>
+                </div>
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="126" stroke-dashoffset="0.0" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">5</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">Impressão 3D</div>
+                        <div class="skill-radial-desc">Manufatura aditiva de peças e modelos personalizados</div>
+                    </div>
+                </div>
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="126" stroke-dashoffset="0.0" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">5</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">Slicing / Fatiamento</div>
+                        <div class="skill-radial-desc">Domínio avançado de Cura e PrusaSlicer</div>
+                    </div>
+                </div>  </div>
+</div>
+
+                        </div>
+                    </section>
+                </main>
             </div>
 <!-- CURRICULO_END -->
         </div>

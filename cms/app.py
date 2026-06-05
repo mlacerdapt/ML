@@ -27,6 +27,16 @@ DEFAULT_CV = {
     'avatar': 'https://api.dicebear.com/7.x/identicon/svg?seed=mlacerda',
     'resumo': 'Engenheiro de Software Sénior com mais de 8 anos de experiência no desenvolvimento de aplicações eficientes e automatizações industriais. Paralelamente, atuo no design de réplicas físicas e virtuais de monumentos, combinando modelação tridimensional precisa, fabrico digital via impressão 3D e renderização fotorrealista.',
     'skills': 'Python & Flask, SQL & SQLite, Tailwind CSS, Impressão 3D, Slicing (Cura/PrusaSlicer), Modelação (Blender), Renderização (Cycles/V-Ray), Layout & Grelhas',
+    'skills_by_category': [
+        {
+            'category': 'Automação, Web Dev & Ciência de Dados',
+            'items': [
+                {'name': 'Python & Flask', 'desc': 'Desenvolvimento de Web Apps, APIs e Sistemas de Gestão', 'level': 5},
+                {'name': 'Pandas & NumPy', 'desc': 'Análise, tratamento de dados complexos e ETL', 'level': 4.5},
+                {'name': 'RPA / Automatismos', 'desc': 'PyAutoGUI, Win32, extração SAP automatizada', 'level': 5}
+            ]
+        }
+    ],
     'experiencias': [
         {
             'date': '2023 - Presente',
@@ -148,112 +158,160 @@ def start_git_sync(project_id):
 def compile_cv_html(cv):
     avatar_src = cv.get('avatar') or "https://api.dicebear.com/7.x/identicon/svg?seed=mlacerda"
     nome = cv.get('nome') or "Marcelo Lacerda"
-    titulo = cv.get('titulo') or "Engenheiro de Software & Designer 3D"
+    titulo = cv.get('titulo') or "Técnico de Planeamento e Processos"
     
-    contacts_html = ""
-    if cv.get('email'):
-        contacts_html += f'<li class="contact-item">📧 {cv.get("email")}</li>'
-    if cv.get('github'):
-        contacts_html += f'<li class="contact-item">🔗 {cv.get("github")}</li>'
-    if cv.get('localizacao'):
-        contacts_html += f'<li class="contact-item">📍 {cv.get("localizacao")}</li>'
-        
+    # Render Skills grouped by category with SVG radial circular progress charts
     skills_html = ""
-    skills_list = [s.strip() for s in cv.get('skills', '').split(',') if s.strip()]
-    for skill in skills_list:
-        skills_html += f'<span class="skill-tag">{skill}</span>'
+    categories = cv.get('skills_by_category', [])
+    if categories:
+        for cat in categories:
+            cat_title = cat.get('category', '').strip()
+            items = cat.get('items', [])
+            if not cat_title and not items:
+                continue
+            skills_html += f'<div class="cv-skills-category-group">\n'
+            skills_html += f'  <h4 class="cv-skills-category-header">{cat_title}</h4>\n'
+            skills_html += f'  <div class="cv-skills-category-grid">\n'
+            for item in items:
+                name = item.get('name', '').strip()
+                desc = item.get('desc', '').strip()
+                level = float(item.get('level', 4.0))
+                
+                # SVG stroke-dashoffset calculation. Circumference C = 2 * pi * r = 2 * pi * 20 = 125.66. Let's use 126.
+                dasharray = 126
+                dashoffset = dasharray - (level / 5.0) * dasharray
+                
+                skills_html += f"""
+                <div class="skill-radial-item">
+                    <div class="skill-radial-chart">
+                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
+                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
+                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
+                                    stroke-dasharray="{dasharray}" stroke-dashoffset="{dashoffset}" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
+                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">{level:g}</text>
+                        </svg>
+                    </div>
+                    <div class="skill-radial-details">
+                        <div class="skill-radial-name">{name}</div>
+                        {f'<div class="skill-radial-desc">{desc}</div>' if desc else ''}
+                    </div>
+                </div>"""
+            skills_html += f'  </div>\n'
+            skills_html += f'</div>\n'
+    else:
+        # Fallback to plain tags if skills_by_category not defined
+        skills_list = [s.strip() for s in cv.get('skills', '').split(',') if s.strip()]
+        skills_html += '<div class="cv-skills-list">'
+        for skill in skills_list:
+            skills_html += f'<span class="skill-tag">{skill}</span>'
+        skills_html += '</div>'
         
     exp_html = ""
     for exp in cv.get('experiencias', []):
         if not exp.get('role') and not exp.get('company'): continue
+        desc_html = exp.get('desc', '').replace('\r\n', '<br>').replace('\n', '<br>')
         exp_html += f"""
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-date">{exp.get('date', '')}</div>
-                                <div class="timeline-role">{exp.get('role', '')}</div>
-                                <div class="timeline-company">{exp.get('company', '')}</div>
-                                <p class="timeline-desc">{exp.get('desc', '')}</p>
+                            <div class="timeline-row-item">
+                                <div class="timeline-left-date">{exp.get('date', '')}</div>
+                                <div class="timeline-center-line">
+                                    <div class="timeline-node-dot"></div>
+                                </div>
+                                <div class="timeline-right-content">
+                                    <div class="timeline-title-company">
+                                        <span class="timeline-role-name">{exp.get('role', '')}</span>
+                                        <span class="timeline-sep">|</span>
+                                        <span class="timeline-company-name">{exp.get('company', '')}</span>
+                                    </div>
+                                    <div class="timeline-description-text">{desc_html}</div>
+                                </div>
                             </div>"""
         
     edu_html = ""
     for edu in cv.get('educacao', []):
         if not edu.get('role') and not edu.get('company'): continue
+        desc_html = edu.get('desc', '').replace('\r\n', '<br>').replace('\n', '<br>')
         edu_html += f"""
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-date">{edu.get('date', '')}</div>
-                                <div class="timeline-role">{edu.get('role', '')}</div>
-                                <div class="timeline-company">{edu.get('company', '')}</div>
-                                <p class="timeline-desc">{edu.get('desc', '')}</p>
+                            <div class="timeline-row-item">
+                                <div class="timeline-left-date">{edu.get('date', '')}</div>
+                                <div class="timeline-center-line">
+                                    <div class="timeline-node-dot"></div>
+                                </div>
+                                <div class="timeline-right-content">
+                                    <div class="timeline-title-company">
+                                        <span class="timeline-role-name">{edu.get('role', '')}</span>
+                                        <span class="timeline-sep">|</span>
+                                        <span class="timeline-company-name">{edu.get('company', '')}</span>
+                                    </div>
+                                    <div class="timeline-description-text">{desc_html}</div>
+                                </div>
                             </div>"""
         
-    cv_html = f"""<div class="cv-new-layout">
-                <!-- Left rotated title "CURRICULO" -->
-                <div class="cv-vertical-title">CURRICULO</div>
-                
-                <!-- Main content grid -->
-                <div class="cv-main-grid">
-                    <!-- Left Column -->
-                    <div class="cv-left-col">
-                        <!-- Avatar Frame -->
-                        <div class="cv-avatar-card">
-                            <img class="cv-profile-avatar" src="{avatar_src}" alt="{nome}">
-                        </div>
-                        
-                        <!-- Summary Card (Dark Background) -->
-                        <div class="cv-summary-card">
-                            <div class="cv-quote-mark">“</div>
-                            <p class="cv-summary-text">{cv.get('resumo', '')}</p>
-                        </div>
-                        
-                        <!-- Skills Card -->
-                        <div class="cv-skills-card">
-                            <h3 class="cv-card-subtitle">Competências</h3>
-                            <div class="cv-skills-list">
-                                {skills_html}
-                            </div>
-                        </div>
+    cv_html = f"""<div class="cv-modern-split">
+                <!-- Left Sidebar Column (Dark/Charcoal Background below photo) -->
+                <aside class="cv-split-sidebar">
+                    <div class="cv-sidebar-header">
+                        <h2 class="cv-name-display">{nome}</h2>
+                        <div class="cv-title-display">{titulo}</div>
                     </div>
                     
-                    <!-- Right Column -->
-                    <div class="cv-right-col">
-                        <!-- Name & Title -->
-                        <div class="cv-header-block">
-                            <h2 class="cv-profile-name">{nome}</h2>
-                            <div class="cv-profile-title">{titulo}</div>
+                    <!-- Profile Picture container with diagonal clip-path -->
+                    <div class="cv-photo-container">
+                        <img class="cv-photo-img" src="{avatar_src}" alt="{nome}">
+                    </div>
+                    
+                    <!-- Dark Area below the photo -->
+                    <div class="cv-sidebar-dark-content">
+                        <div class="cv-sidebar-section">
+                            <h3 class="cv-sidebar-section-title">Sobre Mim</h3>
+                            <p class="cv-about-text">{cv.get('resumo', '')}</p>
                         </div>
                         
-                        <!-- Contacts Pill Box (Dark Background) -->
-                        <div class="cv-contacts-card">
-                            <div class="cv-arrow-accent">→</div>
-                            <div class="cv-contacts-info">
-                                <span class="cv-contacts-badge">Contacto</span>
-                                <ul class="cv-contact-list">
-                                    {contacts_html}
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <!-- Details Grid (Experience & Education Side-by-Side) -->
-                        <div class="cv-details-grid">
-                            <!-- Column 1: Education -->
-                            <div class="cv-details-col">
-                                <h3 class="cv-details-title">Formação</h3>
-                                <div class="cv-timeline-new">
-                                    {edu_html}
-                                </div>
-                            </div>
-                            
-                            <!-- Column 2: Experience -->
-                            <div class="cv-details-col">
-                                <h3 class="cv-details-title">Experiência</h3>
-                                <div class="cv-timeline-new">
-                                    {exp_html}
-                                </div>
-                            </div>
+                        <div class="cv-sidebar-section">
+                            <h3 class="cv-sidebar-section-title">Contacto</h3>
+                            <ul class="cv-contact-items-list">
+                                {f'<li class="contact-li">📧 <span class="contact-txt">{cv.get("email")}</span></li>' if cv.get('email') else ''}
+                                {f'<li class="contact-li">🔗 <span class="contact-txt">{cv.get("github")}</span></li>' if cv.get('github') else ''}
+                                {f'<li class="contact-li">📍 <span class="contact-txt">{cv.get("localizacao")}</span></li>' if cv.get('localizacao') else ''}
+                            </ul>
                         </div>
                     </div>
-                </div>
+                </aside>
+                
+                <!-- Right Main Column (Light background) -->
+                <main class="cv-split-main">
+                    <!-- Education Section -->
+                    <section class="cv-main-section">
+                        <div class="cv-section-header-styled">
+                            <h3 class="cv-section-title-text">Educação</h3>
+                            <div class="cv-section-header-line"></div>
+                        </div>
+                        <div class="cv-timeline-vertical-styled">
+                            {edu_html}
+                        </div>
+                    </section>
+                    
+                    <!-- Experience Section -->
+                    <section class="cv-main-section">
+                        <div class="cv-section-header-styled">
+                            <h3 class="cv-section-title-text">Experiência</h3>
+                            <div class="cv-section-header-line"></div>
+                        </div>
+                        <div class="cv-timeline-vertical-styled">
+                            {exp_html}
+                        </div>
+                    </section>
+                    
+                    <!-- Skills Section -->
+                    <section class="cv-main-section">
+                        <div class="cv-section-header-styled">
+                            <h3 class="cv-section-title-text">Competências</h3>
+                            <div class="cv-section-header-line"></div>
+                        </div>
+                        <div class="cv-skills-radial-wrapper">
+                            {skills_html}
+                        </div>
+                    </section>
+                </main>
             </div>"""
     return cv_html
 
@@ -812,6 +870,15 @@ def save_cv():
                 'desc': desc.strip()
             })
     
+    # Parse structured skills from hidden JSON field
+    skills_json_str = request.form.get('skills_json')
+    skills_by_category = []
+    if skills_json_str:
+        try:
+            skills_by_category = json.loads(skills_json_str)
+        except Exception as e:
+            print(f"Error parsing skills_json: {e}")
+
     curriculo = {
         'nome': request.form.get('nome'),
         'titulo': request.form.get('titulo'),
@@ -820,7 +887,8 @@ def save_cv():
         'localizacao': request.form.get('localizacao'),
         'avatar': avatar_url,
         'resumo': request.form.get('resumo'),
-        'skills': request.form.get('skills'),
+        'skills': request.form.get('skills') or "",
+        'skills_by_category': skills_by_category,
         'experiencias': experiencias,
         'educacao': [
             {

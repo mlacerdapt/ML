@@ -6,8 +6,115 @@
         "github": "github.com/mlacerdapt",
         "localizacao": "Viana do Castelo, Portugal",
         "avatar": "uploads/profile_avatar.png",
-        "resumo": "Profissional polivalente e focado em eficiência operacional, com sólida trajetória no setor industrial e de automação (Enercon), transitando com sucesso entre Garantia da Qualidade, Planeamento de Processos e Automação Industrial. Especialista no desenvolvimento de sistemas web completos e soluções de RPA (Robotic Process Automation) em Python (Flask) integradas ao ecossistema SAP, modelagem de dados e inteligência de negócios (Power BI) para otimização de processos e Working Capital.\r\n\r\nEm paralelo, atua de forma empreendedora como desenvolvedor de software independente (criando sistemas personalizados de gestão e fluxo de caixa de ponta a ponta) e no desenvolvimento de projetos de arquitetura, maquetes eletrónicas tridimensionais (SketchUp, V-Ray, Blender) e manufatura aditiva (Impressão 3D). Combina rigor analítico, engenharia de software e competências de design 3D para materializar projetos complexos, automatizar rotinas e gerar impacto estratégico contínuo.",
-        "skills": "Python & Flask,  Análise de Dados (Pandas),  Automação de Processos (RPA) , SAP (ERP & MES), Microsoft Excel (VBA & Macros), Power BI (Dashboards & KPIs), Gestão de Estoque & Working Capital, Controle de Qualidade (Metrologia), Protocolo Digital & Indústria 4.0",
+        "resumo": "Engenheiro de Software Sénior com mais de 8 anos de experiência no desenvolvimento de aplicações eficientes e automatizações industriais. Paralelamente, atuo no design de réplicas físicas e virtuais de monumentos, combinando modelação tridimensional precisa, fabrico digital via impressão 3D e renderização fotorrealista.",
+        "skills": "",
+        "skills_by_category": [
+            {
+                "category": "Automação, Web Dev & Ciência de Dados",
+                "items": [
+                    {
+                        "name": "Python & Flask",
+                        "desc": "Desenvolvimento de Web Apps, APIs e Sistemas de Gestão",
+                        "level": 5
+                    },
+                    {
+                        "name": "Pandas & NumPy",
+                        "desc": "Análise, tratamento de dados complexos e ETL",
+                        "level": 4.5
+                    },
+                    {
+                        "name": "RPA / Automatismos",
+                        "desc": "PyAutoGUI, Win32, extração SAP automatizada",
+                        "level": 5
+                    },
+                    {
+                        "name": "Desenvolvimento Full-Stack",
+                        "desc": "Integração de Front-end, Back-end e Base de Dados",
+                        "level": 4
+                    },
+                    {
+                        "name": "Microsoft Excel Avançado",
+                        "desc": "Macros, Automações & VBA",
+                        "level": 5
+                    },
+                    {
+                        "name": "Power BI",
+                        "desc": "Criação de faróis operacionais, Dashboards & KPIs",
+                        "level": 4.5
+                    }
+                ]
+            },
+            {
+                "category": "Engenharia de Processos & Qualidade Industrial",
+                "items": [
+                    {
+                        "name": "Planeamento de Produção",
+                        "desc": "Controle e otimização de fluxo fabril",
+                        "level": 4
+                    },
+                    {
+                        "name": "Gestão de Stock & Working Capital",
+                        "desc": "Minimização de capital imobilizado",
+                        "level": 4.5
+                    },
+                    {
+                        "name": "Garantia da Qualidade",
+                        "desc": "Inspeção de produto e tratamento de desvios",
+                        "level": 4.5
+                    },
+                    {
+                        "name": "Metrologia Industrial",
+                        "desc": "Uso de paquímetro, nível a laser, trena digital",
+                        "level": 5
+                    },
+                    {
+                        "name": "Ensaios Térmicos DSC",
+                        "desc": "Verificação de cura de materiais compostos",
+                        "level": 4
+                    },
+                    {
+                        "name": "MES & Protocolo Digital",
+                        "desc": "Liderança e capacitação na transição tecnológica",
+                        "level": 5
+                    }
+                ]
+            },
+            {
+                "category": "Desenho Tridimensional & Manufatura Aditiva",
+                "items": [
+                    {
+                        "name": "SketchUp Pro",
+                        "desc": "Modelagem de maquetes eletrónicas e projetos 3D",
+                        "level": 5
+                    },
+                    {
+                        "name": "LayOut",
+                        "desc": "Documentação técnica, escalas e grelhas rigorosas",
+                        "level": 5
+                    },
+                    {
+                        "name": "Renderização V-Ray",
+                        "desc": "Visualização fotorrealista de alta qualidade",
+                        "level": 4.5
+                    },
+                    {
+                        "name": "Blender (Nível Intermediário)",
+                        "desc": "Modelação orgânica, renderização Cycles e animações",
+                        "level": 3.5
+                    },
+                    {
+                        "name": "Impressão 3D",
+                        "desc": "Manufatura aditiva de peças e modelos personalizados",
+                        "level": 5
+                    },
+                    {
+                        "name": "Slicing / Fatiamento",
+                        "desc": "Domínio avançado de Cura e PrusaSlicer",
+                        "level": 5
+                    }
+                ]
+            }
+        ],
         "experiencias": [
             {
                 "date": "2020 - Presente",
