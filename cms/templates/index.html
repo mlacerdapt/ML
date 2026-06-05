@@ -302,18 +302,34 @@
                                     <label for="cv_titulo">Título Profissional</label>
                                     <input type="text" name="titulo" id="cv_titulo" value="{{ curriculo.titulo }}" required>
                                 </div>
-                                <div class="form-group col-4">
+                                <div class="form-group col-3">
                                     <label for="cv_email">Email de Contacto</label>
                                     <input type="text" name="email" id="cv_email" value="{{ curriculo.email }}">
                                 </div>
-                                <div class="form-group col-4">
+                                <div class="form-group col-3">
                                     <label for="cv_github">GitHub (URL ou User)</label>
                                     <input type="text" name="github" id="cv_github" value="{{ curriculo.github }}">
                                 </div>
-                                <div class="form-group col-4">
+                                <div class="form-group col-3">
+                                    <label for="cv_telefone">Telefone (WhatsApp)</label>
+                                    <input type="text" name="telefone" id="cv_telefone" value="{{ curriculo.telefone or '' }}" placeholder="Ex: +351 912 345 678">
+                                </div>
+                                <div class="form-group col-3">
                                     <label for="cv_localizacao">Localização (Cidade, País)</label>
                                     <input type="text" name="localizacao" id="cv_localizacao" value="{{ curriculo.localizacao }}">
                                 </div>
+                                <div class="form-group col-12" style="margin-top: 8px;">
+                                    <label>Redes Sociais do Currículo</label>
+                                    <div id="cv-social-links-container" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px;">
+                                        <!-- Dynamic links populated by JS -->
+                                    </div>
+                                    <button type="button" class="btn-secondary" id="cv-btn-add-social" style="align-self: flex-start; padding: 8px 16px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px;">
+                                        ➕ Adicionar Rede Social
+                                    </button>
+                                </div>
+                                <script id="initial-cv-social-data" type="application/json">
+                                    {{ (curriculo.social_links or []) | tojson }}
+                                </script>
                                 <div class="form-group col-12">
                                     <label for="cv_avatar">Foto de Perfil</label>
                                     <div style="display: flex; gap: 12px; align-items: center; width: 100%;">
