@@ -80,6 +80,41 @@
                         "level": 4.5
                     }
                 ]
+            },
+            {
+                "category": "Desenho Tridimensional & Manufatura Aditiva",
+                "items": [
+                    {
+                        "name": "SketchUp Pro",
+                        "desc": "Modelagem de maquetes eletrónicas e projetos 3D",
+                        "level": 5
+                    },
+                    {
+                        "name": "LayOut",
+                        "desc": "Documentação técnica, escalas e grelhas rigorosas",
+                        "level": 5
+                    },
+                    {
+                        "name": "Renderização V-Ray",
+                        "desc": "Visualização fotorrealista de alta qualidade",
+                        "level": 3.5
+                    },
+                    {
+                        "name": "Blender",
+                        "desc": "Modelação orgânica, renderização Cycles e animações",
+                        "level": 3
+                    },
+                    {
+                        "name": "Impressão 3D",
+                        "desc": "Manufatura aditiva de peças e modelos personalizados",
+                        "level": 4
+                    },
+                    {
+                        "name": "Slicing / Fatiamento",
+                        "desc": "Domínio avançado de Cura e PrusaSlicer",
+                        "level": 4
+                    }
+                ]
             }
         ],
         "experiencias": [
