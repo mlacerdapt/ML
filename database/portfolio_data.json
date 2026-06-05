@@ -1,7 +1,7 @@
 {
     "curriculo": {
         "nome": "Marcelo de Melo Lacerda ",
-        "titulo": "Técnico de Planeiamento",
+        "titulo": "Técnico de Planeamento e Processos",
         "email": "marcelo.melo.lacerda@gmail.com",
         "github": "github.com/mlacerdapt",
         "localizacao": "Viana do Castelo, Portugal",
@@ -10,16 +10,10 @@
         "skills": "Python & Flask,  Análise de Dados (Pandas),  Automação de Processos (RPA) , SAP (ERP & MES), Microsoft Excel (VBA & Macros), Power BI (Dashboards & KPIs), Gestão de Estoque & Working Capital, Controle de Qualidade (Metrologia), Protocolo Digital & Indústria 4.0",
         "experiencias": [
             {
-                "date": "2023 - Presente",
-                "role": "Engenheiro de Software Sénior",
-                "company": "ENERCON",
-                "desc": "Desenvolvimento de sistemas internos, integrações de banco de dados e automações para logística de distribuição e controlo de materiais tridimensionais."
-            },
-            {
-                "date": "2020 - 2023",
-                "role": "Especialista em Modelação e Impressão 3D",
-                "company": "ML Smart Designs",
-                "desc": "Criação de maquetes físicas de alta precisão baseadas em monumentos históricos e modelos arquitetónicos neorromânicos, utilizando filamentos especiais e fatiamento avançado."
+                "date": "2020 - Presente",
+                "role": "Técnico de Planeamento e Processos",
+                "company": "Enercon",
+                "desc": "Engenheiro de Planeamento e Processos (Abril de 2022 – Presente)\r\n\r\nLiderança na implementação global do sistema MES e Protocolo Digital (2022–2024), englobando o estudo prévio, plano de transição e capacitação das equipas de produção.\r\nDesenvolvimento de robôs em Python (Pandas, PyAutoGUI, Win32) integrados ao SAP para extração automatizada de dados, com visualização de indicadores operacionais via Power BI.\r\nCriação e gestão de relatórios de Working Capital e faróis de desvio de consumo, focados na otimização de stock e redução de capital imobilizado.\r\n\r\nTécnico  de Qualidade (Julho de 2020 – Abril de 2022)\r\n\r\nResponsável pela inspeção de pás e realização de testes de qualidade especializados (como ensaios DSC).\r\nDefinição de métodos para tratamento de defeitos em linha e operação de equipamentos de medição industrial de alta precisão (paquímetro, nível a laser, trena)."
             }
         ],
         "educacao": [
