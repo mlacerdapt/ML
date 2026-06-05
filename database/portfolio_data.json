@@ -1,33 +1,34 @@
 {
     "curriculo": {
-        "nome": "Marcelo Lacerda Teste",
-        "titulo": "Engenheiro de Software & Designer 3D Teste",
-        "email": "marcelo.teste@exemplo.com",
+        "nome": "Marcelo Lacerda",
+        "titulo": "Engenheiro de Software & Designer 3D",
+        "email": "marcelo.lacerda@exemplo.com",
         "github": "github.com/mlacerdapt",
         "localizacao": "Porto, Portugal",
-        "avatar": "uploads/profile_avatar.png",
-        "resumo": "Resumo de teste para o currículo dinâmico.",
-        "skills": "Python, Flask, JavaScript, HTML, CSS",
+        "avatar": "https://api.dicebear.com/7.x/identicon/svg?seed=mlacerda",
+        "resumo": "Engenheiro de Software Sénior com mais de 8 anos de experiência no desenvolvimento de aplicações eficientes e automatizações industriais. Paralelamente, atuo no design de réplicas físicas e virtuais de monumentos, combinando modelação tridimensional precisa, fabrico digital via impressão 3D e renderização fotorrealista.",
+        "skills": "Python & Flask, SQL & SQLite, Tailwind CSS, Impressão 3D, Slicing (Cura/PrusaSlicer), Modelação (Blender), Renderização (Cycles/V-Ray), Layout & Grelhas",
         "experiencias": [
             {
                 "date": "2023 - Presente",
-                "role": "Sénior Developer",
+                "role": "Engenheiro de Software Sénior",
                 "company": "ENERCON",
-                "desc": "Atividades de desenvolvimento."
+                "desc": "Desenvolvimento de sistemas internos, integrações de banco de dados e automações para logística de distribuição e controlo de materiais tridimensionais."
             },
             {
                 "date": "2020 - 2023",
-                "role": "3D Specialist",
+                "role": "Especialista em Modelação e Impressão 3D",
                 "company": "ML Smart Designs",
-                "desc": "Atividades de modelação 3D."
-            },
-            {
-                "date": "2018 - 2020",
-                "role": "Junior Developer",
-                "company": "Estúdio Criativo Porto",
-                "desc": "Atividades de design júnior."
+                "desc": "Criação de maquetes físicas de alta precisão baseadas em monumentos históricos e modelos arquitetónicos neorromânicos, utilizando filamentos especiais e fatiamento avançado."
             }
         ],
-        "educacao": []
+        "educacao": [
+            {
+                "date": "2014 - 2019",
+                "role": "Licenciatura em Engenharia de Computadores",
+                "company": "Universidade do Porto",
+                "desc": "Foco em desenvolvimento de software corporativo, banco de dados relacional e arquitetura de sistemas distribuídos."
+            }
+        ]
     }
 }
