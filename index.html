@@ -74,47 +74,75 @@
         <!-- PANE 2: Currículo -->
         <div id="tab-curriculo" class="tab-pane">
             <!-- CURRICULO_START -->
-<div class="cv-grid">
-                <!-- Sidebar: Informações Pessoais e Competências -->
-                <aside class="cv-sidebar">
-                    <div class="flex flex-col items-center">
-                        <img class="profile-avatar" src="uploads/profile_avatar.png" alt="Marcelo de Melo Lacerda ">
-                        <h2 class="profile-name">Marcelo de Melo Lacerda </h2>
-                        <div class="profile-title">Engenheiro de Software & Designer 3D</div>
-                    </div>
-                    
-                    <div>
-                        <h3 class="cv-section-title">Contacto</h3>
-                        <div class="smart-divider"></div>
-                        <ul class="contact-list">
-                            <li class="contact-item">📧 marcelo.melo.lacerda@gmail.com</li><li class="contact-item">🔗 github.com/mlacerdapt</li><li class="contact-item">📍 Viana do Castelo, Portugal</li>
-                        </ul>
-                    </div>
-                    
-                    <div>
-                        <h3 class="cv-section-title">Competências</h3>
-                        <div class="smart-divider"></div>
-                        <div class="skills-container">
-                            <span class="skill-tag">Python & Flask</span><span class="skill-tag">SQL & SQLite</span><span class="skill-tag">Tailwind CSS</span><span class="skill-tag">Impressão 3D</span><span class="skill-tag">Slicing (Cura/PrusaSlicer)</span><span class="skill-tag">Modelação (Blender)</span><span class="skill-tag">Renderização (Cycles/V-Ray)</span><span class="skill-tag">Layout & Grelhas</span>
+<div class="cv-new-layout">
+                <!-- Left rotated title "CURRICULO" -->
+                <div class="cv-vertical-title">CURRICULO</div>
+                
+                <!-- Main content grid -->
+                <div class="cv-main-grid">
+                    <!-- Left Column -->
+                    <div class="cv-left-col">
+                        <!-- Avatar Frame -->
+                        <div class="cv-avatar-card">
+                            <img class="cv-profile-avatar" src="uploads/profile_avatar.png" alt="Marcelo de Melo Lacerda ">
+                        </div>
+                        
+                        <!-- Summary Card (Dark Background) -->
+                        <div class="cv-summary-card">
+                            <div class="cv-quote-mark">“</div>
+                            <p class="cv-summary-text">Engenheiro de Software Sénior com mais de 8 anos de experiência no desenvolvimento de aplicações eficientes e automatizações industriais. Paralelamente, atuo no design de réplicas físicas e virtuais de monumentos, combinando modelação tridimensional precisa, fabrico digital via impressão 3D e renderização fotorrealista.</p>
+                        </div>
+                        
+                        <!-- Skills Card -->
+                        <div class="cv-skills-card">
+                            <h3 class="cv-card-subtitle">Competências</h3>
+                            <div class="cv-skills-list">
+                                <span class="skill-tag">Python & Flask</span><span class="skill-tag">SQL & SQLite</span><span class="skill-tag">Tailwind CSS</span><span class="skill-tag">Impressão 3D</span><span class="skill-tag">Slicing (Cura/PrusaSlicer)</span><span class="skill-tag">Modelação (Blender)</span><span class="skill-tag">Renderização (Cycles/V-Ray)</span><span class="skill-tag">Layout & Grelhas</span>
+                            </div>
                         </div>
                     </div>
-                </aside>
-                
-                <!-- Conteúdo Principal: Experiência e Educação -->
-                <main class="cv-main">
-                    <div>
-                        <h3 class="cv-section-title">Resumo Profissional</h3>
-                        <div class="smart-divider"></div>
-                        <p class="text-charcoal text-sm leading-relaxed text-justify mb-8">
-                            Engenheiro de Software Sénior com mais de 8 anos de experiência no desenvolvimento de aplicações eficientes e automatizações industriais. Paralelamente, atuo no design de réplicas físicas e virtuais de monumentos, combinando modelação tridimensional precisa, fabrico digital via impressão 3D e renderização fotorrealista.
-                        </p>
-                    </div>
                     
-                    <div>
-                        <h3 class="cv-section-title">Experiência Profissional</h3>
-                        <div class="smart-divider"></div>
-                        <div class="timeline">
+                    <!-- Right Column -->
+                    <div class="cv-right-col">
+                        <!-- Name & Title -->
+                        <div class="cv-header-block">
+                            <h2 class="cv-profile-name">Marcelo de Melo Lacerda </h2>
+                            <div class="cv-profile-title">Engenheiro de Software & Designer 3D</div>
+                        </div>
+                        
+                        <!-- Contacts Pill Box (Dark Background) -->
+                        <div class="cv-contacts-card">
+                            <div class="cv-arrow-accent">→</div>
+                            <div class="cv-contacts-info">
+                                <span class="cv-contacts-badge">Contacto</span>
+                                <ul class="cv-contact-list">
+                                    <li class="contact-item">📧 marcelo.melo.lacerda@gmail.com</li><li class="contact-item">🔗 github.com/mlacerdapt</li><li class="contact-item">📍 Viana do Castelo, Portugal</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Details Grid (Experience & Education Side-by-Side) -->
+                        <div class="cv-details-grid">
+                            <!-- Column 1: Education -->
+                            <div class="cv-details-col">
+                                <h3 class="cv-details-title">Formação</h3>
+                                <div class="cv-timeline-new">
+                                    
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-date">2014 - 2019</div>
+                                <div class="timeline-role">Licenciatura em Engenharia de Computadores</div>
+                                <div class="timeline-company">Universidade do Porto</div>
+                                <p class="timeline-desc">Foco em desenvolvimento de software corporativo, banco de dados relacional e arquitetura de sistemas distribuídos.</p>
+                            </div>
+                                </div>
+                            </div>
                             
+                            <!-- Column 2: Experience -->
+                            <div class="cv-details-col">
+                                <h3 class="cv-details-title">Experiência</h3>
+                                <div class="cv-timeline-new">
+                                    
                             <div class="timeline-item">
                                 <div class="timeline-dot"></div>
                                 <div class="timeline-date">2023 - Presente</div>
@@ -129,24 +157,11 @@
                                 <div class="timeline-company">ML Smart Designs</div>
                                 <p class="timeline-desc">Criação de maquetes físicas de alta precisão baseadas em monumentos históricos e modelos arquitetónicos neorromânicos, utilizando filamentos especiais e fatiamento avançado.</p>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-8">
-                        <h3 class="cv-section-title">Formação</h3>
-                        <div class="smart-divider"></div>
-                        <div class="timeline">
-                            
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-date">2014 - 2019</div>
-                                <div class="timeline-role">Licenciatura em Engenharia de Computadores</div>
-                                <div class="timeline-company">Universidade do Porto</div>
-                                <p class="timeline-desc">Foco em desenvolvimento de software corporativo, banco de dados relacional e arquitetura de sistemas distribuídos.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </main>
+                </div>
             </div>
 <!-- CURRICULO_END -->
         </div>

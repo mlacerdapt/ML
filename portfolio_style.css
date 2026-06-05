@@ -901,3 +901,322 @@ body {
     text-transform: uppercase;
     color: var(--brand-blue);
 }
+
+/* ==========================================================================
+   NOVO LAYOUT DE CURRÍCULO (ASIMETRIA E BANNER ESCURO)
+   ========================================================================== */
+
+.cv-new-layout {
+    position: relative;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    background-color: var(--brand-white);
+    margin-top: 1rem;
+}
+
+.cv-vertical-title {
+    display: none; /* Oculto em ecrãs pequenos por defeito */
+}
+
+.cv-main-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    position: relative;
+}
+
+.cv-left-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.cv-avatar-card {
+    width: 100%;
+}
+
+.cv-profile-avatar {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 60px 20px 60px 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.cv-summary-card {
+    background-color: var(--charcoal);
+    color: #FFFFFF;
+    padding: 3.5rem 2.5rem 2.5rem 2.5rem;
+    border-radius: 30px 10px 30px 10px;
+    position: relative;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.cv-quote-mark {
+    font-family: var(--font-heading);
+    font-size: 6rem;
+    font-weight: 800;
+    color: var(--brand-mustard);
+    line-height: 0.1;
+    position: absolute;
+    top: 1.8rem;
+    left: 2rem;
+    opacity: 0.9;
+}
+
+.cv-summary-text {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    text-align: justify;
+    color: #F3F4F6;
+    margin-top: 1rem;
+}
+
+.cv-skills-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 2.5rem;
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.cv-card-subtitle {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 1.5rem;
+    color: var(--charcoal);
+    position: relative;
+}
+
+.cv-card-subtitle::after {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 2px;
+    background-color: var(--brand-blue);
+    margin-top: 6px;
+}
+
+.cv-skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.cv-skills-list .skill-tag {
+    background-color: var(--brand-white);
+    border: 1px solid var(--border-color);
+    color: var(--charcoal);
+    padding: 0.45rem 0.9rem;
+    border-radius: 4px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: var(--transition-smart);
+}
+
+.cv-skills-list .skill-tag:hover {
+    border-color: var(--brand-blue);
+    color: var(--brand-blue);
+    background-color: rgba(0, 88, 163, 0.03);
+    transform: translateY(-1px);
+}
+
+.cv-right-col {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.cv-header-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cv-header-block .cv-profile-name {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--charcoal);
+    letter-spacing: -2px;
+}
+
+.cv-header-block .cv-profile-title {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--brand-blue);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-top: 4px;
+}
+
+.cv-contacts-card {
+    background-color: var(--charcoal);
+    color: #FFFFFF;
+    padding: 2.2rem;
+    border-radius: 10px 40px 10px 40px;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+}
+
+.cv-arrow-accent {
+    font-size: 2.5rem;
+    color: var(--brand-mustard);
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.cv-contacts-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex-grow: 1;
+}
+
+.cv-contacts-badge {
+    background-color: var(--brand-blue);
+    color: #FFFFFF;
+    font-family: var(--font-heading);
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 0.3rem 0.9rem;
+    border-radius: 20px;
+    align-self: flex-start;
+}
+
+.cv-contact-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem 2rem;
+}
+
+.cv-contact-list .contact-item {
+    color: #E5E7EB;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cv-details-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+}
+
+.cv-details-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.cv-details-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--charcoal);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.cv-timeline-new {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.cv-timeline-new .timeline-item {
+    position: relative;
+    padding-left: 0;
+}
+
+.cv-timeline-new .timeline-dot {
+    display: none; /* Layout limpo sem os pontos laterais */
+}
+
+.cv-timeline-new .timeline-date {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--brand-blue);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 6px;
+}
+
+.cv-timeline-new .timeline-role {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    line-height: 1.3;
+}
+
+.cv-timeline-new .timeline-company {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cv-timeline-new .timeline-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    text-align: justify;
+}
+
+/* Responsividade de ecrãs maiores */
+@media (min-width: 768px) {
+    .cv-new-layout {
+        padding-left: 90px;
+    }
+    
+    .cv-vertical-title {
+        display: block;
+        font-family: var(--font-heading);
+        font-size: 4.5rem;
+        font-weight: 800;
+        color: rgba(51, 51, 51, 0.08); /* Marca de água lateral */
+        text-transform: uppercase;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        white-space: nowrap;
+        position: absolute;
+        left: 0;
+        bottom: 2rem;
+        user-select: none;
+    }
+    
+    .cv-main-grid {
+        grid-template-columns: 1fr 2fr;
+    }
+}
+
+@media (min-width: 1024px) {
+    .cv-details-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .cv-contact-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

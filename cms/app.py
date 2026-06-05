@@ -187,58 +187,73 @@ def compile_cv_html(cv):
                                 <p class="timeline-desc">{edu.get('desc', '')}</p>
                             </div>"""
         
-    cv_html = f"""<div class="cv-grid">
-                <!-- Sidebar: Informações Pessoais e Competências -->
-                <aside class="cv-sidebar">
-                    <div class="flex flex-col items-center">
-                        <img class="profile-avatar" src="{avatar_src}" alt="{nome}">
-                        <h2 class="profile-name">{nome}</h2>
-                        <div class="profile-title">{titulo}</div>
-                    </div>
-                    
-                    <div>
-                        <h3 class="cv-section-title">Contacto</h3>
-                        <div class="smart-divider"></div>
-                        <ul class="contact-list">
-                            {contacts_html}
-                        </ul>
-                    </div>
-                    
-                    <div>
-                        <h3 class="cv-section-title">Competências</h3>
-                        <div class="smart-divider"></div>
-                        <div class="skills-container">
-                            {skills_html}
-                        </div>
-                    </div>
-                </aside>
+    cv_html = f"""<div class="cv-new-layout">
+                <!-- Left rotated title "CURRICULO" -->
+                <div class="cv-vertical-title">CURRICULO</div>
                 
-                <!-- Conteúdo Principal: Experiência e Educação -->
-                <main class="cv-main">
-                    <div>
-                        <h3 class="cv-section-title">Resumo Profissional</h3>
-                        <div class="smart-divider"></div>
-                        <p class="text-charcoal text-sm leading-relaxed text-justify mb-8">
-                            {cv.get('resumo', '')}
-                        </p>
-                    </div>
-                    
-                    <div>
-                        <h3 class="cv-section-title">Experiência Profissional</h3>
-                        <div class="smart-divider"></div>
-                        <div class="timeline">
-                            {exp_html}
+                <!-- Main content grid -->
+                <div class="cv-main-grid">
+                    <!-- Left Column -->
+                    <div class="cv-left-col">
+                        <!-- Avatar Frame -->
+                        <div class="cv-avatar-card">
+                            <img class="cv-profile-avatar" src="{avatar_src}" alt="{nome}">
+                        </div>
+                        
+                        <!-- Summary Card (Dark Background) -->
+                        <div class="cv-summary-card">
+                            <div class="cv-quote-mark">“</div>
+                            <p class="cv-summary-text">{cv.get('resumo', '')}</p>
+                        </div>
+                        
+                        <!-- Skills Card -->
+                        <div class="cv-skills-card">
+                            <h3 class="cv-card-subtitle">Competências</h3>
+                            <div class="cv-skills-list">
+                                {skills_html}
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="mt-8">
-                        <h3 class="cv-section-title">Formação</h3>
-                        <div class="smart-divider"></div>
-                        <div class="timeline">
-                            {edu_html}
+                    <!-- Right Column -->
+                    <div class="cv-right-col">
+                        <!-- Name & Title -->
+                        <div class="cv-header-block">
+                            <h2 class="cv-profile-name">{nome}</h2>
+                            <div class="cv-profile-title">{titulo}</div>
+                        </div>
+                        
+                        <!-- Contacts Pill Box (Dark Background) -->
+                        <div class="cv-contacts-card">
+                            <div class="cv-arrow-accent">→</div>
+                            <div class="cv-contacts-info">
+                                <span class="cv-contacts-badge">Contacto</span>
+                                <ul class="cv-contact-list">
+                                    {contacts_html}
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Details Grid (Experience & Education Side-by-Side) -->
+                        <div class="cv-details-grid">
+                            <!-- Column 1: Education -->
+                            <div class="cv-details-col">
+                                <h3 class="cv-details-title">Formação</h3>
+                                <div class="cv-timeline-new">
+                                    {edu_html}
+                                </div>
+                            </div>
+                            
+                            <!-- Column 2: Experience -->
+                            <div class="cv-details-col">
+                                <h3 class="cv-details-title">Experiência</h3>
+                                <div class="cv-timeline-new">
+                                    {exp_html}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </main>
+                </div>
             </div>"""
     return cv_html
 
