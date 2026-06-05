@@ -1,10 +1,10 @@
 {
     "curriculo": {
-        "nome": "Marcelo Lacerda",
+        "nome": "Marcelo de Melo Lacerda ",
         "titulo": "Engenheiro de Software & Designer 3D",
-        "email": "marcelo.lacerda@exemplo.com",
+        "email": "marcelo.melo.lacerda@gmail.com",
         "github": "github.com/mlacerdapt",
-        "localizacao": "Porto, Portugal",
+        "localizacao": "Viana do Castelo, Portugal",
         "avatar": "https://api.dicebear.com/7.x/identicon/svg?seed=mlacerda",
         "resumo": "Engenheiro de Software Sénior com mais de 8 anos de experiência no desenvolvimento de aplicações eficientes e automatizações industriais. Paralelamente, atuo no design de réplicas físicas e virtuais de monumentos, combinando modelação tridimensional precisa, fabrico digital via impressão 3D e renderização fotorrealista.",
         "skills": "Python & Flask, SQL & SQLite, Tailwind CSS, Impressão 3D, Slicing (Cura/PrusaSlicer), Modelação (Blender), Renderização (Cycles/V-Ray), Layout & Grelhas",
