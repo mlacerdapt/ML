@@ -999,6 +999,11 @@ def local_image():
 def serve_root_css():
     return send_file(os.path.join(ROOT_DIR, 'portfolio_style.css'))
 
+# ROUTE: Serve i18n translation script for local previews
+@app.route('/portfolio_i18n.js')
+def serve_i18n_js():
+    return send_file(os.path.join(ROOT_DIR, 'portfolio_i18n.js'))
+
 # ROUTE: Serve the compiled master portfolio/curriculum hub
 @app.route('/portfolio')
 def serve_portfolio_hub():

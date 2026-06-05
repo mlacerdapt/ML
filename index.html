@@ -44,11 +44,25 @@
             <h1 class="portfolio-logo">ML Portfólio</h1>
             <p class="portfolio-subtitle">Galeria de Criações Estáticas e Ficha Curricular</p>
             
-            <!-- Tab Switcher -->
-            <nav class="tabs-navigation">
-                <button class="tab-trigger active" onclick="switchMainTab('tab-portfolio', this)">Portfólio</button>
-                <button class="tab-trigger" onclick="switchMainTab('tab-curriculo', this)">Currículo</button>
-            </nav>
+            <!-- Tab Switcher + Language Bar -->
+            <div class="header-controls">
+                <nav class="tabs-navigation">
+                    <button class="tab-trigger active" onclick="switchMainTab('tab-portfolio', this)">Portfólio</button>
+                    <button class="tab-trigger" onclick="switchMainTab('tab-curriculo', this)">Currículo</button>
+                </nav>
+                <!-- Language Switcher -->
+                <div class="lang-bar no-print" id="lang-bar" role="toolbar" aria-label="Language selector">
+                    <button class="lang-btn active" data-lang="pt" onclick="switchLang('pt')" title="Português">
+                        <span class="lang-flag">🇵🇹</span><span class="lang-code">PT</span>
+                    </button>
+                    <button class="lang-btn" data-lang="en" onclick="switchLang('en')" title="English">
+                        <span class="lang-flag">🇬🇧</span><span class="lang-code">EN</span>
+                    </button>
+                    <button class="lang-btn" data-lang="es" onclick="switchLang('es')" title="Español">
+                        <span class="lang-flag">🇪🇸</span><span class="lang-code">ES</span>
+                    </button>
+                </div>
+            </div>
         </header>
         
         <!-- PANE 1: Portfólio -->
@@ -534,5 +548,6 @@ Em paralelo, atua de forma empreendedora como desenvolvedor de software independ
             });
         });
     </script>
+    <script src="portfolio_i18n.js"></script>
 </body>
 </html>
