@@ -98,10 +98,11 @@ Em paralelo, atua de forma empreendedora como desenvolvedor de software independ
                         
                         <div class="cv-sidebar-section">
                             <h3 class="cv-sidebar-section-title">Contacto</h3>
-                            <ul class="cv-contact-items-list">
-                                <li class="contact-li">📧 <span class="contact-txt">marcelo.melo.lacerda@gmail.com</span></li>
-                                <li class="contact-li">🔗 <span class="contact-txt">github.com/mlacerdapt</span></li>
-                                <li class="contact-li">📍 <span class="contact-txt">Viana do Castelo, Portugal</span></li>
+                            <ul class="cv-contact-items-list">                                <li class="contact-li">📧 <a class="contact-txt contact-link" href="mailto:marcelo.melo.lacerda@gmail.com">marcelo.melo.lacerda@gmail.com</a></li>
+<li class="contact-li">🔗 <a class="contact-txt contact-link" href="https://github.com/mlacerdapt" target="_blank" rel="noopener">github.com/mlacerdapt</a></li>
+<li class="contact-li">📱 <a class="contact-txt contact-link" href="https://wa.me/351924089174" target="_blank" rel="noopener">+351924089174</a></li>
+<li class="contact-li">📍 <a class="contact-txt contact-link" href="https://www.google.com/maps/place//@41.7051228,-8.8176067,17z?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">Viana do Castelo, Portugal</a></li>
+
                             </ul>
                         </div>
                     </div>
@@ -192,6 +193,22 @@ Em paralelo, atua de forma empreendedora como desenvolvedor de software independ
             document.getElementById(tabId).classList.add("active");
             triggerBtn.classList.add("active");
         }
+
+        // Print helper: ensure CV tab is active before printing
+        function printCV() {
+            const curricBtn = document.querySelector('button[onclick*="tab-curriculo"]');
+            const wasActive = document.getElementById('tab-curriculo').classList.contains('active');
+            if (!wasActive && curricBtn) switchMainTab('tab-curriculo', curricBtn);
+            window.print();
+        }
+
+        // Intercept Ctrl+P / Cmd+P to also activate the CV tab
+        window.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault();
+                printCV();
+            }
+        });
         
         // Category Filters implementation
         document.addEventListener("DOMContentLoaded", () => {

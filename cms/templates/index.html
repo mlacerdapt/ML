@@ -318,6 +318,10 @@
                                     <label for="cv_localizacao">Localização (Cidade, País)</label>
                                     <input type="text" name="localizacao" id="cv_localizacao" value="{{ curriculo.localizacao }}">
                                 </div>
+                                <div class="form-group col-3">
+                                    <label for="cv_localizacao_maps_url">Link Google Maps da Localização</label>
+                                    <input type="text" name="localizacao_maps_url" id="cv_localizacao_maps_url" value="{{ curriculo.localizacao_maps_url or '' }}" placeholder="https://maps.google.com/?q=...">
+                                </div>
                                 <div class="form-group col-12" style="margin-top: 8px;">
                                     <label>Redes Sociais do Currículo</label>
                                     <div id="cv-social-links-container" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px;">

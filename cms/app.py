@@ -268,10 +268,31 @@ def compile_cv_html(cv):
                         
                         <div class="cv-sidebar-section">
                             <h3 class="cv-sidebar-section-title">Contacto</h3>
-                            <ul class="cv-contact-items-list">
-                                {f'<li class="contact-li">📧 <span class="contact-txt">{cv.get("email")}</span></li>' if cv.get('email') else ''}
-                                {f'<li class="contact-li">🔗 <span class="contact-txt">{cv.get("github")}</span></li>' if cv.get('github') else ''}
-                                {f'<li class="contact-li">📍 <span class="contact-txt">{cv.get("localizacao")}</span></li>' if cv.get('localizacao') else ''}
+                            <ul class="cv-contact-items-list">"""
+
+    # Build contact items cleanly to avoid nested f-string issues
+    _email = cv.get('email', '')
+    _github = cv.get('github', '')
+    _telefone = cv.get('telefone', '')
+    _localizacao = cv.get('localizacao', '')
+    _maps_url = cv.get('localizacao_maps_url', '') or (
+        'https://www.google.com/maps/search/?api=1&query=' + _localizacao.replace(' ', '+')
+        if _localizacao else ''
+    )
+    _github_clean = _github.replace('https://github.com/', '').replace('github.com/', '')
+    _tel_clean = _telefone.replace(' ', '').replace('+', '').replace('-', '')
+
+    contact_html = ''
+    if _email:
+        contact_html += f'<li class="contact-li">📧 <a class="contact-txt contact-link" href="mailto:{_email}">{_email}</a></li>\n'
+    if _github:
+        contact_html += f'<li class="contact-li">🔗 <a class="contact-txt contact-link" href="https://github.com/{_github_clean}" target="_blank" rel="noopener">{_github}</a></li>\n'
+    if _telefone:
+        contact_html += f'<li class="contact-li">📱 <a class="contact-txt contact-link" href="https://wa.me/{_tel_clean}" target="_blank" rel="noopener">{_telefone}</a></li>\n'
+    if _localizacao:
+        contact_html += f'<li class="contact-li">📍 <a class="contact-txt contact-link" href="{_maps_url}" target="_blank" rel="noopener">{_localizacao}</a></li>\n'
+
+    cv_html_part2 = f"""                                {contact_html}
                             </ul>
                         </div>
                     </div>
@@ -313,7 +334,8 @@ def compile_cv_html(cv):
                     </section>
                 </main>
             </div>"""
-    return cv_html
+    return cv_html + cv_html_part2
+
 
 # Rebuilds root index.html grid mapping all Public projects and CV
 def rebuild_master_hub():
@@ -884,7 +906,9 @@ def save_cv():
         'titulo': request.form.get('titulo'),
         'email': request.form.get('email'),
         'github': request.form.get('github'),
+        'telefone': request.form.get('telefone', '').strip(),
         'localizacao': request.form.get('localizacao'),
+        'localizacao_maps_url': request.form.get('localizacao_maps_url', '').strip(),
         'avatar': avatar_url,
         'resumo': request.form.get('resumo'),
         'skills': request.form.get('skills') or "",

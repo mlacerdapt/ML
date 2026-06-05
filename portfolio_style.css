@@ -1028,6 +1028,17 @@ body {
     word-break: break-all;
 }
 
+.contact-link {
+    color: inherit;
+    text-decoration: none;
+    transition: opacity var(--transition-smart);
+}
+
+.contact-link:hover {
+    opacity: 0.75;
+    text-decoration: underline;
+}
+
 /* Main Content Column */
 .cv-split-main {
     padding: 3rem 2rem;
@@ -1305,6 +1316,40 @@ body {
 }
 
 /* ==========================================================================
+   PRINT ACTION BAR (screen only)
+   ========================================================================== */
+
+.cv-print-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.cv-print-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--brand-blue);
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.55rem 1.25rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: var(--transition-smart);
+    box-shadow: 0 4px 14px rgba(0, 88, 163, 0.25);
+}
+
+.cv-print-btn:hover {
+    background: #00468a;
+    box-shadow: 0 6px 20px rgba(0, 88, 163, 0.35);
+    transform: translateY(-1px);
+}
+
+/* ==========================================================================
    QR CODE BLOCK (visible on screen & in print)
    ========================================================================== */
 
@@ -1396,7 +1441,9 @@ body {
     #tab-portfolio,
     .filters-container,
     .tabs-navigation,
-    .lightbox-overlay {
+    .lightbox-overlay,
+    .no-print,
+    .cv-print-bar {
         display: none !important;
     }
 
