@@ -246,7 +246,10 @@ def compile_cv_html(cv):
                                 </div>
                             </div>"""
         
-    cv_html = f"""<div class="cv-modern-split">
+    cv_html = f"""<div class="cv-print-bar no-print">
+                <button class="cv-print-btn" onclick="printCV()">🖨️ Imprimir / Exportar PDF</button>
+            </div>
+            <div class="cv-modern-split">
                 <!-- Left Sidebar Column (Dark/Charcoal Background below photo) -->
                 <aside class="cv-split-sidebar">
                     <div class="cv-sidebar-header">
