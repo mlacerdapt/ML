@@ -1303,3 +1303,291 @@ body {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+/* ==========================================================================
+   QR CODE BLOCK (visible on screen & in print)
+   ========================================================================== */
+
+.cv-print-qr-block {
+    display: none; /* Hidden on screen by default; shown in print via @media print */
+    margin-top: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--card-bg);
+    padding: 1.25rem 1.75rem;
+}
+
+.cv-print-qr-inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.cv-qr-image {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 4px;
+    background: #fff;
+}
+
+.cv-qr-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.cv-qr-label {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+}
+
+.cv-qr-link {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--brand-blue);
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.cv-qr-caption {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   PRINT STYLESHEET  – @media print
+   ========================================================================== */
+
+@media print {
+
+    /* --- Page setup -------------------------------------------------------- */
+    @page {
+        size: A4 portrait;
+        margin: 12mm 10mm 14mm 10mm;
+    }
+
+    /* --- Base reset for print ---------------------------------------------- */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
+    body {
+        background: #fff !important;
+        color: #333 !important;
+        font-size: 10pt;
+        line-height: 1.5;
+    }
+
+    /* --- Hide everything that is NOT the CV -------------------------------- */
+    .portfolio-header,
+    .portfolio-footer,
+    .tab-pane:not(#tab-curriculo),
+    #tab-portfolio,
+    .filters-container,
+    .tabs-navigation,
+    .lightbox-overlay {
+        display: none !important;
+    }
+
+    /* --- Wrapper: remove padding / max-width limits ------------------------ */
+    .portfolio-wrapper {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        gap: 0 !important;
+    }
+
+    /* --- Force the CV tab pane visible ------------------------------------- */
+    #tab-curriculo {
+        display: block !important;
+        animation: none !important;
+    }
+
+    /* --- CV outer container: full width, no extra margin ------------------- */
+    .cv-modern-split {
+        display: grid !important;
+        grid-template-columns: 210pt 1fr !important; /* ~37% / 63% on A4 */
+        gap: 0 !important;
+        width: 100% !important;
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        margin-top: 0 !important;
+        overflow: visible !important;
+        page-break-inside: avoid;
+    }
+
+    /* --- Sidebar ----------------------------------------------------------- */
+    .cv-split-sidebar {
+        border-right: 1pt solid #E0E0E0 !important;
+    }
+
+    .cv-sidebar-header {
+        padding: 1.5rem 1.2rem 1rem !important;
+    }
+
+    .cv-name-display {
+        font-size: 1.5rem !important;
+    }
+
+    .cv-photo-container {
+        height: 200pt !important;
+    }
+
+    .cv-sidebar-dark-content {
+        padding: 1.5rem 1.2rem !important;
+        gap: 1.5rem !important;
+        background-color: #333333 !important;
+        color: #ffffff !important;
+    }
+
+    .cv-about-text {
+        font-size: 7.5pt !important;
+    }
+
+    .contact-li {
+        font-size: 7.5pt !important;
+    }
+
+    /* --- Main content area ------------------------------------------------- */
+    .cv-split-main {
+        padding: 1.5rem 1.5rem !important;
+        gap: 1.5rem !important;
+    }
+
+    /* --- Section headers --------------------------------------------------- */
+    .cv-section-title-text {
+        font-size: 9pt !important;
+    }
+
+    /* --- Timeline ---------------------------------------------------------- */
+    .timeline-row-item {
+        grid-template-columns: 70pt 20pt 1fr !important;
+    }
+
+    .timeline-left-date {
+        font-size: 7pt !important;
+    }
+
+    .timeline-description-text {
+        font-size: 7.5pt !important;
+        line-height: 1.4 !important;
+    }
+
+    .timeline-title-company {
+        font-size: 8.5pt !important;
+    }
+
+    /* --- Skills section ---------------------------------------------------- */
+    .cv-skills-category-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .skill-radial-item {
+        padding: 0.35rem 0.6rem !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .skill-radial-name {
+        font-size: 7.5pt !important;
+    }
+
+    .skill-radial-desc {
+        font-size: 6.5pt !important;
+    }
+
+    .skill-radial-chart {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    /* --- Page break rules -------------------------------------------------- */
+    /* Keep each main CV section together; allow breaks BETWEEN sections */
+    .cv-main-section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .cv-skills-radial-wrapper {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .timeline-right-content {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    /* Force a page break before the Skills section so it starts fresh */
+    .cv-main-section:nth-child(3) {
+        break-before: page;
+        page-break-before: always;
+    }
+
+    /* --- QR Code block on last page --------------------------------------- */
+    .cv-print-qr-block {
+        display: block !important;
+        break-before: page;
+        page-break-before: always;
+        border: 1pt solid #E0E0E0 !important;
+        border-radius: 4pt !important;
+        padding: 14pt 20pt !important;
+        margin-top: 0 !important;
+        background: #ffffff !important;
+    }
+
+    .cv-print-qr-inner {
+        display: flex !important;
+        align-items: center !important;
+        gap: 20pt !important;
+    }
+
+    .cv-qr-image {
+        width: 90pt !important;
+        height: 90pt !important;
+    }
+
+    .cv-qr-label {
+        font-size: 7pt !important;
+        color: #6B7280 !important;
+    }
+
+    .cv-qr-link {
+        font-size: 11pt !important;
+        color: #0058A3 !important;
+        text-decoration: underline !important;
+    }
+
+    .cv-qr-caption {
+        font-size: 7.5pt !important;
+        color: #6B7280 !important;
+    }
+
+    /* --- Remove animations & hover effects in print ------------------------ */
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    /* Print links as plain text except QR link */
+    a:not(.cv-qr-link) {
+        color: inherit !important;
+    }
+}
+
