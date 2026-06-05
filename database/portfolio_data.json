@@ -1,13 +1,13 @@
 {
     "curriculo": {
         "nome": "Marcelo de Melo Lacerda ",
-        "titulo": "Engenheiro de Software & Designer 3D",
+        "titulo": "Técnico de Planeiamento",
         "email": "marcelo.melo.lacerda@gmail.com",
         "github": "github.com/mlacerdapt",
         "localizacao": "Viana do Castelo, Portugal",
         "avatar": "uploads/profile_avatar.png",
         "resumo": "Engenheiro de Software Sénior com mais de 8 anos de experiência no desenvolvimento de aplicações eficientes e automatizações industriais. Paralelamente, atuo no design de réplicas físicas e virtuais de monumentos, combinando modelação tridimensional precisa, fabrico digital via impressão 3D e renderização fotorrealista.",
-        "skills": "Python & Flask, SQL & SQLite, Tailwind CSS, Impressão 3D, Slicing (Cura/PrusaSlicer), Modelação (Blender), Renderização (Cycles/V-Ray), Layout & Grelhas",
+        "skills": "Python & Flask,  Análise de Dados (Pandas),  Automação de Processos (RPA) , SAP (ERP & MES), Microsoft Excel (VBA & Macros), Power BI (Dashboards & KPIs), Gestão de Estoque & Working Capital, Controle de Qualidade (Metrologia), Protocolo Digital & Indústria 4.0",
         "experiencias": [
             {
                 "date": "2023 - Presente",
