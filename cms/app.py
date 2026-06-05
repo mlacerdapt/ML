@@ -761,35 +761,52 @@ def save_project():
 def save_cv():
     db = load_db()
     
+    # Handle profile avatar image upload
+    avatar_url = request.form.get('avatar')
+    avatar_file = request.files.get('avatar_file')
+    if avatar_file and avatar_file.filename:
+        _, ext = os.path.splitext(avatar_file.filename)
+        if ext.lower() in ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg']:
+            uploads_dir = os.path.join(ROOT_DIR, 'uploads')
+            os.makedirs(uploads_dir, exist_ok=True)
+            # Remove old avatar files to prevent file pollution in Git
+            for old_file in os.listdir(uploads_dir):
+                if old_file.startswith('profile_avatar.'):
+                    try:
+                        os.remove(os.path.join(uploads_dir, old_file))
+                    except Exception as e:
+                        print(f"Error removing old avatar file: {e}")
+            filename = f"profile_avatar{ext.lower()}"
+            avatar_path = os.path.join(uploads_dir, filename)
+            avatar_file.save(avatar_path)
+            avatar_url = f"uploads/{filename}"
+
+    # Handle dynamic experiences
+    exp_dates = request.form.getlist('exp_date[]')
+    exp_roles = request.form.getlist('exp_role[]')
+    exp_companies = request.form.getlist('exp_company[]')
+    exp_descs = request.form.getlist('exp_desc[]')
+    
+    experiencias = []
+    for date, role, company, desc in zip(exp_dates, exp_roles, exp_companies, exp_descs):
+        if date.strip() or role.strip() or company.strip() or desc.strip():
+            experiencias.append({
+                'date': date.strip(),
+                'role': role.strip(),
+                'company': company.strip(),
+                'desc': desc.strip()
+            })
+    
     curriculo = {
         'nome': request.form.get('nome'),
         'titulo': request.form.get('titulo'),
         'email': request.form.get('email'),
         'github': request.form.get('github'),
         'localizacao': request.form.get('localizacao'),
-        'avatar': request.form.get('avatar'),
+        'avatar': avatar_url,
         'resumo': request.form.get('resumo'),
         'skills': request.form.get('skills'),
-        'experiencias': [
-            {
-                'date': request.form.get('exp1_date'),
-                'role': request.form.get('exp1_role'),
-                'company': request.form.get('exp1_company'),
-                'desc': request.form.get('exp1_desc')
-            },
-            {
-                'date': request.form.get('exp2_date'),
-                'role': request.form.get('exp2_role'),
-                'company': request.form.get('exp2_company'),
-                'desc': request.form.get('exp2_desc')
-            },
-            {
-                'date': request.form.get('exp3_date'),
-                'role': request.form.get('exp3_role'),
-                'company': request.form.get('exp3_company'),
-                'desc': request.form.get('exp3_desc')
-            }
-        ],
+        'experiencias': experiencias,
         'educacao': [
             {
                 'date': request.form.get('edu1_date'),
@@ -806,8 +823,7 @@ def save_cv():
         ]
     }
     
-    # Filter empty rows
-    curriculo['experiencias'] = [e for e in curriculo['experiencias'] if e['date'] or e['role'] or e['company']]
+    # Filter empty rows for education (experiences already handled dynamically)
     curriculo['educacao'] = [ed for ed in curriculo['educacao'] if ed['date'] or ed['role'] or ed['company']]
     
     db['curriculo'] = curriculo
@@ -839,6 +855,12 @@ def publish_project(project_id):
         return jsonify({'success': True, 'message': 'Página gerada e sincronização iniciada.'})
     else:
         return jsonify({'success': False, 'message': f'Falha ao gerar página: {err}'}), 500
+
+# ROUTE: Serve uploaded avatar/files locally
+@app.route('/uploads/<path:filename>')
+def serve_uploads(filename):
+    uploads_dir = os.path.join(ROOT_DIR, 'uploads')
+    return send_from_directory(uploads_dir, filename)
 
 # ROUTE: Safe local disk file image server
 @app.route('/local-image')

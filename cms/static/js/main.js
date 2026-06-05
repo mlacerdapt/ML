@@ -31,6 +31,53 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Lógica para Experiências Dinâmicas no Currículo
+    window.addExperienceRow = function(date = "", role = "", company = "", desc = "") {
+        const container = document.getElementById("cv-experiencias-container");
+        if (!container) return;
+        const row = document.createElement("div");
+        row.className = "cv-experience-row";
+        row.style.cssText = "background: var(--bg-base); border: 1px solid var(--border-color); border-radius: 4px; padding: 20px; position: relative;";
+        row.innerHTML = `
+            <button type="button" class="btn-remove-experience" style="position: absolute; right: 10px; top: 10px; background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 2px; cursor: pointer; font-size: 0.75rem; font-weight: bold; transition: var(--transition-smart);">Remover</button>
+            <div class="form-grid">
+                <div class="form-group col-3">
+                    <label>Período</label>
+                    <input type="text" name="exp_date[]" value="${date}" placeholder="Ex: 2023 - Presente">
+                </div>
+                <div class="form-group col-4">
+                    <label>Cargo</label>
+                    <input type="text" name="exp_role[]" value="${role}" placeholder="Ex: Software Engineer">
+                </div>
+                <div class="form-group col-5">
+                    <label>Empresa</label>
+                    <input type="text" name="exp_company[]" value="${company}" placeholder="Ex: ENERCON">
+                </div>
+                <div class="form-group col-12">
+                    <label>Descrição das Atividades</label>
+                    <textarea name="exp_desc[]" style="min-height: 70px;">${desc}</textarea>
+                </div>
+            </div>
+        `;
+        row.querySelector(".btn-remove-experience").onclick = () => row.remove();
+        container.appendChild(row);
+    };
+
+    const btnAddExperience = document.getElementById("btn-add-experience");
+    if (btnAddExperience) {
+        btnAddExperience.addEventListener("click", () => {
+            addExperienceRow();
+        });
+    }
+
+    // Associar eventos aos botões de remoção das experiências já existentes (geradas pelo Jinja)
+    const existingRemoveBtns = document.querySelectorAll("#cv-experiencias-container .btn-remove-experience");
+    existingRemoveBtns.forEach(btn => {
+        btn.onclick = (e) => {
+            e.target.closest(".cv-experience-row").remove();
+        };
+    });
+
     // 1. Tab Switching Logic
     const tabButtons = document.querySelectorAll(".tab-btn");
     const tabContents = document.querySelectorAll(".tab-content");
