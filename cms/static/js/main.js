@@ -41,17 +41,17 @@ document.addEventListener("DOMContentLoaded", () => {
         row.innerHTML = `
             <button type="button" class="btn-remove-experience" style="position: absolute; right: 10px; top: 10px; background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 2px; cursor: pointer; font-size: 0.75rem; font-weight: bold; transition: var(--transition-smart);">Remover</button>
             <div class="form-grid">
-                <div class="form-group col-3">
+                <div class="form-group col-4">
                     <label>Período</label>
                     <input type="text" name="exp_date[]" value="${date}" placeholder="Ex: 2023 - Presente">
                 </div>
-                <div class="form-group col-4">
-                    <label>Cargo</label>
-                    <input type="text" name="exp_role[]" value="${role}" placeholder="Ex: Software Engineer">
-                </div>
-                <div class="form-group col-5">
+                <div class="form-group col-8">
                     <label>Empresa</label>
                     <input type="text" name="exp_company[]" value="${company}" placeholder="Ex: ENERCON">
+                </div>
+                <div class="form-group col-12">
+                    <label>Cargo / Função</label>
+                    <input type="text" name="exp_role[]" value="${role}" placeholder="Ex: Software Engineer">
                 </div>
                 <div class="form-group col-12">
                     <label>Descrição das Atividades</label>

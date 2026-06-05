@@ -333,7 +333,7 @@
                                 </div>
                                 <div class="form-group col-12">
                                     <label for="cv_skills">Competências (Separadas por vírgula)</label>
-                                    <input type="text" name="skills" id="cv_skills" value="{{ curriculo.skills }}">
+                                    <textarea name="skills" id="cv_skills" style="min-height: 80px;" placeholder="Ex: Python & Flask, SQL & SQLite, Tailwind CSS...">{{ curriculo.skills }}</textarea>
                                 </div>
                                 
                                 <!-- Experiences -->
@@ -349,17 +349,17 @@
                                     <div class="cv-experience-row" style="background: var(--bg-base); border: 1px solid var(--border-color); border-radius: 4px; padding: 20px; position: relative;">
                                         <button type="button" class="btn-remove-experience" style="position: absolute; right: 10px; top: 10px; background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 2px; cursor: pointer; font-size: 0.75rem; font-weight: bold; transition: var(--transition-smart);">Remover</button>
                                         <div class="form-grid">
-                                            <div class="form-group col-3">
+                                            <div class="form-group col-4">
                                                 <label>Período</label>
                                                 <input type="text" name="exp_date[]" value="{{ exp.date }}" placeholder="Ex: 2023 - Presente">
                                             </div>
-                                            <div class="form-group col-4">
-                                                <label>Cargo</label>
-                                                <input type="text" name="exp_role[]" value="{{ exp.role }}" placeholder="Ex: Software Engineer">
-                                            </div>
-                                            <div class="form-group col-5">
+                                            <div class="form-group col-8">
                                                 <label>Empresa</label>
                                                 <input type="text" name="exp_company[]" value="{{ exp.company }}" placeholder="Ex: ENERCON">
+                                            </div>
+                                            <div class="form-group col-12">
+                                                <label>Cargo / Função</label>
+                                                <input type="text" name="exp_role[]" value="{{ exp.role }}" placeholder="Ex: Software Engineer">
                                             </div>
                                             <div class="form-group col-12">
                                                 <label>Descrição das Atividades</label>
@@ -374,38 +374,38 @@
                                 <div class="form-group col-12" style="margin-top: 16px;"><h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--accent);">🎓 Formação Académica</h3></div>
                                 
                                 <!-- Edu 1 -->
-                                <div class="form-group col-3">
+                                <div class="form-group col-4">
                                     <label>Edu 1: Período</label>
                                     <input type="text" name="edu1_date" value="{{ curriculo.educacao[0].date if curriculo.educacao|length > 0 else '' }}" placeholder="Ex: 2014 - 2019">
                                 </div>
-                                <div class="form-group col-4">
-                                    <label>Edu 1: Curso/Grau</label>
-                                    <input type="text" name="edu1_role" value="{{ curriculo.educacao[0].role if curriculo.educacao|length > 0 else '' }}" placeholder="Ex: Licenciatura em Engenharia">
-                                </div>
-                                <div class="form-group col-5">
-                                    <label>Edu 1: Instituição</label>
+                                <div class="form-group col-8">
+                                    <label>Instituição</label>
                                     <input type="text" name="edu1_company" value="{{ curriculo.educacao[0].company if curriculo.educacao|length > 0 else '' }}" placeholder="Ex: Universidade do Porto">
                                 </div>
+                                <div class="form-group col-12">
+                                    <label>Curso / Grau</label>
+                                    <input type="text" name="edu1_role" value="{{ curriculo.educacao[0].role if curriculo.educacao|length > 0 else '' }}" placeholder="Ex: Licenciatura em Engenharia">
+                                </div>
                                 <div class="form-group col-12" style="margin-bottom: 12px;">
-                                    <label>Edu 1: Detalhes</label>
+                                    <label>Detalhes</label>
                                     <textarea name="edu1_desc" style="min-height: 70px;">{{ curriculo.educacao[0].desc if curriculo.educacao|length > 0 else '' }}</textarea>
                                 </div>
 
                                 <!-- Edu 2 -->
-                                <div class="form-group col-3">
-                                    <label>Edu 2: Período</label>
-                                    <input type="text" name="edu2_date" value="{{ curriculo.educacao[1].date if curriculo.educacao|length > 1 else '' }}">
-                                </div>
                                 <div class="form-group col-4">
-                                    <label>Edu 2: Curso/Grau</label>
-                                    <input type="text" name="edu2_role" value="{{ curriculo.educacao[1].role if curriculo.educacao|length > 1 else '' }}">
+                                    <label>Edu 2: Período</label>
+                                    <input type="text" name="edu2_date" value="{{ curriculo.educacao[1].date if curriculo.educacao|length > 1 else '' }}" placeholder="Ex: 2019 - 2020">
                                 </div>
-                                <div class="form-group col-5">
-                                    <label>Edu 2: Instituição</label>
+                                <div class="form-group col-8">
+                                    <label>Instituição</label>
                                     <input type="text" name="edu2_company" value="{{ curriculo.educacao[1].company if curriculo.educacao|length > 1 else '' }}">
                                 </div>
                                 <div class="form-group col-12">
-                                    <label>Edu 2: Detalhes</label>
+                                    <label>Curso / Grau</label>
+                                    <input type="text" name="edu2_role" value="{{ curriculo.educacao[1].role if curriculo.educacao|length > 1 else '' }}">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label>Detalhes</label>
                                     <textarea name="edu2_desc" style="min-height: 70px;">{{ curriculo.educacao[1].desc if curriculo.educacao|length > 1 else '' }}</textarea>
                                 </div>
                             </div>
