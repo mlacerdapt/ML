@@ -930,8 +930,18 @@ def save_cv():
         ]
     }
     
+    # Parse CV social links (redes sociais do currículo)
+    cv_social_plataformas = request.form.getlist('cv_social_plataforma[]')
+    cv_social_urls = request.form.getlist('cv_social_url[]')
+    cv_social_links = []
+    for plataforma, url in zip(cv_social_plataformas, cv_social_urls):
+        if url.strip():
+            cv_social_links.append({'plataforma': plataforma.strip(), 'url': url.strip()})
+    curriculo['social_links'] = cv_social_links
+
     # Filter empty rows for education (experiences already handled dynamically)
     curriculo['educacao'] = [ed for ed in curriculo['educacao'] if ed['date'] or ed['role'] or ed['company']]
+
     
     db['curriculo'] = curriculo
     save_db(db)

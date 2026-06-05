@@ -45,6 +45,41 @@
                         "level": 3
                     }
                 ]
+            },
+            {
+                "category": "Criação de faróis operacionais, Dashboards & KPIs",
+                "items": [
+                    {
+                        "name": "Planeamento de Produção",
+                        "desc": "Controle e otimização de fluxo fabril",
+                        "level": 3.5
+                    },
+                    {
+                        "name": "Gestão de Stock & Working Capital",
+                        "desc": "Minimização de capital imobilizado",
+                        "level": 4
+                    },
+                    {
+                        "name": "Garantia da Qualidade",
+                        "desc": "Inspeção de produto e tratamento de desvios",
+                        "level": 5
+                    },
+                    {
+                        "name": "Metrologia Industrial",
+                        "desc": "Uso de paquímetro, nível a laser, trena digital",
+                        "level": 5
+                    },
+                    {
+                        "name": "Ensaios Térmicos DSC",
+                        "desc": "Verificação de cura de materiais compostos",
+                        "level": 3
+                    },
+                    {
+                        "name": "MES & Protocolo Digital",
+                        "desc": "Liderança e capacitação na transição tecnológica",
+                        "level": 4.5
+                    }
+                ]
             }
         ],
         "experiencias": [
@@ -62,6 +97,7 @@
                 "company": "Universidade do Porto",
                 "desc": "Foco em desenvolvimento de software corporativo, banco de dados relacional e arquitetura de sistemas distribuídos."
             }
-        ]
+        ],
+        "social_links": []
     }
 }
