@@ -814,16 +814,47 @@ def generate_client_page(project_id, project_data):
         if project_data.get('status') == 'Em andamento':
             serial_number += " [EM ANDAMENTO]"
 
-        # Resolve Map Link
-        maps_url = project_data.get('link_mapa', '').strip()
+        # Resolve Map Link — convert any normal Google Maps URL to embeddable format
+        maps_url_raw = project_data.get('link_mapa', '').strip()
+        maps_url = ''
+        if maps_url_raw:
+            if 'maps/embed' in maps_url_raw or 'output=embed' in maps_url_raw:
+                # Already an embed URL — use as-is
+                maps_url = maps_url_raw
+            elif 'google.com/maps' in maps_url_raw:
+                # Extract lat/lng coordinates from URL (e.g. @41.7093,-8.8252,15z)
+                import re as _re
+                coord_match = _re.search(r'@(-?\d+\.\d+),(-?\d+\.\d+),(\d+)', maps_url_raw)
+                if coord_match:
+                    lat = coord_match.group(1)
+                    lng = coord_match.group(2)
+                    zoom = coord_match.group(3)
+                    maps_url = f"https://maps.google.com/maps?q={lat},{lng}&z={zoom}&output=embed"
+                else:
+                    # No coordinates — use the URL as a search query
+                    import urllib.parse as _up
+                    maps_url = f"https://maps.google.com/maps?q={_up.quote(maps_url_raw)}&output=embed"
+            else:
+                maps_url = maps_url_raw
 
-        # Resolve Instagram Post URL
+        # Resolve Instagram link and extract real handle from URL
+        import re as _re2
         instagram_url = ""
+        instagram_handle = "@mlacerdapt"
         for sl in project_data.get('social_links', []):
             if sl.get('plataforma') == 'Instagram':
-                instagram_url = sl.get('url', '')
+                instagram_url = sl.get('url', '').strip()
+                if instagram_url:
+                    ig_m = _re2.search(r'instagram\.com/([^/?#\s]+)', instagram_url)
+                    if ig_m:
+                        h = ig_m.group(1).strip('/')
+                        if h and h not in ('p', 'reel', 'stories', 'explore', 'accounts'):
+                            instagram_handle = f"@{h}"
                 break
-            
+
+        # Use CV avatar
+        _cv_avatar = load_db().get('curriculo', {}).get('avatar') or "https://api.dicebear.com/7.x/identicon/svg?seed=mlacerdapt"
+
         config = {
             "status": project_data.get('status', 'Em andamento'),
             "hero": {
@@ -845,8 +876,8 @@ def generate_client_page(project_id, project_data):
             "mapsIframeUrl": maps_url,
             "socialLinks": project_data.get('social_links', []),
             "instagramPost": {
-                "authorHandle": "@mlacerdapt",
-                "authorAvatar": "https://api.dicebear.com/7.x/identicon/svg?seed=mlacerdapt",
+                "authorHandle": instagram_handle,
+                "authorAvatar": _cv_avatar,
                 "likesCount": f"Curtido por {project_data.get('horas', 0)}h investidas no projeto",
                 "captionText": f"Concluí mais um trabalho de {project_data.get('categoria')}: {project_data.get('titulo')}. Excelente resultado!",
                 "tags": " ".join([f"#{t.strip().replace('#','')}" for t in project_data.get('tags', '').split(',') if t.strip()]),
