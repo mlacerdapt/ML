@@ -305,9 +305,9 @@
                 "desc": "Adesão perfeita e nivelada ao póster de fundo, ausência de stringing ou marcas de suporte na carroçaria visível, e legibilidade absoluta da tipografia \"V8\" na conjugação com a sombra do carro."
             },
             {
-                "title": "Etapa de Pos-ImpressaoEtapa de Pos-ImpressaoEtapa de Etapa de Pos-ImpressaoP",
-                "image": "ML-3DP-26001_021.jpegML-3DP-26001_021.jpeg",
-                "desc": "Remocao de suportes adicionais e lixamentoRemocao de suportes adicionais e lixamento"
+                "title": "Etapa de Pos-Impressao",
+                "image": "ML-3DP-26001_021.jpeg",
+                "desc": "Remocao de suportes adicionais e lixamento"
             }
         ],
         "excluded_images": [
@@ -340,6 +340,10 @@
                 "tag": ""
             },
             "ML-3DP-26001_042.png": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26001_052.png": {
                 "caption": "",
                 "tag": ""
             },
@@ -460,6 +464,10 @@
                 "tag": ""
             },
             "ML-3DP-26001_002.jpg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26001_053.jpeg": {
                 "caption": "",
                 "tag": ""
             },
