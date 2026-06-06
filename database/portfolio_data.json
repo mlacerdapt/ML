@@ -277,7 +277,12 @@
         "path_processo": "IMG-20260417-WA0086.jpeg",
         "path_galeria": "",
         "link_mapa": "https://www.google.com/maps/place//@41.7093239,-8.8252509,15z?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D",
-        "social_links": [],
+        "social_links": [
+            {
+                "plataforma": "Instagram",
+                "url": "https://www.instagram.com/v8racing/"
+            }
+        ],
         "milestone1_title": "CONCEITO & BRIEFING",
         "milestone1_desc": "Estética (Foto de época do carro exato, Tipografia técnica/suíça para os textos)",
         "milestone1_image": "IMG-20260408-WA0058.jpg",
@@ -290,7 +295,9 @@
         "milestone4_title": "EXPOSIÇÃO & ENTREGA",
         "milestone4_desc": "Adesão perfeita e nivelada ao póster de fundo, ausência de stringing ou marcas de suporte na carroçaria visível, e legibilidade absoluta da tipografia \"V8\" na conjugação com a sombra do carro.",
         "milestone4_image": "IMG-20260417-WA0086.jpeg",
-        "excluded_images": [],
+        "excluded_images": [
+            "MVIMG_20260414_200453.jpg"
+        ],
         "maq_maquina": "Bambu Lab A1",
         "maq_material": "PLA Branco",
         "maq_peso": 79.0,
