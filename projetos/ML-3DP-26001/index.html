@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carregando... | ML Portfólio</title>
+    
+    <!-- Meta tags SEO -->
+    <meta name="description" content="Explore este projeto em miniatura 3D/design do portfólio de Marcelo Lacerda.">
+    <meta name="author" content="Marcelo Lacerda">
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBlue: '#0058A3',
+                        brandMustard: '#F7C846',
+                        brandWhite: '#F5F5F7',
+                        cardBg: '#ffffff',
+                        charcoal: '#333333',
+                        textMuted: '#6B7280',
+                        borderColor: '#E0E0E0',
+                    },
+                    fontFamily: {
+                        title: ['Montserrat', 'sans-serif'],
+                        sans: ['Lato', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Estilos Japandi Premium -->
+    <link rel="stylesheet" href="../../portfolio_style.css">
+</head>
+<body class="bg-brandWhite min-h-screen py-10 md:py-20 px-4 md:px-8 flex flex-col items-center">
+
+    <!-- OBJETO DE CONFIGURAÇÃO DINÂMICO (INJETADO PELO CMS) -->
+    <script>
+        const MONUMENT_CONFIG = {
+    "status": "Finalizado",
+    "hero": {
+        "title": "Quadro Comemorativo V8: Carro de Competição 3D",
+        "subtitle": "Modelagem e impressão 3D de um carro de competição clássico para fixação num quadro comemorativo (estilo shadow box). O ...",
+        "category": "Impressão 3D",
+        "serialNumber": "ID: ML-3DP-26001",
+        "locationText": "Bambu Lab A1",
+        "bgImage": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200"
+    },
+    "about": {
+        "title": "Sobre o Trabalho",
+        "description": "Modelagem e impressão 3D de um carro de competição clássico para fixação num quadro comemorativo (estilo shadow box). O design integra o veículo físico com um fundo gráfico (poster) referente ao ano de competição e ao grupo V8. O objetivo é criar um presente exclusivo e personalizado para Fernando Moura.",
+        "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200",
+        "metrics": [
+            {
+                "number": "79.0g",
+                "label": "Peso do material consumido"
+            },
+            {
+                "number": "4.0h",
+                "label": "Tempo de impressão física"
+            },
+            {
+                "number": "€3.98",
+                "label": "Custo estimado de fabricação"
+            }
+        ]
+    },
+    "milestones": [
+        {
+            "num": "01",
+            "title": "Conceito & Briefing",
+            "text": "Definição do escopo, recolha de referências e planeamento das especificações do projeto.",
+            "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500"
+        },
+        {
+            "num": "02",
+            "title": "Desenvolvimento Técnico",
+            "text": "Execução da modelação 3D, fatiamento, configurações de render ou grelha de layout.",
+            "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500"
+        },
+        {
+            "num": "03",
+            "title": "Produção & Acabamento",
+            "text": "Impressão física da peça, pós-processamento, composição ou renderização final.",
+            "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500"
+        },
+        {
+            "num": "04",
+            "title": "Exposição & Entrega",
+            "text": "Validação das métricas de qualidade, registo fotográfico e publicação no portfólio.",
+            "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500"
+        }
+    ],
+    "gallery": [
+        {
+            "url": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200",
+            "caption": "Apresentação Geral do Projeto",
+            "tag": "Projeto",
+            "spansLarge": true
+        }
+    ],
+    "mapsIframeUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.676644123!2d-8.625843!3d41.157943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd2465adc!2sPorto!5e0!3m2!1spt!2spt",
+    "socialLinks": [],
+    "instagramPost": {
+        "authorHandle": "@mlacerdapt",
+        "authorAvatar": "https://api.dicebear.com/7.x/identicon/svg?seed=mlacerdapt",
+        "likesCount": "Curtido por 0.0h investidas no projeto",
+        "captionText": "Concluí mais um trabalho de Impressão 3D: Quadro Comemorativo V8: Carro de Competição 3D. Excelente resultado!",
+        "tags": "#Impressao3D #Modelagem3D #Automobilismo #QuadroDecorativo",
+        "date": "06 DE JUNE DE 2026",
+        "postUrl": ""
+    }
+};
+    </script>
+
+    <!-- CONTAINER CENTRAL (ESTILO EXPOSIÇÃO / APRESENTAÇÃO ARQUITETÔNICA) -->
+    <main class="w-full max-w-4xl flex flex-col gap-12 relative">
+
+        <!-- BOTÃO DE VOLTAR AO PORTFÓLIO -->
+        <div class="w-full text-left">
+            <a href="../../index.html" class="inline-flex items-center gap-2 font-title font-bold text-xs text-brandBlue uppercase tracking-widest hover:underline">
+                ← Voltar ao Portfólio
+            </a>
+        </div>
+
+        <!-- 1. HERO SLIDE (CAPA) -->
+        <header id="js-hero-slide" class="hero-slide w-full">
+            <!-- Selo Visual de Status -->
+            <div id="js-status-badge-wrapper" class="absolute top-6 right-6 z-10 hidden">
+                <span class="bg-brandMustard text-charcoal font-title font-bold text-xs px-3 py-1 rounded-sm uppercase tracking-widest shadow-md border border-charcoal/10">
+                    ⚠️ Em Andamento
+                </span>
+            </div>
+            <div class="hero-slide-content">
+                <div class="mb-4 flex items-center gap-3">
+                    <span id="js-hero-badge" class="exhibition-tag">Carregando...</span>
+                    <span id="js-hero-serial" class="text-xs font-title font-bold text-brandMustard tracking-widest uppercase">000/000</span>
+                </div>
+                <h1 id="js-hero-title" class="hero-main-title my-2">
+                    <!-- Título dinâmico -->
+                </h1>
+                <h2 id="js-hero-subtitle" class="hero-sub-title mb-6">
+                    <!-- Subtítulo dinâmico -->
+                </h2>
+                <div class="smart-divider-mustard"></div>
+                <p id="js-hero-location" class="font-title text-xs tracking-widest uppercase text-white/95 mt-4">
+                    <!-- Localização -->
+                </p>
+            </div>
+        </header>
+
+        <!-- 2. SLIDE SOBRE & FATOS (METRICS) -->
+        <section id="about-section" class="exhibition-card w-full">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                <div>
+                    <h2 id="js-about-title" class="museum-title">Sobre a Obra</h2>
+                    <div class="smart-divider"></div>
+                    <p id="js-about-text" class="text-charcoal text-sm leading-relaxed mb-8">
+                        <!-- Texto sobre a obra -->
+                    </p>
+                    
+                    <!-- Container das Métricas -->
+                    <div id="js-metrics-container" class="flex flex-col">
+                        <!-- Gerado dinamicamente via JS -->
+                    </div>
+                </div>
+                
+                <div class="about-image-frame aspect-[4/3] overflow-hidden">
+                    <img id="js-about-image" src="" alt="Representação Digital">
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. SLIDE MARCOS HISTÓRICOS (TIMELINE / MILESTONES) -->
+        <section id="milestones-section" class="exhibition-card w-full">
+            <div>
+                <h2 class="museum-title">Fases & Processo de Desenvolvimento</h2>
+                <div class="smart-divider"></div>
+                
+                <!-- Grade 4 colunas simétricas -->
+                <div id="js-milestones-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+                    <!-- Marcos históricos gerados via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. SLIDE GALERIA TÉCNICA E PROCESSO 3D -->
+        <section id="gallery-section" class="exhibition-card w-full">
+            <div>
+                <h2 class="museum-title">Galeria de Imagens & Resultados</h2>
+                <div class="smart-divider"></div>
+                
+                <!-- Grid Assimétrico -->
+                <div id="js-gallery-grid" class="gallery-grid-custom mt-6">
+                    <!-- Os cards da galeria serão gerados dinamicamente -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. SLIDE LOCALIZAÇÃO E REDES SOCIAIS -->
+        <section id="location-social-section" class="exhibition-card w-full">
+            <div>
+                <h2 class="museum-title">Localização & Registro de Criação</h2>
+                <div class="smart-divider"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-8 mt-6">
+                    
+                    <!-- Mapa Embutido -->
+                    <div class="md:col-span-3 flex flex-col justify-between">
+                        <div class="map-outer-container relative w-full h-80 overflow-hidden">
+                            <iframe 
+                                id="js-map-iframe"
+                                src="" 
+                                width="100%" 
+                                height="100%" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                        <p class="font-sans italic text-xs text-center text-textMuted mt-4">
+                            Referência cartográfica do local do monumento / projeto
+                        </p>
+                    </div>
+
+                    <!-- Lateral: Instagram Post Simulado -->
+                    <div class="md:col-span-2 flex flex-col">
+                        <h3 class="font-title font-bold text-xs text-brandBlue uppercase tracking-widest mb-3">
+                            📍 Origem do Projeto
+                        </h3>
+                        
+                        <!-- Card Instagram Simulado Japandi -->
+                        <a id="js-ig-post-link" href="#" target="_blank" style="text-decoration: none; display: block;">
+                            <div class="instagram-outer-card p-4 flex flex-col gap-3 transition-transform hover:scale-[1.01]">
+                                <div class="flex items-center gap-3">
+                                    <img id="js-ig-avatar" src="" alt="Avatar" class="w-8 h-8 rounded-full border border-borderColor">
+                                    <div class="flex flex-col">
+                                        <span id="js-ig-handle" class="font-title font-bold text-xs text-charcoal leading-tight"><!-- Handle --></span>
+                                        <span class="text-[10px] text-textMuted leading-none">Porto, Portugal</span>
+                                    </div>
+                                    <span class="ml-auto text-textMuted text-xs">•••</span>
+                                </div>
+                                
+                                <!-- Foto do Post -->
+                                <div class="relative bg-brandWhite aspect-square overflow-hidden instagram-img-container">
+                                    <img id="js-ig-image" src="" alt="Foto Instagram" class="w-full h-full object-cover">
+                                </div>
+                                
+                                <!-- Ações -->
+                                <div class="flex gap-3 text-sm text-charcoal">
+                                    <span class="cursor-pointer hover:text-brandBlue">❤️</span>
+                                    <span class="cursor-pointer hover:text-brandBlue">💬</span>
+                                    <span class="cursor-pointer hover:text-brandBlue">✈️</span>
+                                    <span class="ml-auto cursor-pointer hover:text-brandBlue">🔖</span>
+                                </div>
+
+                                <!-- Likes e Legenda -->
+                                <div class="flex flex-col gap-1 text-[11px] text-textMuted leading-snug">
+                                    <span id="js-ig-likes" class="font-bold text-charcoal"><!-- Curtidos --></span>
+                                    <span>
+                                        <strong id="js-ig-caption-handle" class="mr-1 text-charcoal"><!-- Handle --></strong>
+                                        <span id="js-ig-caption-text"><!-- Legenda --></span>
+                                        <span id="js-ig-tags" class="text-brandBlue block mt-1"><!-- Tags --></span>
+                                    </span>
+                                    <span id="js-ig-date" class="text-[9px] text-textMuted uppercase tracking-wider mt-1"><!-- Data --></span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Outros Links de Redes Sociais do Projeto -->
+                        <div id="js-social-links-container" class="mt-6 flex flex-col gap-3">
+                            <h4 class="font-title font-bold text-[10px] text-charcoal uppercase tracking-wider">
+                                Links Adicionais
+                            </h4>
+                            <div id="js-social-links-list" class="flex flex-wrap gap-2">
+                                <!-- Redes sociais geradas via JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- RODAPÉ -->
+        <footer class="w-full text-center py-10 flex flex-col items-center gap-2 mt-4 border-t border-borderColor">
+            <span class="museum-footer-tagline">
+                Coleção de Arquitetura & Réplicas 3D
+            </span>
+            <span class="text-xs text-textMuted italic font-sans">
+                Modelado e publicado dinamicamente via ML Gestor de Projetos
+            </span>
+        </footer>
+
+    </main>
+
+    <!-- LIGHTBOX MODAL (JAPANDI LIGHTBOX OVERLAY) -->
+    <div id="js-lightbox" class="lightbox-overlay">
+        <button id="js-lightbox-close" class="lightbox-close-button" aria-label="Fechar galeria">&times;</button>
+        <button id="js-lightbox-prev" class="lightbox-navigation lightbox-previous-button" aria-label="Foto anterior">&#10094;</button>
+        <button id="js-lightbox-next" class="lightbox-navigation lightbox-next-button" aria-label="Próxima foto">&#10095;</button>
+
+        <div class="lightbox-content-wrapper">
+            <div class="lightbox-card">
+                <img id="js-lightbox-img" class="lightbox-img-element" src="" alt="Imagem ampliada">
+                <div id="js-lightbox-caption" class="lightbox-caption-text">
+                    <!-- Legenda da imagem -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LÓGICA E RENDERIZAÇÃO JAPANDI -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. APLICAR CONFIGURAÇÕES NA PÁGINA DINAMICAMENTE
+            
+            // Slide 1: Hero / Capa
+            document.title = `${MONUMENT_CONFIG.hero.title} | ML Portfólio`;
+            document.getElementById("js-hero-slide").style.backgroundImage = `url('${MONUMENT_CONFIG.hero.bgImage}')`;
+            document.getElementById("js-hero-badge").textContent = MONUMENT_CONFIG.hero.category;
+            document.getElementById("js-hero-serial").textContent = MONUMENT_CONFIG.hero.serialNumber;
+            document.getElementById("js-hero-title").textContent = MONUMENT_CONFIG.hero.title;
+            document.getElementById("js-hero-subtitle").textContent = MONUMENT_CONFIG.hero.subtitle;
+            document.getElementById("js-hero-location").textContent = `📍 ${MONUMENT_CONFIG.hero.locationText}`;
+            
+            // Exibir selo de "Em andamento" se aplicável
+            if (MONUMENT_CONFIG.status === "Em andamento") {
+                const badge = document.getElementById("js-status-badge-wrapper");
+                if (badge) badge.classList.remove("hidden");
+            }
+            
+            // Slide 2: Sobre & Fatos Relevantes
+            document.getElementById("js-about-title").textContent = MONUMENT_CONFIG.about.title;
+            document.getElementById("js-about-text").textContent = MONUMENT_CONFIG.about.description;
+            document.getElementById("js-about-image").src = MONUMENT_CONFIG.about.image;
+            document.getElementById("js-about-image").alt = MONUMENT_CONFIG.about.title;
+
+            // Injetar Métricas
+            const metricsContainer = document.getElementById("js-metrics-container");
+            metricsContainer.innerHTML = "";
+            MONUMENT_CONFIG.about.metrics.forEach(metric => {
+                const row = document.createElement("div");
+                row.className = "metric-row";
+                row.innerHTML = `
+                    <div class="metric-number">${metric.number}</div>
+                    <div class="metric-label">${metric.label}</div>
+                `;
+                metricsContainer.appendChild(row);
+            });
+
+            // Slide 3: Marcos Históricos (Timeline)
+            const milestonesGrid = document.getElementById("js-milestones-grid");
+            milestonesGrid.innerHTML = "";
+            MONUMENT_CONFIG.milestones.forEach(m => {
+                const card = document.createElement("div");
+                card.className = "milestone-card";
+                card.innerHTML = `
+                    <div class="milestone-image-wrapper">
+                        <span class="milestone-badge">${m.num}</span>
+                        <img src="${m.image}" alt="${m.title}">
+                    </div>
+                    <h4 class="milestone-title">${m.title}</h4>
+                    <p class="milestone-text">${m.text}</p>
+                `;
+                milestonesGrid.appendChild(card);
+            });
+
+            // Slide 4: Galeria Assimétrica
+            const galleryGrid = document.getElementById("js-gallery-grid");
+            galleryGrid.innerHTML = "";
+
+            MONUMENT_CONFIG.gallery.forEach((item, index) => {
+                const card = document.createElement("div");
+                card.className = `gallery-card ${item.spansLarge ? 'gallery-card-large' : ''}`;
+                card.setAttribute("data-index", index);
+
+                card.innerHTML = `
+                    <div class="gallery-image-wrapper">
+                        <img src="${item.url}" alt="${item.caption}">
+                    </div>
+                    <div class="gallery-info">
+                        <div class="gallery-title">${item.caption}</div>
+                        <div class="gallery-category">${item.tag}</div>
+                    </div>
+                `;
+
+                // Clique para abrir o Lightbox
+                card.addEventListener("click", () => {
+                    openLightbox(index);
+                });
+
+                galleryGrid.appendChild(card);
+            });
+
+            // Slide 5: Google Maps
+            document.getElementById("js-map-iframe").src = MONUMENT_CONFIG.mapsIframeUrl;
+
+            // Post do Instagram Simulado
+            const igConfig = MONUMENT_CONFIG.instagramPost;
+            document.getElementById("js-ig-avatar").src = igConfig.authorAvatar;
+            document.getElementById("js-ig-handle").textContent = igConfig.authorHandle;
+            document.getElementById("js-ig-caption-handle").textContent = igConfig.authorHandle;
+            document.getElementById("js-ig-likes").textContent = igConfig.likesCount;
+            document.getElementById("js-ig-caption-text").textContent = igConfig.captionText;
+            document.getElementById("js-ig-tags").textContent = igConfig.tags;
+            document.getElementById("js-ig-date").textContent = igConfig.date;
+            
+            // Usar a primeira imagem da galeria no post simulado
+            if (MONUMENT_CONFIG.gallery && MONUMENT_CONFIG.gallery.length > 0) {
+                document.getElementById("js-ig-image").src = MONUMENT_CONFIG.gallery[0].url;
+            }
+
+            // Associar link real ao card do Instagram
+            const igLink = document.getElementById("js-ig-post-link");
+            if (igLink) {
+                if (igConfig.postUrl && igConfig.postUrl.trim()) {
+                    igLink.href = igConfig.postUrl;
+                } else {
+                    igLink.href = "https://instagram.com/mlacerdapt";
+                }
+            }
+
+            // Renderizar Redes Sociais do Projeto
+            const socialLinksList = document.getElementById("js-social-links-list");
+            if (socialLinksList) {
+                socialLinksList.innerHTML = "";
+                const links = MONUMENT_CONFIG.socialLinks || [];
+                if (links.length > 0) {
+                    links.forEach(link => {
+                        const a = document.createElement("a");
+                        a.href = link.url;
+                        a.target = "_blank";
+                        
+                        let icon = "🔗";
+                        let colorClass = "bg-charcoal text-white";
+                        if (link.plataforma === "Instagram") {
+                            icon = "📷";
+                            colorClass = "bg-[#E1306C] text-white";
+                        } else if (link.plataforma === "Facebook") {
+                            icon = "📘";
+                            colorClass = "bg-[#1877F2] text-white";
+                        } else if (link.plataforma === "X") {
+                            icon = "𝕏";
+                            colorClass = "bg-black text-white font-bold";
+                        } else if (link.plataforma === "Behance") {
+                            icon = "🎨";
+                            colorClass = "bg-[#0057ff] text-white";
+                        } else if (link.plataforma === "Pinterest") {
+                            icon = "📌";
+                            colorClass = "bg-[#BD081C] text-white";
+                        } else if (link.plataforma === "YouTube") {
+                            icon = "🎥";
+                            colorClass = "bg-[#FF0000] text-white";
+                        } else if (link.plataforma === "LinkedIn") {
+                            icon = "💼";
+                            colorClass = "bg-[#0077B5] text-white";
+                        }
+                        
+                        a.className = `inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm text-[10px] font-title font-bold uppercase tracking-widest transition-all hover:opacity-90 hover:scale-105 ${colorClass}`;
+                        a.innerHTML = `<span>${icon}</span> <span>${link.plataforma}</span>`;
+                        socialLinksList.appendChild(a);
+                    });
+                } else {
+                    const noLinks = document.createElement("span");
+                    noLinks.className = "text-[10px] text-textMuted italic";
+                    noLinks.textContent = "Nenhuma rede social adicional configurada.";
+                    socialLinksList.appendChild(noLinks);
+                }
+            }
+
+            // LIGHTBOX LÓGICA
+            const lightbox = document.getElementById("js-lightbox");
+            const lightboxImg = document.getElementById("js-lightbox-img");
+            const lightboxCaption = document.getElementById("js-lightbox-caption");
+            const btnClose = document.getElementById("js-lightbox-close");
+            const btnPrev = document.getElementById("js-lightbox-prev");
+            const btnNext = document.getElementById("js-lightbox-next");
+            
+            let activeIndex = 0;
+
+            function openLightbox(index) {
+                activeIndex = index;
+                updateLightboxContent();
+                lightbox.classList.add("active");
+                document.body.style.overflow = "hidden";
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove("active");
+                document.body.style.overflow = "";
+            }
+
+            function updateLightboxContent() {
+                const item = MONUMENT_CONFIG.gallery[activeIndex];
+                if (item) {
+                    lightboxImg.src = item.url;
+                    lightboxImg.alt = item.caption;
+                    lightboxCaption.textContent = item.caption;
+                }
+            }
+
+            function showNext() {
+                activeIndex = (activeIndex + 1) % MONUMENT_CONFIG.gallery.length;
+                updateLightboxContent();
+            }
+
+            btnClose.addEventListener("click", closeLightbox);
+            btnNext.addEventListener("click", showNext);
+            btnPrev.addEventListener("click", () => {
+                activeIndex = (activeIndex - 1 + MONUMENT_CONFIG.gallery.length) % MONUMENT_CONFIG.gallery.length;
+                updateLightboxContent();
+            });
+
+            lightbox.addEventListener("click", (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            document.addEventListener("keydown", (e) => {
+                if (!lightbox.classList.contains("active")) return;
+                
+                if (e.key === "Escape") {
+                    closeLightbox();
+                } else if (e.key === "ArrowRight") {
+                    showNext();
+                } else if (e.key === "ArrowLeft") {
+                    activeIndex = (activeIndex - 1 + MONUMENT_CONFIG.gallery.length) % MONUMENT_CONFIG.gallery.length;
+                    updateLightboxContent();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
