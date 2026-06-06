@@ -183,16 +183,14 @@ def compile_cv_html(cv):
                 
                 skills_html += f"""
                 <div class="skill-radial-item">
-                    <div class="skill-radial-chart">
-                        <svg class="radial-svg" width="46" height="46" viewBox="0 0 46 46">
-                            <circle class="radial-bg" cx="23" cy="23" r="20" fill="none" stroke="rgba(0, 88, 163, 0.1)" stroke-width="3.5"></circle>
-                            <circle class="radial-progress" cx="23" cy="23" r="20" fill="none" stroke="var(--brand-blue)" stroke-width="3.5"
-                                    stroke-dasharray="{dasharray}" stroke-dashoffset="{dashoffset}" stroke-linecap="round" transform="rotate(-90 23 23)"></circle>
-                            <text class="radial-text" x="23" y="27" text-anchor="middle" font-size="10.5" font-weight="800" fill="var(--charcoal)">{level:g}</text>
-                        </svg>
-                    </div>
                     <div class="skill-radial-details">
-                        <div class="skill-radial-name">{name}</div>
+                        <div class="skill-bar-header">
+                            <span class="skill-radial-name">{name}</span>
+                            <span class="skill-radial-level">{level:g}/5</span>
+                        </div>
+                        <div class="skill-progress-wrapper">
+                            <div class="skill-progress-fill" style="width: {level * 20:g}%;"></div>
+                        </div>
                         {f'<div class="skill-radial-desc">{desc}</div>' if desc else ''}
                     </div>
                 </div>"""
@@ -320,6 +318,28 @@ def compile_cv_html(cv):
             display_text = display_text[:27] + "..."
         contact_html += f'<li class="contact-li">{icon} <a class="contact-txt contact-link" href="{href}" target="_blank" rel="noopener">{plataforma}: {display_text}</a></li>\n'
 
+    qr_html = ""
+    if _github:
+        qr_url_encoded = f"https%3A%2F%2Fgithub.com%2F{_github_clean}"
+        qr_html = f"""
+            <!-- QR Code block – visible ONLY in print (last page) -->
+            <div class="cv-print-qr-block" id="cv-print-qr">
+                <div class="cv-print-qr-inner">
+                    <img
+                        class="cv-qr-image"
+                        src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data={qr_url_encoded}&color=0058A3&bgcolor=FFFFFF&margin=6"
+                        alt="QR Code – Portfólio e Currículo no GitHub"
+                    >
+                    <div class="cv-qr-text">
+                        <p class="cv-qr-label">Portfólio &amp; Currículo Online</p>
+                        <a class="cv-qr-link" href="https://github.com/{_github_clean}" target="_blank" rel="noopener">
+                            github.com/{_github_clean}
+                        </a>
+                        <p class="cv-qr-caption">Aceda ao meu portfólio completo, projetos e currículo online no GitHub. Aponte a câmara para o QR code ou clique no link acima.</p>
+                    </div>
+                </div>
+            </div>"""
+
     cv_html_part2 = f"""                                {contact_html}
                             </ul>
                         </div>
@@ -360,32 +380,12 @@ def compile_cv_html(cv):
                             {edu_html}
                         </div>
                     </section>
+                    
+                    {qr_html}
                 </main>
             </div>"""
 
-    qr_html = ""
-    if _github:
-        qr_url_encoded = f"https%3A%2F%2Fgithub.com%2F{_github_clean}"
-        qr_html = f"""
-            <!-- QR Code block – visible ONLY in print (last page) -->
-            <div class="cv-print-qr-block" id="cv-print-qr">
-                <div class="cv-print-qr-inner">
-                    <img
-                        class="cv-qr-image"
-                        src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data={qr_url_encoded}&color=0058A3&bgcolor=FFFFFF&margin=6"
-                        alt="QR Code – Portfólio e Currículo no GitHub"
-                    >
-                    <div class="cv-qr-text">
-                        <p class="cv-qr-label">Portfólio &amp; Currículo Online</p>
-                        <a class="cv-qr-link" href="https://github.com/{_github_clean}" target="_blank" rel="noopener">
-                            github.com/{_github_clean}
-                        </a>
-                        <p class="cv-qr-caption">Aceda ao meu portfólio completo, projetos e currículo online no GitHub. Aponte a câmara para o QR code ou clique no link acima.</p>
-                    </div>
-                </div>
-            </div>"""
-
-    return cv_html + cv_html_part2 + qr_html
+    return cv_html + cv_html_part2
 
 
 # Rebuilds root index.html grid mapping all Public projects and CV
