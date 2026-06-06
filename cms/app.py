@@ -763,10 +763,11 @@ def generate_client_page(project_id, project_data):
 @app.route('/')
 def index():
     db = load_db()
+    active_tab = request.args.get('active_tab', 'edit-tab')
     # Filter projects (omit 'curriculo' key!)
     projects_db = {k: v for k, v in db.items() if k != 'curriculo'}
     sorted_db = dict(sorted(projects_db.items(), key=lambda x: x[0], reverse=True))
-    return render_template('index.html', projetos=sorted_db, curriculo=db.get('curriculo', DEFAULT_CV))
+    return render_template('index.html', projetos=sorted_db, curriculo=db.get('curriculo', DEFAULT_CV), active_tab=active_tab)
 
 # ROUTE: AJAX details lookup
 @app.route('/project/get/<project_id>')
@@ -900,7 +901,7 @@ def save_project():
     if success and pdata['visibilidade'] == 'Público':
         start_git_sync(project_id)
             
-    return redirect(url_for('index'))
+    return redirect(url_for('index', active_tab='edit-tab'))
 
 # ROUTE: Save CV metadata
 @app.route('/curriculo/save', methods=['POST'])
@@ -1000,7 +1001,7 @@ def save_cv():
     rebuild_master_hub()
     start_git_sync("curriculum-update")
     
-    return redirect(url_for('index'))
+    return redirect(url_for('index', active_tab='cv-tab'))
 
 # ROUTE: Manual publish and compile trigger
 @app.route('/project/publish/<project_id>', methods=['POST'])

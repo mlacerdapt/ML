@@ -54,15 +54,15 @@
         <main class="main-content">
             <!-- Navigation Header Tabs -->
             <header class="tabs-header">
-                <button class="tab-btn active" data-tab="edit-tab">📝 Projetos</button>
-                <button class="tab-btn" data-tab="cv-tab">🎓 Editar Currículo</button>
-                <button class="tab-btn" data-tab="view-tab">👁️ Visualizador Interno</button>
-                <button class="tab-btn" data-tab="guide-tab">💡 Guia de Orientação</button>
+                <button class="tab-btn{% if active_tab == 'edit-tab' %} active{% endif %}" data-tab="edit-tab">📝 Projetos</button>
+                <button class="tab-btn{% if active_tab == 'cv-tab' %} active{% endif %}" data-tab="cv-tab">🎓 Editar Currículo</button>
+                <button class="tab-btn{% if active_tab == 'view-tab' %} active{% endif %}" data-tab="view-tab">👁️ Visualizador Interno</button>
+                <button class="tab-btn{% if active_tab == 'guide-tab' %} active{% endif %}" data-tab="guide-tab">💡 Guia de Orientação</button>
             </header>
 
             <div class="tab-container">
                 <!-- TAB 1: Edit/Create Form (Projects) -->
-                <div class="tab-content active" id="edit-tab">
+                <div class="tab-content{% if active_tab == 'edit-tab' %} active{% endif %}" id="edit-tab">
                     <div class="glass-panel">
                         <div class="panel-header">
                             <h2 class="panel-title">Ficha Técnica do Projeto</h2>
@@ -283,7 +283,7 @@
                 </div>
 
                 <!-- TAB 2: Edit Curriculum Form -->
-                <div class="tab-content" id="cv-tab">
+                <div class="tab-content{% if active_tab == 'cv-tab' %} active{% endif %}" id="cv-tab">
                     <div class="glass-panel">
                         <div class="panel-header">
                             <h2 class="panel-title">Editar Currículo Profissional</h2>
@@ -452,7 +452,7 @@
                 </div>
 
                 <!-- TAB 3: Private Summary and Preview -->
-                <div class="tab-content" id="view-tab">
+                <div class="tab-content{% if active_tab == 'view-tab' %} active{% endif %}" id="view-tab">
                     <div class="empty-state" id="empty-project-view">
                         <div class="empty-state-icon">📂</div>
                         <h2>Nenhum Projeto Selecionado</h2>
@@ -571,7 +571,7 @@
                 </div>
 
                 <!-- TAB 4: Guia de Orientação -->
-                <div class="tab-content" id="guide-tab">
+                <div class="tab-content{% if active_tab == 'guide-tab' %} active{% endif %}" id="guide-tab">
                     <div class="glass-panel" style="max-width: 900px; margin: 0 auto;">
                         <div class="panel-header" style="margin-bottom: 1.5rem;">
                             <h2 class="panel-title">💡 Guia de Orientação Rápida</h2>
