@@ -283,21 +283,48 @@
                 "url": "https://www.instagram.com/v8racing/"
             }
         ],
-        "milestone1_title": "CONCEITO & BRIEFING",
-        "milestone1_desc": "Estética (Foto de época do carro exato, Tipografia técnica/suíça para os textos)",
-        "milestone1_image": "ML-3DP-26001_002.jpg",
-        "milestone2_title": "DESENVOLVIMENTO TÉCNICO",
-        "milestone2_desc": "Técnico (Blueprint ortogonal lateral do carro).Modelagem 3D: Blender",
-        "milestone2_image": "ML-3DP-26001_001.png",
-        "milestone3_title": "PRODUÇÃO & ACABAMENTO",
-        "milestone3_desc": "Modelagem 3D: Blender",
-        "milestone3_image": "ML-3DP-26001_021.jpeg",
-        "milestone4_title": "EXPOSIÇÃO & ENTREGA",
-        "milestone4_desc": "Adesão perfeita e nivelada ao póster de fundo, ausência de stringing ou marcas de suporte na carroçaria visível, e legibilidade absoluta da tipografia \"V8\" na conjugação com a sombra do carro.",
-        "milestone4_image": "ML-3DP-26001_022.jpeg",
+        "milestones": [
+            {
+                "title": "CONCEITO & BRIEFING",
+                "image": "ML-3DP-26001_002.jpg",
+                "desc": "Estética (Foto de época do carro exato, Tipografia técnica/suíça para os textos)"
+            },
+            {
+                "title": "DESENVOLVIMENTO TÉCNICO",
+                "image": "ML-3DP-26001_001.png",
+                "desc": "Técnico (Blueprint ortogonal lateral do carro).Modelagem 3D: Blender"
+            },
+            {
+                "title": "PRODUÇÃO & ACABAMENTO",
+                "image": "ML-3DP-26001_021.jpeg",
+                "desc": "Modelagem 3D: Blender"
+            },
+            {
+                "title": "EXPOSIÇÃO & ENTREGA",
+                "image": "ML-3DP-26001_022.jpeg",
+                "desc": "Adesão perfeita e nivelada ao póster de fundo, ausência de stringing ou marcas de suporte na carroçaria visível, e legibilidade absoluta da tipografia \"V8\" na conjugação com a sombra do carro."
+            },
+            {
+                "title": "Etapa de Pos-ImpressaoEtapa de Etapa de Pos-ImpressaoP",
+                "image": "ML-3DP-26001_021.jpeg",
+                "desc": "Remocao de suportes adicionais e lixamento"
+            }
+        ],
         "excluded_images": [
             "ML-3DP-26001_025.jpg"
         ],
+        "milestone1_title": "CONCEITO & BRIEFING",
+        "milestone1_image": "ML-3DP-26001_002.jpg",
+        "milestone1_desc": "Estética (Foto de época do carro exato, Tipografia técnica/suíça para os textos)",
+        "milestone2_title": "DESENVOLVIMENTO TÉCNICO",
+        "milestone2_image": "ML-3DP-26001_001.png",
+        "milestone2_desc": "Técnico (Blueprint ortogonal lateral do carro).Modelagem 3D: Blender",
+        "milestone3_title": "PRODUÇÃO & ACABAMENTO",
+        "milestone3_image": "ML-3DP-26001_021.jpeg",
+        "milestone3_desc": "Modelagem 3D: Blender",
+        "milestone4_title": "EXPOSIÇÃO & ENTREGA",
+        "milestone4_image": "ML-3DP-26001_022.jpeg",
+        "milestone4_desc": "Adesão perfeita e nivelada ao póster de fundo, ausência de stringing ou marcas de suporte na carroçaria visível, e legibilidade absoluta da tipografia \"V8\" na conjugação com a sombra do carro.",
         "maq_maquina": "Bambu Lab A1",
         "maq_material": "PLA Branco",
         "maq_peso": 79.0,
@@ -316,11 +343,23 @@
                 "caption": "",
                 "tag": ""
             },
+            "ML-3DP-26001_046.png": {
+                "caption": "",
+                "tag": ""
+            },
             "ML-3DP-26001_021.jpeg": {
                 "caption": "",
                 "tag": ""
             },
+            "ML-3DP-26001_044.png": {
+                "caption": "",
+                "tag": ""
+            },
             "ML-3DP-26001_036.jpg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26001_047.jpeg": {
                 "caption": "",
                 "tag": ""
             },
@@ -404,6 +443,10 @@
                 "caption": "",
                 "tag": ""
             },
+            "ML-3DP-26001_045.jpeg": {
+                "caption": "",
+                "tag": ""
+            },
             "ML-3DP-26001_016.jpg": {
                 "caption": "",
                 "tag": ""
@@ -417,6 +460,10 @@
                 "tag": ""
             },
             "ML-3DP-26001_001.png": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26001_049.jpeg": {
                 "caption": "",
                 "tag": ""
             },
@@ -461,6 +508,10 @@
                 "tag": ""
             },
             "ML-3DP-26001_022.jpeg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26001_048.png": {
                 "caption": "",
                 "tag": ""
             },

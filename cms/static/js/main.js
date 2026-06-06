@@ -31,6 +31,107 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // ── Fases (Milestones) Dinâmicas no Formulário ──────────────────────────
+    window.addMilestoneRow = function(title = "", image = "", desc = "") {
+        const container = document.getElementById("milestones-container");
+        if (!container) return;
+        
+        const row = document.createElement("div");
+        row.className = "milestone-row";
+        row.style.cssText = "display: flex; gap: 12px; align-items: flex-start; padding: 12px; background: var(--bg-base); border: 1px solid var(--border-color); border-radius: 4px; position: relative; width: 100%; flex-wrap: wrap;";
+        
+        row.innerHTML = `
+            <div class="milestone-number" style="font-family: var(--font-heading); font-weight: 800; font-size: 1.1rem; color: var(--accent); min-width: 24px; padding-top: 24px;">01</div>
+            
+            <div style="flex: 2; min-width: 150px; display: flex; flex-direction: column; gap: 4px;">
+                <label style="font-size: 0.65rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase;">Título</label>
+                <input type="text" class="milestone-title-input" value="${title.replace(/"/g, '&quot;')}" placeholder="Ex: Conceito & Briefing">
+            </div>
+            
+            <div style="flex: 2; min-width: 150px; display: flex; flex-direction: column; gap: 4px;">
+                <label style="font-size: 0.65rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase;">Imagem</label>
+                <input type="text" class="milestone-image-input" value="${image.replace(/"/g, '&quot;')}" placeholder="Ex: foto.jpg">
+            </div>
+            
+            <div style="flex: 4; min-width: 250px; display: flex; flex-direction: column; gap: 4px;">
+                <label style="font-size: 0.65rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase;">Descrição</label>
+                <input type="text" class="milestone-desc-input" value="${desc.replace(/"/g, '&quot;')}" placeholder="Ex: Definição do escopo, referências...">
+            </div>
+            
+            <button type="button" class="btn-remove-milestone" style="background: transparent; border: none; color: var(--danger); font-size: 1.1rem; cursor: pointer; padding-top: 24px; padding-left: 6px; padding-right: 6px; transition: var(--transition-smart);" title="Remover esta fase">🗑️</button>
+        `;
+        
+        row.querySelector(".btn-remove-milestone").onclick = () => {
+            row.remove();
+            reindexMilestones();
+        };
+        
+        container.appendChild(row);
+        reindexMilestones();
+    };
+
+    window.reindexMilestones = function() {
+        const rows = document.querySelectorAll(".milestone-row");
+        rows.forEach((row, idx) => {
+            const numBadge = row.querySelector(".milestone-number");
+            if (numBadge) {
+                numBadge.textContent = String(idx + 1).padStart(2, '0');
+            }
+            
+            const titleInput = row.querySelector(".milestone-title-input");
+            if (titleInput) titleInput.name = "milestone_title[]";
+            
+            const imgInput = row.querySelector(".milestone-image-input");
+            if (imgInput) imgInput.name = "milestone_image[]";
+            
+            const descInput = row.querySelector(".milestone-desc-input");
+            if (descInput) descInput.name = "milestone_desc[]";
+        });
+        
+        updateGalleryPhaseSelectors();
+    };
+
+    window.renderMilestones = function(milestonesList) {
+        const container = document.getElementById("milestones-container");
+        if (!container) return;
+        container.innerHTML = "";
+        
+        if (milestonesList && milestonesList.length > 0) {
+            milestonesList.forEach(m => {
+                addMilestoneRow(m.title || "", m.image || "", m.desc || "");
+            });
+        }
+        reindexMilestones();
+    };
+
+    window.updateGalleryPhaseSelectors = function() {
+        const selectors = document.querySelectorAll(".select-assign-fase");
+        const rows = document.querySelectorAll(".milestone-row");
+        
+        selectors.forEach(select => {
+            const currentValue = select.value;
+            select.innerHTML = '<option value="">Atribuir à Fase...</option>';
+            rows.forEach((row, idx) => {
+                const opt = document.createElement("option");
+                opt.value = idx;
+                opt.textContent = `Fase ${idx + 1}`;
+                select.appendChild(opt);
+            });
+            if (currentValue !== "" && parseInt(currentValue) < rows.length) {
+                select.value = currentValue;
+            } else {
+                select.value = "";
+            }
+        });
+    };
+
+    const btnAddMilestone = document.getElementById("btn-add-milestone");
+    if (btnAddMilestone) {
+        btnAddMilestone.addEventListener("click", () => {
+            addMilestoneRow();
+        });
+    }
+
     // ── Redes Sociais do CURRÍCULO ──────────────────────────────────────────
     window.addCvSocialLinkRow = function(platform = "LinkedIn", url = "") {
         const container = document.getElementById("cv-social-links-container");
@@ -436,19 +537,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("path_processo").value = data.path_processo || "";
                 document.getElementById("path_galeria").value = data.path_galeria || "";
 
-                // Carregar marcos (milestones) de desenvolvimento
-                document.getElementById("milestone1_title").value = data.milestone1_title || "";
-                document.getElementById("milestone1_image").value = data.milestone1_image || "";
-                document.getElementById("milestone1_desc").value = data.milestone1_desc || "";
-                document.getElementById("milestone2_title").value = data.milestone2_title || "";
-                document.getElementById("milestone2_image").value = data.milestone2_image || "";
-                document.getElementById("milestone2_desc").value = data.milestone2_desc || "";
-                document.getElementById("milestone3_title").value = data.milestone3_title || "";
-                document.getElementById("milestone3_image").value = data.milestone3_image || "";
-                document.getElementById("milestone3_desc").value = data.milestone3_desc || "";
-                document.getElementById("milestone4_title").value = data.milestone4_title || "";
-                document.getElementById("milestone4_image").value = data.milestone4_image || "";
-                document.getElementById("milestone4_desc").value = data.milestone4_desc || "";
+                // Carregar marcos (milestones) de desenvolvimento dinamicamente
+                let milestonesList = data.milestones || [];
+                if (milestonesList.length === 0) {
+                    for (let i = 1; i <= 4; i++) {
+                        const t = data[`milestone${i}_title`] || "";
+                        const d = data[`milestone${i}_desc`] || "";
+                        const img = data[`milestone${i}_image`] || "";
+                        if (t || d || img) {
+                            milestonesList.push({ title: t, desc: d, image: img });
+                        }
+                    }
+                }
+                if (milestonesList.length === 0) {
+                    milestonesList = [
+                        { title: "Conceito & Briefing", image: "", desc: "Definição do escopo, recolha de referências e planeamento das especificações do projeto." },
+                        { title: "Desenvolvimento Técnico", image: "", desc: "Execução da modelação 3D, fatiamento, configurações de render ou grelha de layout." },
+                        { title: "Produção & Acabamento", image: "", desc: "Impressão física da peça, pós-processamento, composição ou renderização final." },
+                        { title: "Exposição & Entrega", image: "", desc: "Validação das métricas de qualidade, registo fotográfico e publicação no portfólio." }
+                    ];
+                }
+                renderMilestones(milestonesList);
                 
                 // Carregar mapa e redes sociais
                 document.getElementById("link_mapa").value = data.link_mapa || "";
@@ -694,6 +803,14 @@ document.addEventListener("DOMContentLoaded", () => {
             categorySelect.value = "Impressão 3D";
             updateCategoryFields();
 
+            // Render default milestones for new project
+            renderMilestones([
+                { title: "Conceito & Briefing", image: "", desc: "Definição do escopo, recolha de referências e planeamento das especificações do projeto." },
+                { title: "Desenvolvimento Técnico", image: "", desc: "Execução da modelação 3D, fatiamento, configurações de render ou grelha de layout." },
+                { title: "Produção & Acabamento", image: "", desc: "Impressão física da peça, pós-processamento, composição ou renderização final." },
+                { title: "Exposição & Entrega", image: "", desc: "Validação das métricas de qualidade, registo fotográfico e publicação no portfólio." }
+            ]);
+
             // Set tab to edit form
             switchTab("edit-tab");
         });
@@ -786,11 +903,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         </div>
 
                         <!-- Assign to milestone phase slots -->
-                        <div style="display: flex; gap: 3px; width: 100%;">
-                            <button type="button" class="btn-assign-f1" style="flex: 1; font-size: 0.5rem; padding: 3px 0; background: #7C3AED; color: white; border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Imagem da Fase 1">F1</button>
-                            <button type="button" class="btn-assign-f2" style="flex: 1; font-size: 0.5rem; padding: 3px 0; background: #7C3AED; color: white; border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Imagem da Fase 2">F2</button>
-                            <button type="button" class="btn-assign-f3" style="flex: 1; font-size: 0.5rem; padding: 3px 0; background: #7C3AED; color: white; border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Imagem da Fase 3">F3</button>
-                            <button type="button" class="btn-assign-f4" style="flex: 1; font-size: 0.5rem; padding: 3px 0; background: #7C3AED; color: white; border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Imagem da Fase 4">F4</button>
+                        <div style="width: 100%; margin-top: 2px;">
+                            <select class="select-assign-fase" style="width: 100%; font-size: 0.58rem; padding: 4px 6px; border: 1px solid var(--border-color); border-radius: 2px; background: var(--bg-base); cursor: pointer; outline: none; font-weight: bold;">
+                                <option value="">Atribuir à Fase...</option>
+                            </select>
                         </div>
 
                         <!-- Caption and Tag inputs -->
@@ -818,23 +934,21 @@ document.addEventListener("DOMContentLoaded", () => {
                         showToast(`Definido "${file.name}" como Imagem de Galeria!`, "success");
                     };
 
-                    // Milestone phase buttons
-                    card.querySelector(".btn-assign-f1").onclick = () => {
-                        document.getElementById("milestone1_image").value = file.name;
-                        showToast(`"${file.name}" definido como imagem da Fase 1!`, "success");
-                    };
-                    card.querySelector(".btn-assign-f2").onclick = () => {
-                        document.getElementById("milestone2_image").value = file.name;
-                        showToast(`"${file.name}" definido como imagem da Fase 2!`, "success");
-                    };
-                    card.querySelector(".btn-assign-f3").onclick = () => {
-                        document.getElementById("milestone3_image").value = file.name;
-                        showToast(`"${file.name}" definido como imagem da Fase 3!`, "success");
-                    };
-                    card.querySelector(".btn-assign-f4").onclick = () => {
-                        document.getElementById("milestone4_image").value = file.name;
-                        showToast(`"${file.name}" definido como imagem da Fase 4!`, "success");
-                    };
+                    // Milestone phase dropdown assigner
+                    const phaseSelect = card.querySelector(".select-assign-fase");
+                    if (phaseSelect) {
+                        phaseSelect.onchange = (e) => {
+                            const val = e.target.value;
+                            if (val !== "") {
+                                const inputs = document.querySelectorAll(".milestone-image-input");
+                                if (inputs[val]) {
+                                    inputs[val].value = file.name;
+                                    showToast(`"${file.name}" definido como imagem da Fase ${parseInt(val) + 1}!`, "success");
+                                }
+                                e.target.value = ""; // reset dropdown
+                            }
+                        };
+                    }
 
                     // Toggle opacity on exclude checkbox
                     card.querySelector(".cb-exclude").addEventListener("change", (e) => {
@@ -843,6 +957,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     
                     galleryGrid.appendChild(card);
                 });
+                updateGalleryPhaseSelectors();
             })
             .catch(err => {
                 console.error("Erro ao carregar galeria de miniaturas locais:", err);

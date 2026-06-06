@@ -666,6 +666,11 @@ def generate_client_page(project_id, project_data):
                 project_data[field] = rename_map[basename]
 
         # Update milestone image references
+        if 'milestones' in project_data:
+            for m in project_data['milestones']:
+                old_val = (m.get('image') or '').strip()
+                if old_val in rename_map:
+                    m['image'] = rename_map[old_val]
         for i in range(1, 5):
             key = f'milestone{i}_image'
             old_val = (project_data.get(key) or '').strip()
@@ -767,28 +772,76 @@ def generate_client_page(project_id, project_data):
         fallback_capa = images_mapping.get('capa', '') or "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500"
 
         # 3. Determine milestones with per-phase image assignment
-        m1_title = project_data.get('milestone1_title', '').strip() or "Conceito & Briefing"
-        m1_desc = project_data.get('milestone1_desc', '').strip() or "Definição do escopo, recolha de referências e planeamento das especificações do projeto."
-        m1_img = resolve_milestone_img(project_data.get('milestone1_image', ''), images_mapping.get('capa', '') or fallback_capa)
+        raw_milestones = project_data.get('milestones', [])
+        if not raw_milestones:
+            # Try to build from old database keys first
+            has_old = False
+            for i in range(1, 5):
+                t = project_data.get(f'milestone{i}_title', '').strip()
+                d = project_data.get(f'milestone{i}_desc', '').strip()
+                img = project_data.get(f'milestone{i}_image', '').strip()
+                if t or d or img:
+                    raw_milestones.append({
+                        'title': t,
+                        'desc': d,
+                        'image': img
+                    })
+                    has_old = True
+            
+            if not has_old:
+                # Add default 4 phases
+                raw_milestones = [
+                    {
+                        "title": "Conceito & Briefing",
+                        "desc": "Definição do escopo, recolha de referências e planeamento das especificações do projeto.",
+                        "image": project_data.get('milestone1_image', '')
+                    },
+                    {
+                        "title": "Desenvolvimento Técnico",
+                        "desc": "Execução da modelação 3D, fatiamento, configurações de render ou grelha de layout.",
+                        "image": project_data.get('milestone2_image', '')
+                    },
+                    {
+                        "title": "Produção & Acabamento",
+                        "desc": "Impressão física da peça, pós-processamento, composição ou renderização final.",
+                        "image": project_data.get('milestone3_image', '')
+                    },
+                    {
+                        "title": "Exposição & Entrega",
+                        "desc": "Validação das métricas de qualidade, registo fotográfico e publicação no portfólio.",
+                        "image": project_data.get('milestone4_image', '')
+                    }
+                ]
 
-        m2_title = project_data.get('milestone2_title', '').strip() or "Desenvolvimento Técnico"
-        m2_desc = project_data.get('milestone2_desc', '').strip() or "Execução da modelação 3D, fatiamento, configurações de render ou grelha de layout."
-        m2_img = resolve_milestone_img(project_data.get('milestone2_image', ''), images_mapping.get('processo', '') or fallback_capa)
-
-        m3_title = project_data.get('milestone3_title', '').strip() or "Produção & Acabamento"
-        m3_desc = project_data.get('milestone3_desc', '').strip() or "Impressão física da peça, pós-processamento, composição ou renderização final."
-        m3_img = resolve_milestone_img(project_data.get('milestone3_image', ''), images_mapping.get('galeria', '') or fallback_capa)
-
-        m4_title = project_data.get('milestone4_title', '').strip() or "Exposição & Entrega"
-        m4_desc = project_data.get('milestone4_desc', '').strip() or "Validação das métricas de qualidade, registo fotográfico e publicação no portfólio."
-        m4_img = resolve_milestone_img(project_data.get('milestone4_image', ''), fallback_capa)
-
-        milestones = [
-            { "num": "01", "title": m1_title, "text": m1_desc, "image": m1_img },
-            { "num": "02", "title": m2_title, "text": m2_desc, "image": m2_img },
-            { "num": "03", "title": m3_title, "text": m3_desc, "image": m3_img },
-            { "num": "04", "title": m4_title, "text": m4_desc, "image": m4_img }
-        ]
+        milestones = []
+        for index, m in enumerate(raw_milestones):
+            num_str = f"{index + 1:02d}"
+            title = m.get('title', '').strip()
+            desc = m.get('desc', '').strip()
+            img_val = m.get('image', '').strip()
+            
+            # Map fallback image depending on position if empty
+            if not img_val:
+                if index == 0:
+                    fallback_img = images_mapping.get('capa', '')
+                elif index == 1:
+                    fallback_img = images_mapping.get('processo', '')
+                elif index == 2:
+                    fallback_img = images_mapping.get('galeria', '')
+                else:
+                    fallback_img = ''
+                if not fallback_img:
+                    fallback_img = fallback_capa
+            else:
+                fallback_img = fallback_capa
+                
+            img_resolved = resolve_milestone_img(img_val, fallback_img)
+            milestones.append({
+                "num": num_str,
+                "title": title or f"Fase {index + 1}",
+                "text": desc or "Sem descrição.",
+                "image": img_resolved
+            })
                 
         # 4. Gallery: include ALL local images in img/ except explicitly excluded ones
         excluded_images = project_data.get('excluded_images', [])
@@ -942,12 +995,25 @@ def index():
     sorted_db = dict(sorted(projects_db.items(), key=lambda x: x[0], reverse=True))
     return render_template('index.html', projetos=sorted_db, curriculo=db.get('curriculo', DEFAULT_CV), active_tab=active_tab)
 
-# ROUTE: AJAX details lookup
 @app.route('/project/get/<project_id>')
 def get_project(project_id):
     db = load_db()
     if project_id in db:
-        return jsonify(db[project_id])
+        pdata = db[project_id]
+        if 'milestones' not in pdata:
+            milestones = []
+            for i in range(1, 5):
+                t = pdata.get(f'milestone{i}_title', '').strip()
+                d = pdata.get(f'milestone{i}_desc', '').strip()
+                img = pdata.get(f'milestone{i}_image', '').strip()
+                if t or d or img:
+                    milestones.append({
+                        'title': t,
+                        'desc': d,
+                        'image': img
+                    })
+            pdata['milestones'] = milestones
+        return jsonify(pdata)
     return jsonify({'error': f'Project {project_id} not found in database.'}), 404
 
 # ROUTE: AJAX local project images lookup
@@ -999,6 +1065,19 @@ def save_project():
     path_mod = request.form.get('path_models', '').strip() or f"projetos/{project_id}/modelos"
     path_rnd = request.form.get('path_renders', '').strip() or f"projetos/{project_id}/renders"
 
+    # Parse dynamic list of milestones (fases)
+    milestone_titles = request.form.getlist('milestone_title[]')
+    milestone_images = request.form.getlist('milestone_image[]')
+    milestone_descs = request.form.getlist('milestone_desc[]')
+    milestones_list = []
+    for title, img, desc in zip(milestone_titles, milestone_images, milestone_descs):
+        if title.strip() or img.strip() or desc.strip():
+            milestones_list.append({
+                'title': title.strip(),
+                'image': img.strip(),
+                'desc': desc.strip()
+            })
+
     pdata = {
         'id': project_id,
         'titulo': request.form.get('titulo'),
@@ -1016,20 +1095,21 @@ def save_project():
         'path_galeria': request.form.get('path_galeria'),
         'link_mapa': request.form.get('link_mapa'),
         'social_links': social_links,
-        'milestone1_title': request.form.get('milestone1_title', '').strip(),
-        'milestone1_desc': request.form.get('milestone1_desc', '').strip(),
-        'milestone1_image': request.form.get('milestone1_image', '').strip(),
-        'milestone2_title': request.form.get('milestone2_title', '').strip(),
-        'milestone2_desc': request.form.get('milestone2_desc', '').strip(),
-        'milestone2_image': request.form.get('milestone2_image', '').strip(),
-        'milestone3_title': request.form.get('milestone3_title', '').strip(),
-        'milestone3_desc': request.form.get('milestone3_desc', '').strip(),
-        'milestone3_image': request.form.get('milestone3_image', '').strip(),
-        'milestone4_title': request.form.get('milestone4_title', '').strip(),
-        'milestone4_desc': request.form.get('milestone4_desc', '').strip(),
-        'milestone4_image': request.form.get('milestone4_image', '').strip(),
+        'milestones': milestones_list,
         'excluded_images': request.form.getlist('excluded_images')
     }
+
+    # Write first 4 milestones to legacy keys for maximum compatibility
+    for i in range(1, 5):
+        idx = i - 1
+        if idx < len(milestones_list):
+            pdata[f'milestone{i}_title'] = milestones_list[idx]['title']
+            pdata[f'milestone{i}_image'] = milestones_list[idx]['image']
+            pdata[f'milestone{i}_desc'] = milestones_list[idx]['desc']
+        else:
+            pdata[f'milestone{i}_title'] = ''
+            pdata[f'milestone{i}_image'] = ''
+            pdata[f'milestone{i}_desc'] = ''
     
     # Process dynamic data category details
     if categoria == "Impressão 3D":
