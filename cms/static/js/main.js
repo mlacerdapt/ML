@@ -902,4 +902,22 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
+
+    // Intercetar colagem de código do Google Maps e extrair apenas a URL do Iframe
+    const linkMapaInput = document.getElementById("link_mapa");
+    if (linkMapaInput) {
+        linkMapaInput.addEventListener("paste", (e) => {
+            const pasteData = (e.clipboardData || window.clipboardData).getData("text");
+            if (pasteData.includes("<iframe") && pasteData.includes("src=")) {
+                e.preventDefault();
+                const match = pasteData.match(/src=["']([^"']+)["']/);
+                if (match && match[1]) {
+                    linkMapaInput.value = match[1];
+                    showToast("URL do Google Maps extraída do Iframe com sucesso!", "success");
+                } else {
+                    showToast("Não foi possível extrair a URL do Iframe colado.", "warning");
+                }
+            }
+        });
+    }
 });
