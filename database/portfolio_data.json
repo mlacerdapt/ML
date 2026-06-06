@@ -566,7 +566,7 @@
             {
                 "title": "CONCEITO & BRIEFING",
                 "image": "",
-                "desc": "\"Realizada pesquisa de imagens da santa na internet, selecionando referências com alta qualidade para subsidiar a modelagem 3D."
+                "desc": "Realizada pesquisa de imagens da santa na internet, selecionando referências com alta qualidade para subsidiar a modelagem 3D."
             },
             {
                 "title": "DESENVOLVIMENTO TÉCNICO",
@@ -581,13 +581,13 @@
             {
                 "title": "EXPOSIÇÃO & ENTREGA",
                 "image": "",
-                "desc": "\"Realizada a validação da qualidade de impressão e a preparação do encarte fotográfico que acompanha o item. A oração da santa foi integrada ao material, seguida pelo registro fotográfico e publicação do projeto no portfólio.\""
+                "desc": "Realizada a validação da qualidade de impressão e a preparação do encarte fotográfico que acompanha o item. A oração da santa foi integrada ao material, seguida pelo registro fotográfico e publicação do projeto no portfólio."
             }
         ],
         "excluded_images": [],
         "milestone1_title": "CONCEITO & BRIEFING",
         "milestone1_image": "",
-        "milestone1_desc": "\"Realizada pesquisa de imagens da santa na internet, selecionando referências com alta qualidade para subsidiar a modelagem 3D.",
+        "milestone1_desc": "Realizada pesquisa de imagens da santa na internet, selecionando referências com alta qualidade para subsidiar a modelagem 3D.",
         "milestone2_title": "DESENVOLVIMENTO TÉCNICO",
         "milestone2_image": "",
         "milestone2_desc": "Blender para modelagem orgânica e escultura digital. Foco intenso na suavidade do rosto, mãos sobre o ventre e no caimento realista e contínuo do manto para facilitar o trabalho pós-impressão.",
@@ -596,58 +596,14 @@
         "milestone3_desc": "IMáquina: Bambu Lab A1. Material: PLA Basic/Matte (Cinza claro, ideal para receber primer). Peso: ~85g. Tempo: 3.5h (devido à resolução fina)",
         "milestone4_title": "EXPOSIÇÃO & ENTREGA",
         "milestone4_image": "",
-        "milestone4_desc": "\"Realizada a validação da qualidade de impressão e a preparação do encarte fotográfico que acompanha o item. A oração da santa foi integrada ao material, seguida pelo registro fotográfico e publicação do projeto no portfólio.\"",
+        "milestone4_desc": "Realizada a validação da qualidade de impressão e a preparação do encarte fotográfico que acompanha o item. A oração da santa foi integrada ao material, seguida pelo registro fotográfico e publicação do projeto no portfólio.",
         "maq_maquina": "Bambu Lab A1",
         "maq_material": "PLA Branco Matte",
         "maq_peso": 83.0,
         "maq_tempo": 2.8,
         "maq_custo": 3.95,
         "image_metadata": {
-            "ML-3DP-26002_007.jpg": {
-                "caption": "",
-                "tag": ""
-            },
-            "ML-3DP-26002_019.jpg": {
-                "caption": "",
-                "tag": ""
-            },
-            "ML-3DP-26002_008.jpg": {
-                "caption": "",
-                "tag": ""
-            },
-            "ML-3DP-26002_006.jpg": {
-                "caption": "",
-                "tag": ""
-            },
-            "ML-3DP-26002_017.jpg": {
-                "caption": "",
-                "tag": ""
-            },
-            "ML-3DP-26002_023.png": {
-                "caption": "",
-                "tag": ""
-            },
-            "ML-3DP-26002_011.jpg": {
-                "caption": "",
-                "tag": ""
-            },
-            "ML-3DP-26002_004.jpg": {
-                "caption": "",
-                "tag": ""
-            },
-            "ML-3DP-26002_012.jpg": {
-                "caption": "",
-                "tag": ""
-            },
-            "ML-3DP-26002_010.jpg": {
-                "caption": "",
-                "tag": ""
-            },
-            "ML-3DP-26002_013.jpg": {
-                "caption": "",
-                "tag": ""
-            },
-            "ML-3DP-26002_020.png": {
+            "ML-3DP-26002_021.png": {
                 "caption": "",
                 "tag": ""
             },
@@ -655,23 +611,11 @@
                 "caption": "",
                 "tag": ""
             },
-            "ML-3DP-26002_001.jpg": {
+            "ML-3DP-26002_008.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "ML-3DP-26002_014.jpg": {
-                "caption": "",
-                "tag": ""
-            },
-            "ML-3DP-26002_002.jpeg": {
-                "caption": "",
-                "tag": ""
-            },
-            "ML-3DP-26002_021.png": {
-                "caption": "",
-                "tag": ""
-            },
-            "ML-3DP-26002_005.jpg": {
+            "ML-3DP-26002_020.png": {
                 "caption": "",
                 "tag": ""
             },
@@ -679,11 +623,15 @@
                 "caption": "",
                 "tag": ""
             },
-            "ML-3DP-26002_016.jpg": {
+            "ML-3DP-26002_023.png": {
                 "caption": "",
                 "tag": ""
             },
-            "ML-3DP-26002_015.jpg": {
+            "ML-3DP-26002_018.jpg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26002_019.jpg": {
                 "caption": "",
                 "tag": ""
             },
@@ -691,7 +639,59 @@
                 "caption": "",
                 "tag": ""
             },
-            "ML-3DP-26002_018.jpg": {
+            "ML-3DP-26002_002.jpeg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26002_014.jpg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26002_001.jpg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26002_015.jpg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26002_017.jpg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26002_016.jpg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26002_006.jpg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26002_012.jpg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26002_013.jpg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26002_007.jpg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26002_011.jpg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26002_005.jpg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26002_004.jpg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26002_010.jpg": {
                 "caption": "",
                 "tag": ""
             }
