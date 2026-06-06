@@ -600,7 +600,87 @@ def generate_client_page(project_id, project_data):
         else:
             if not images_mapping.get(img_key):
                 images_mapping[img_key] = ""
-            
+
+    # ── AUTO-RENAME: all images in img/ → {project_id}_{NNN}.ext ──────────────
+    # Files already starting with the project_id prefix are skipped (already renamed).
+    # After renaming, all references inside project_data are updated and saved to DB.
+    rename_map = {}  # old_name → new_name
+    if os.path.exists(img_dir):
+        img_files = sorted([
+            f for f in os.listdir(img_dir)
+            if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif'))
+               and not f.startswith(project_id)
+        ])
+        counter = 1
+        # Count existing already-renamed files to continue numbering correctly
+        existing_renamed = [
+            f for f in os.listdir(img_dir)
+            if f.startswith(project_id) and f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif'))
+        ]
+        counter = len(existing_renamed) + 1
+
+        for fname in img_files:
+            ext = os.path.splitext(fname)[1].lower()
+            new_name = f"{project_id}_{counter:03d}{ext}"
+            counter += 1
+            old_path = os.path.join(img_dir, fname)
+            new_path = os.path.join(img_dir, new_name)
+            # Avoid overwriting an existing renamed file
+            while os.path.exists(new_path):
+                new_name = f"{project_id}_{counter:03d}{ext}"
+                new_path = os.path.join(img_dir, new_name)
+                counter += 1
+            try:
+                os.rename(old_path, new_path)
+                rename_map[fname] = new_name
+                print(f"Renamed: {fname} → {new_name}")
+            except Exception as e:
+                print(f"Error renaming {fname}: {e}")
+
+    if rename_map:
+        # Update path_capa / path_processo / path_galeria
+        for field in ['path_capa', 'path_processo', 'path_galeria']:
+            old_val = (project_data.get(field) or '').strip()
+            basename = os.path.basename(old_val)
+            if basename in rename_map:
+                project_data[field] = rename_map[basename]
+
+        # Update milestone image references
+        for i in range(1, 5):
+            key = f'milestone{i}_image'
+            old_val = (project_data.get(key) or '').strip()
+            if old_val in rename_map:
+                project_data[key] = rename_map[old_val]
+
+        # Update excluded_images list
+        project_data['excluded_images'] = [
+            rename_map.get(f, f) for f in project_data.get('excluded_images', [])
+        ]
+
+        # Update image_metadata keys
+        old_meta = project_data.get('image_metadata', {})
+        project_data['image_metadata'] = {
+            rename_map.get(fname, fname): meta
+            for fname, meta in old_meta.items()
+        }
+
+        # Also rebuild images_mapping with new names
+        for key in list(images_mapping.keys()):
+            rel = images_mapping[key]  # e.g. "img/capa.jpg"
+            old_fname = os.path.basename(rel)
+            if old_fname in rename_map:
+                images_mapping[key] = f"img/{rename_map[old_fname]}"
+
+        # Persist updated references back to DB
+        try:
+            _db = load_db()
+            _db[project_id] = project_data
+            save_db(_db)
+            print(f"DB updated after image rename for {project_id}")
+        except Exception as e:
+            print(f"Warning: could not update DB after rename: {e}")
+    # ── END AUTO-RENAME ────────────────────────────────────────────────────────
+
     # Read the base template html
     template_path = os.path.join(CMS_DIR, 'templates/project_template.html')
     if not os.path.exists(template_path):

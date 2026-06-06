@@ -273,8 +273,8 @@
         "path_references": "IMG-20260408-WA0058.jpg",
         "path_models": "projetos/ML-3DP-26001/modelos",
         "path_renders": "projetos/ML-3DP-26001/renders",
-        "path_capa": "file_0000000041c47243b0e671ecd9e7939c.png",
-        "path_processo": "IMG-20260417-WA0086.jpeg",
+        "path_capa": "ML-3DP-26001_040.png",
+        "path_processo": "ML-3DP-26001_022.jpeg",
         "path_galeria": "",
         "link_mapa": "https://www.google.com/maps/place//@41.7093239,-8.8252509,15z?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D",
         "social_links": [
@@ -285,18 +285,18 @@
         ],
         "milestone1_title": "CONCEITO & BRIEFING",
         "milestone1_desc": "Estética (Foto de época do carro exato, Tipografia técnica/suíça para os textos)",
-        "milestone1_image": "IMG-20260408-WA0058.jpg",
+        "milestone1_image": "ML-3DP-26001_002.jpg",
         "milestone2_title": "DESENVOLVIMENTO TÉCNICO",
         "milestone2_desc": "Técnico (Blueprint ortogonal lateral do carro).Modelagem 3D: Blender",
-        "milestone2_image": "1775663683921.png",
+        "milestone2_image": "ML-3DP-26001_001.png",
         "milestone3_title": "PRODUÇÃO & ACABAMENTO",
         "milestone3_desc": "Modelagem 3D: Blender",
-        "milestone3_image": "IMG-20260414-WA0055.jpeg",
+        "milestone3_image": "ML-3DP-26001_021.jpeg",
         "milestone4_title": "EXPOSIÇÃO & ENTREGA",
         "milestone4_desc": "Adesão perfeita e nivelada ao póster de fundo, ausência de stringing ou marcas de suporte na carroçaria visível, e legibilidade absoluta da tipografia \"V8\" na conjugação com a sombra do carro.",
-        "milestone4_image": "IMG-20260417-WA0086.jpeg",
+        "milestone4_image": "ML-3DP-26001_022.jpeg",
         "excluded_images": [
-            "MVIMG_20260414_200453.jpg"
+            "ML-3DP-26001_025.jpg"
         ],
         "maq_maquina": "Bambu Lab A1",
         "maq_material": "PLA Branco",
@@ -304,167 +304,167 @@
         "maq_tempo": 4.0,
         "maq_custo": 3.98,
         "image_metadata": {
-            "IMG-20260408-WA0066.jpg": {
+            "ML-3DP-26001_010.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260502-WA0005.jpg": {
+            "ML-3DP-26001_024.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260408-WA0058.jpg": {
+            "ML-3DP-26001_002.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260408-WA0064.jpg": {
+            "ML-3DP-26001_008.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260408-WA0065.jpg": {
+            "ML-3DP-26001_009.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260408-WA0059.jpg": {
+            "ML-3DP-26001_003.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "Screenshot_2026-04-13-15-00-34-027_com.instagram.android-edit.jpg": {
+            "ML-3DP-26001_038.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260408-WA0061.jpg": {
+            "ML-3DP-26001_005.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260408-WA0060.jpg": {
+            "ML-3DP-26001_004.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260408-WA0062.jpg": {
+            "ML-3DP-26001_006.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "MVIMG_20260419_132636.jpg": {
+            "ML-3DP-26001_037.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260408-WA0063.jpg": {
+            "ML-3DP-26001_007.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260412-WA0037.jpeg": {
+            "ML-3DP-26001_012.jpeg": {
                 "caption": "",
                 "tag": ""
             },
-            "MVIMG_20260418_011806.jpg": {
+            "ML-3DP-26001_030.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260413-WA0035.jpeg": {
+            "ML-3DP-26001_014.jpeg": {
                 "caption": "",
                 "tag": ""
             },
-            "MVIMG_20260414_200458.jpg": {
+            "ML-3DP-26001_026.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "MVIMG_20260418_011828.jpg": {
+            "ML-3DP-26001_034.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "MVIMG_20260414_200503.jpg": {
+            "ML-3DP-26001_027.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "MVIMG_20260418_011817.jpg": {
+            "ML-3DP-26001_031.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260414-WA0029.jpg": {
+            "ML-3DP-26001_019.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "MVIMG_20260414_200453.jpg": {
+            "ML-3DP-26001_025.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260414-WA0025.jpg": {
+            "ML-3DP-26001_017.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260414-WA0031.jpg": {
+            "ML-3DP-26001_020.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260414-WA0027.jpg": {
+            "ML-3DP-26001_018.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "MVIMG_20260418_011818.jpg": {
+            "ML-3DP-26001_032.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "MVIMG_20260418_011830.jpg": {
+            "ML-3DP-26001_035.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260414-WA0055.jpeg": {
+            "ML-3DP-26001_021.jpeg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260414-WA0023.jpg": {
+            "ML-3DP-26001_016.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260414-WA0021.jpg": {
+            "ML-3DP-26001_015.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "MVIMG_20260418_011823.jpg": {
+            "ML-3DP-26001_033.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260417-WA0086.jpeg": {
+            "ML-3DP-26001_022.jpeg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260418-WA0106.jpeg": {
+            "ML-3DP-26001_023.jpeg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260409-WA0109.jpeg": {
+            "ML-3DP-26001_011.jpeg": {
                 "caption": "",
                 "tag": ""
             },
-            "processo.jpeg": {
+            "ML-3DP-26001_041.jpeg": {
                 "caption": "",
                 "tag": ""
             },
-            "MVIMG_20260417_211646.jpg": {
+            "ML-3DP-26001_028.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "IMG-20260412-WA0039.jpeg": {
+            "ML-3DP-26001_013.jpeg": {
                 "caption": "",
                 "tag": ""
             },
-            "MVIMG_20260419_132629.jpg": {
+            "ML-3DP-26001_036.jpg": {
                 "caption": "",
                 "tag": ""
             },
-            "1775663683921.png": {
+            "ML-3DP-26001_001.png": {
                 "caption": "",
                 "tag": ""
             },
-            "capa.png": {
+            "ML-3DP-26001_039.png": {
                 "caption": "",
                 "tag": ""
             },
-            "file_0000000041c47243b0e671ecd9e7939c.png": {
+            "ML-3DP-26001_040.png": {
                 "caption": "",
                 "tag": ""
             },
-            "MVIMG_20260417_211655.jpg": {
+            "ML-3DP-26001_029.jpg": {
                 "caption": "",
                 "tag": ""
             }
