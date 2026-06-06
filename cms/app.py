@@ -711,9 +711,7 @@ def generate_client_page(project_id, project_data):
             serial_number += " [EM ANDAMENTO]"
 
         # Resolve Map Link
-        maps_url = project_data.get('link_mapa')
-        if not maps_url or not maps_url.strip():
-            maps_url = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.676644123!2d-8.625843!3d41.157943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd2465adc!2sPorto!5e0!3m2!1spt!2spt"
+        maps_url = project_data.get('link_mapa', '').strip()
 
         # Resolve Instagram Post URL
         instagram_url = ""

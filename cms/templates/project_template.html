@@ -324,80 +324,112 @@
                 galleryGrid.appendChild(card);
             });
 
-            // Slide 5: Google Maps
-            document.getElementById("js-map-iframe").src = MONUMENT_CONFIG.mapsIframeUrl;
+            // Slide 5: Google Maps & Redes Sociais
+            const mapIframe = document.getElementById("js-map-iframe");
+            const mapColumn = mapIframe.closest(".md:col-span-3");
+            const socialColumn = document.getElementById("js-ig-post-link").closest(".md:col-span-2");
+            const igCard = document.getElementById("js-ig-post-link");
+            const additionalLinksContainer = document.getElementById("js-social-links-container");
+            const mainSection = document.getElementById("location-social-section");
 
-            // Post do Instagram Simulado
+            let hasMap = false;
+            let hasIg = false;
+            let hasAdditional = false;
+
+            // 1. Verificar Mapa
+            if (MONUMENT_CONFIG.mapsIframeUrl && MONUMENT_CONFIG.mapsIframeUrl.trim()) {
+                mapIframe.src = MONUMENT_CONFIG.mapsIframeUrl;
+                mapColumn.style.display = "flex";
+                hasMap = true;
+            } else {
+                mapColumn.style.display = "none";
+            }
+
+            // 2. Verificar Instagram Simulado
             const igConfig = MONUMENT_CONFIG.instagramPost;
-            document.getElementById("js-ig-avatar").src = igConfig.authorAvatar;
-            document.getElementById("js-ig-handle").textContent = igConfig.authorHandle;
-            document.getElementById("js-ig-caption-handle").textContent = igConfig.authorHandle;
-            document.getElementById("js-ig-likes").textContent = igConfig.likesCount;
-            document.getElementById("js-ig-caption-text").textContent = igConfig.captionText;
-            document.getElementById("js-ig-tags").textContent = igConfig.tags;
-            document.getElementById("js-ig-date").textContent = igConfig.date;
-            
-            // Usar a primeira imagem da galeria no post simulado
-            if (MONUMENT_CONFIG.gallery && MONUMENT_CONFIG.gallery.length > 0) {
-                document.getElementById("js-ig-image").src = MONUMENT_CONFIG.gallery[0].url;
-            }
-
-            // Associar link real ao card do Instagram
-            const igLink = document.getElementById("js-ig-post-link");
-            if (igLink) {
-                if (igConfig.postUrl && igConfig.postUrl.trim()) {
-                    igLink.href = igConfig.postUrl;
-                } else {
-                    igLink.href = "https://instagram.com/mlacerdapt";
+            if (igConfig.postUrl && igConfig.postUrl.trim()) {
+                document.getElementById("js-ig-avatar").src = igConfig.authorAvatar;
+                document.getElementById("js-ig-handle").textContent = igConfig.authorHandle;
+                document.getElementById("js-ig-caption-handle").textContent = igConfig.authorHandle;
+                document.getElementById("js-ig-likes").textContent = igConfig.likesCount;
+                document.getElementById("js-ig-caption-text").textContent = igConfig.captionText;
+                document.getElementById("js-ig-tags").textContent = igConfig.tags;
+                document.getElementById("js-ig-date").textContent = igConfig.date;
+                
+                if (MONUMENT_CONFIG.gallery && MONUMENT_CONFIG.gallery.length > 0) {
+                    document.getElementById("js-ig-image").src = MONUMENT_CONFIG.gallery[0].url;
                 }
+                igCard.href = igConfig.postUrl;
+                igCard.style.display = "block";
+                hasIg = true;
+            } else {
+                igCard.style.display = "none";
             }
 
-            // Renderizar Redes Sociais do Projeto
+            // 3. Verificar Redes Sociais Adicionais
             const socialLinksList = document.getElementById("js-social-links-list");
-            if (socialLinksList) {
-                socialLinksList.innerHTML = "";
-                const links = MONUMENT_CONFIG.socialLinks || [];
-                if (links.length > 0) {
-                    links.forEach(link => {
-                        const a = document.createElement("a");
-                        a.href = link.url;
-                        a.target = "_blank";
-                        
-                        let icon = "🔗";
-                        let colorClass = "bg-charcoal text-white";
-                        if (link.plataforma === "Instagram") {
-                            icon = "📷";
-                            colorClass = "bg-[#E1306C] text-white";
-                        } else if (link.plataforma === "Facebook") {
-                            icon = "📘";
-                            colorClass = "bg-[#1877F2] text-white";
-                        } else if (link.plataforma === "X") {
-                            icon = "𝕏";
-                            colorClass = "bg-black text-white font-bold";
-                        } else if (link.plataforma === "Behance") {
-                            icon = "🎨";
-                            colorClass = "bg-[#0057ff] text-white";
-                        } else if (link.plataforma === "Pinterest") {
-                            icon = "📌";
-                            colorClass = "bg-[#BD081C] text-white";
-                        } else if (link.plataforma === "YouTube") {
-                            icon = "🎥";
-                            colorClass = "bg-[#FF0000] text-white";
-                        } else if (link.plataforma === "LinkedIn") {
-                            icon = "💼";
-                            colorClass = "bg-[#0077B5] text-white";
-                        }
-                        
-                        a.className = `inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm text-[10px] font-title font-bold uppercase tracking-widest transition-all hover:opacity-90 hover:scale-105 ${colorClass}`;
-                        a.innerHTML = `<span>${icon}</span> <span>${link.plataforma}</span>`;
-                        socialLinksList.appendChild(a);
-                    });
-                } else {
-                    const noLinks = document.createElement("span");
-                    noLinks.className = "text-[10px] text-textMuted italic";
-                    noLinks.textContent = "Nenhuma rede social adicional configurada.";
-                    socialLinksList.appendChild(noLinks);
-                }
+            socialLinksList.innerHTML = "";
+            const links = MONUMENT_CONFIG.socialLinks || [];
+            const validLinks = links.filter(link => link.url && link.url.trim());
+            
+            if (validLinks.length > 0) {
+                validLinks.forEach(link => {
+                    const a = document.createElement("a");
+                    a.href = link.url;
+                    a.target = "_blank";
+                    
+                    let icon = "🔗";
+                    let colorClass = "bg-charcoal text-white";
+                    if (link.plataforma === "Instagram") {
+                        icon = "📷";
+                        colorClass = "bg-[#E1306C] text-white";
+                    } else if (link.plataforma === "Facebook") {
+                        icon = "📘";
+                        colorClass = "bg-[#1877F2] text-white";
+                    } else if (link.plataforma === "X") {
+                        icon = "𝕏";
+                        colorClass = "bg-black text-white font-bold";
+                    } else if (link.plataforma === "Behance") {
+                        icon = "🎨";
+                        colorClass = "bg-[#0057ff] text-white";
+                    } else if (link.plataforma === "Pinterest") {
+                        icon = "📌";
+                        colorClass = "bg-[#BD081C] text-white";
+                    } else if (link.plataforma === "YouTube") {
+                        icon = "🎥";
+                        colorClass = "bg-[#FF0000] text-white";
+                    } else if (link.plataforma === "LinkedIn") {
+                        icon = "💼";
+                        colorClass = "bg-[#0077B5] text-white";
+                    }
+                    
+                    a.className = `inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm text-[10px] font-title font-bold uppercase tracking-widest transition-all hover:opacity-90 hover:scale-105 ${colorClass}`;
+                    a.innerHTML = `<span>${icon}</span> <span>${link.plataforma}</span>`;
+                    socialLinksList.appendChild(a);
+                });
+                additionalLinksContainer.style.display = "block";
+                hasAdditional = true;
+            } else {
+                additionalLinksContainer.style.display = "none";
+            }
+
+            // 4. Ajustar Grid de acordo com visibilidade
+            const hasSocials = hasIg || hasAdditional;
+            if (hasMap && hasSocials) {
+                mapColumn.className = "md:col-span-3 flex flex-col justify-between";
+                socialColumn.className = "md:col-span-2 flex flex-col";
+                socialColumn.style.display = "flex";
+                mainSection.style.display = "block";
+            } else if (hasMap && !hasSocials) {
+                mapColumn.className = "md:col-span-5 flex flex-col justify-between";
+                socialColumn.style.display = "none";
+                mainSection.style.display = "block";
+            } else if (!hasMap && hasSocials) {
+                socialColumn.className = "md:col-span-5 flex flex-col";
+                socialColumn.style.display = "flex";
+                mainSection.style.display = "block";
+            } else {
+                mainSection.style.display = "none";
             }
 
             // LIGHTBOX LÓGICA
