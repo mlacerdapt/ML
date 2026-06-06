@@ -394,8 +394,14 @@
                     const slide = document.createElement("div");
                     slide.className = "carousel-slide";
                     slide.dataset.index = i;
+                    
+                    const isVideo = item.type === 'video' || (item.url && (item.url.endsWith('.mp4') || item.url.endsWith('.webm') || item.url.endsWith('.ogg') || item.url.endsWith('.mov')));
+                    const mediaHtml = isVideo 
+                        ? `<video src="${item.url}" muted loop playsinline autoplay style="width:100%; height:100%; object-fit:cover;"></video>` 
+                        : `<img src="${item.url}" alt="${item.caption}" loading="${i === 0 ? 'eager' : 'lazy'}" onerror="this.style.opacity='0.3'">`;
+
                     slide.innerHTML = `
-                        <img src="${item.url}" alt="${item.caption}" loading="${i === 0 ? 'eager' : 'lazy'}" onerror="this.style.opacity='0.3'">
+                        ${mediaHtml}
                         <div class="carousel-slide-caption">
                             <div class="carousel-slide-caption-title">${item.caption}</div>
                             <div class="carousel-slide-caption-tag">${item.tag}</div>
@@ -543,7 +549,7 @@
 
             // LIGHTBOX LÓGICA
             const lightbox = document.getElementById("js-lightbox");
-            const lightboxImg = document.getElementById("js-lightbox-img");
+            let lightboxImg = document.getElementById("js-lightbox-img");
             const lightboxCaption = document.getElementById("js-lightbox-caption");
             const btnClose = document.getElementById("js-lightbox-close");
             const btnPrev = document.getElementById("js-lightbox-prev");
@@ -561,18 +567,50 @@
             function closeLightbox() {
                 lightbox.classList.remove("active");
                 document.body.style.overflow = "";
+                // Pause video if playing
+                const oldEl = document.getElementById("js-lightbox-img");
+                if (oldEl && oldEl.tagName.toLowerCase() === 'video') {
+                    oldEl.pause();
+                }
             }
 
             function updateLightboxContent() {
                 const item = MONUMENT_CONFIG.gallery[activeIndex];
                 if (item) {
-                    lightboxImg.src = item.url;
-                    lightboxImg.alt = item.caption;
+                    const isVideo = item.type === 'video' || (item.url && (item.url.endsWith('.mp4') || item.url.endsWith('.webm') || item.url.endsWith('.ogg') || item.url.endsWith('.mov')));
+                    const parent = lightboxImg.parentNode;
+                    const oldEl = document.getElementById("js-lightbox-img");
+                    
+                    if (isVideo) {
+                        const videoEl = document.createElement("video");
+                        videoEl.id = "js-lightbox-img";
+                        videoEl.className = "lightbox-img-element";
+                        videoEl.src = item.url;
+                        videoEl.controls = true;
+                        videoEl.autoplay = true;
+                        videoEl.style.maxHeight = "60vh";
+                        videoEl.style.maxWidth = "100%";
+                        
+                        parent.replaceChild(videoEl, oldEl);
+                    } else {
+                        const imgEl = document.createElement("img");
+                        imgEl.id = "js-lightbox-img";
+                        imgEl.className = "lightbox-img-element";
+                        imgEl.src = item.url;
+                        imgEl.alt = item.caption;
+                        
+                        parent.replaceChild(imgEl, oldEl);
+                    }
+                    lightboxImg = document.getElementById("js-lightbox-img");
                     lightboxCaption.textContent = item.caption;
                 }
             }
 
             function showNext() {
+                const oldEl = document.getElementById("js-lightbox-img");
+                if (oldEl && oldEl.tagName.toLowerCase() === 'video') {
+                    oldEl.pause();
+                }
                 activeIndex = (activeIndex + 1) % MONUMENT_CONFIG.gallery.length;
                 updateLightboxContent();
             }
@@ -580,6 +618,10 @@
             btnClose.addEventListener("click", closeLightbox);
             btnNext.addEventListener("click", showNext);
             btnPrev.addEventListener("click", () => {
+                const oldEl = document.getElementById("js-lightbox-img");
+                if (oldEl && oldEl.tagName.toLowerCase() === 'video') {
+                    oldEl.pause();
+                }
                 activeIndex = (activeIndex - 1 + MONUMENT_CONFIG.gallery.length) % MONUMENT_CONFIG.gallery.length;
                 updateLightboxContent();
             });

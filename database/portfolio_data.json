@@ -548,7 +548,7 @@
     "ML-3DP-26002": {
         "id": "ML-3DP-26002",
         "titulo": "Nossa Senhora Grávida - Escultura Sacra",
-        "description": "Adaptação para impressão 3D de uma imagem sacra de 15 cm com foco em detalhes delicados. O modelo deve permitir um acabamento liso perfeito. Detalhes em Dourado pintado.",
+        "description": "Adaptação para impressão 3D de uma imagem sacra de 15 cm com foco em detalhes delicados. O modelo deve permitir um acabamento liso perfeito. Detalhes em Dourado pintado. \r\n\r\nContexto Histórico.\r\nA devoção a Nossa Senhora do Bom Parto (ou São Raimundo Nonato, frequentemente invocado pelo mesmo motivo) tem raízes profundas na Europa medieval, crescendo paralelamente ao desejo de proteção em uma época onde o parto era um dos momentos mais arriscados da vida de uma mulher. A tradição consolidou-se fortemente em Portugal e na França, onde imagens da Virgem Maria grávida — conhecida como Nossa Senhora da Expectação ou O — eram veneradas para garantir um nascimento seguro. Com a colonização, essa forte herança cultural e religiosa foi introduzida no Brasil, multiplicando-se em igrejas, irmandades e promessas que persistem até hoje como um símbolo de amparo à maternidade.",
         "tags": "#ArteSacra, #Escultura3D, #Impressao3D, #PinturaArtesanal, #Decoracao",
         "categoria": "Impressão 3D",
         "status": "Finalizado",
@@ -631,6 +631,14 @@
                 "caption": "",
                 "tag": ""
             },
+            "ML-3DP-26002_024.jpg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26002_025.jpg": {
+                "caption": "",
+                "tag": ""
+            },
             "ML-3DP-26002_019.jpg": {
                 "caption": "",
                 "tag": ""
@@ -640,6 +648,10 @@
                 "tag": ""
             },
             "ML-3DP-26002_002.jpeg": {
+                "caption": "",
+                "tag": ""
+            },
+            "ML-3DP-26002_026.mp4": {
                 "caption": "",
                 "tag": ""
             },

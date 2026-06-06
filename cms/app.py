@@ -628,14 +628,14 @@ def generate_client_page(project_id, project_data):
     if os.path.exists(img_dir):
         img_files = sorted([
             f for f in os.listdir(img_dir)
-            if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif'))
+            if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif', '.mp4', '.webm', '.ogg', '.mov'))
                and not f.startswith(project_id)
         ])
         counter = 1
         # Count existing already-renamed files to continue numbering correctly
         existing_renamed = [
             f for f in os.listdir(img_dir)
-            if f.startswith(project_id) and f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif'))
+            if f.startswith(project_id) and f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif', '.mp4', '.webm', '.ogg', '.mov'))
         ]
         counter = len(existing_renamed) + 1
 
@@ -858,7 +858,7 @@ def generate_client_page(project_id, project_data):
         if os.path.exists(img_dir):
             # Sort: capa first, then alphabetically
             all_files = sorted(
-                [f for f in os.listdir(img_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif'))],
+                [f for f in os.listdir(img_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif', '.mp4', '.webm', '.ogg', '.mov'))],
                 key=lambda f: (0 if os.path.splitext(f)[0].lower() == 'capa' else 1, f)
             )
             is_first = True
@@ -875,7 +875,14 @@ def generate_client_page(project_id, project_data):
                 caption = custom_caption or default.get('caption', fname)
                 tag = custom_tag or default.get('tag', 'Galeria')
                 spans_large = is_first  # First image always spans large
-                gallery.append({'url': url, 'caption': caption, 'tag': tag, 'spansLarge': spans_large})
+                is_video = fname.lower().endswith(('.mp4', '.webm', '.ogg', '.mov'))
+                gallery.append({
+                    'url': url,
+                    'caption': caption,
+                    'tag': tag,
+                    'spansLarge': spans_large,
+                    'type': 'video' if is_video else 'image'
+                })
                 is_first = False
 
         # If gallery is still empty, place placeholder
@@ -1027,7 +1034,7 @@ def get_project_images(project_id):
     try:
         files = []
         for f in os.listdir(img_dir):
-            if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif')):
+            if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif', '.mp4', '.webm', '.ogg', '.mov')):
                 size_bytes = os.path.getsize(os.path.join(img_dir, f))
                 files.append({
                     'name': f,
@@ -1151,7 +1158,7 @@ def save_project():
     image_metadata = {}
     if os.path.exists(img_dir_for_meta):
         for fname in os.listdir(img_dir_for_meta):
-            if fname.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif')):
+            if fname.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif', '.mp4', '.webm', '.ogg', '.mov')):
                 caption = request.form.get(f'image_caption_{fname}', '').strip()
                 tag = request.form.get(f'image_tag_{fname}', '').strip()
                 image_metadata[fname] = {'caption': caption, 'tag': tag}

@@ -890,8 +890,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     card.style.cssText = "display: flex; flex-direction: column; align-items: center; gap: 6px; background: white; border: 1px solid var(--border-color); border-radius: 4px; padding: 8px; width: 160px; position: relative; box-shadow: 0 2px 6px rgba(0,0,0,0.05); flex-shrink: 0;";
                     if (isExcluded) card.style.opacity = "0.45";
                     
+                    const isVideo = file.name.toLowerCase().endsWith('.mp4') || file.name.toLowerCase().endsWith('.webm') || file.name.toLowerCase().endsWith('.ogg') || file.name.toLowerCase().endsWith('.mov');
+                    const mediaHtml = isVideo 
+                        ? `<video src="${file.url}" style="width: 144px; height: 90px; object-fit: cover; border-radius: 2px; border: 1px solid var(--border-color);" muted preload="metadata"></video>` 
+                        : `<img src="${file.url}" style="width: 144px; height: 90px; object-fit: cover; border-radius: 2px; border: 1px solid var(--border-color);" alt="Thumbnail" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500';">`;
+
                     card.innerHTML = `
-                        <img src="${file.url}" style="width: 144px; height: 90px; object-fit: cover; border-radius: 2px; border: 1px solid var(--border-color);" alt="Thumbnail" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500';">
+                        ${mediaHtml}
                         <span style="font-size: 0.62rem; color: var(--text-primary); text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 144px; font-weight: 600;" title="${file.name}">${file.name}</span>
                         <span style="font-size: 0.55rem; color: var(--text-secondary); margin-top: -4px;">${file.size_mb} MB</span>
 
