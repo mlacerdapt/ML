@@ -43,6 +43,11 @@
                         "name": "Power BI",
                         "desc": "Criação de faróis operacionais, Dashboards & KPIs",
                         "level": 3
+                    },
+                    {
+                        "name": "Sistemas ERP (SAP & SAGE)",
+                        "desc": "Consultoria, parametrização e formação de utilizadores",
+                        "level": 3.5
                     }
                 ]
             },
@@ -78,6 +83,11 @@
                         "name": "MES & Protocolo Digital",
                         "desc": "Liderança e capacitação na transição tecnológica",
                         "level": 4.5
+                    },
+                    {
+                        "name": "Ensaios de Segurança (ANAC)",
+                        "desc": "Participação em testes de comissionamento de infraestruturas/ORAT",
+                        "level": 3
                     }
                 ]
             },
@@ -113,6 +123,26 @@
                         "name": "Slicing / Fatiamento",
                         "desc": "Domínio avançado de Cura e PrusaSlicer",
                         "level": 4
+                    }
+                ]
+            },
+            {
+                "category": "Formação, Projetos Digitais & Logística",
+                "items": [
+                    {
+                        "name": "Formação & Capacitação",
+                        "desc": "Treino de equipas operacionais e de atendimento, liderança de dinâmicas",
+                        "level": 5
+                    },
+                    {
+                        "name": "E-learning / Plataforma Moodle",
+                        "desc": "Transposição de conteúdos presenciais para o digital e produção audiovisual",
+                        "level": 5
+                    },
+                    {
+                        "name": "Gestão Operacional de Eventos",
+                        "desc": "Logística, fabrico de mobiliário e design cenográfico",
+                        "level": 5
                     }
                 ]
             }
