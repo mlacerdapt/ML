@@ -544,5 +544,43 @@
                 "tag": ""
             }
         }
+    },
+    "ML-3DP-26002": {
+        "id": "ML-3DP-26002",
+        "titulo": "Nossa Senhora Grávida - Escultura Sacra",
+        "description": "Adaptação para impressão 3D de uma imagem sacra de 15 cm com foco em detalhes delicados. O modelo deve permitir um acabamento liso perfeito. Detalhes em Dourado pintado.",
+        "tags": "#ArteSacra, #Escultura3D, #Impressao3D, #PinturaArtesanal, #Decoracao",
+        "categoria": "Impressão 3D",
+        "status": "Finalizado",
+        "visibilidade": "Público",
+        "horas": 4.0,
+        "path_references": "projetos/ML-3DP-26002/referencias",
+        "path_models": "projetos/ML-3DP-26002/modelos",
+        "path_renders": "projetos/ML-3DP-26002/renders",
+        "path_capa": "",
+        "path_processo": "",
+        "path_galeria": "",
+        "link_mapa": "https://www.google.com/maps/place//@41.7093239,-8.8252509,15z?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D",
+        "social_links": [],
+        "milestones": [],
+        "excluded_images": [],
+        "milestone1_title": "",
+        "milestone1_image": "",
+        "milestone1_desc": "",
+        "milestone2_title": "",
+        "milestone2_image": "",
+        "milestone2_desc": "",
+        "milestone3_title": "",
+        "milestone3_image": "",
+        "milestone3_desc": "",
+        "milestone4_title": "",
+        "milestone4_image": "",
+        "milestone4_desc": "",
+        "maq_maquina": "Bambu Lab A1",
+        "maq_material": "PLA Branco Matte",
+        "maq_peso": 83.0,
+        "maq_tempo": 2.8,
+        "maq_custo": 3.95,
+        "image_metadata": {}
     }
 }
