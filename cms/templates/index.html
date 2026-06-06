@@ -354,9 +354,6 @@
                                 <!-- Dynamic Skills Category Section -->
                                 <div class="form-group col-12" style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
                                     <h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--accent); margin: 0;">🛠️ Competências por Categoria (Gráficos de Nível 0 a 5)</h3>
-                                    <button type="button" class="btn-secondary" id="btn-add-skill-category" style="padding: 8px 16px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; font-weight: bold;">
-                                        ➕ Adicionar Categoria
-                                    </button>
                                 </div>
                                 <input type="hidden" name="skills_json" id="skills_json">
                                 <script id="initial-skills-data" type="application/json">
@@ -365,13 +362,15 @@
                                 <div id="cv-skills-builder-container" class="col-12" style="display: flex; flex-direction: column; gap: 20px;">
                                     <!-- Rendered dynamically via main.js -->
                                 </div>
+                                <div class="form-group col-12" style="margin-top: 10px;">
+                                    <button type="button" class="btn-secondary" id="btn-add-skill-category" style="padding: 8px 16px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; font-weight: bold; align-self: flex-start;">
+                                        ➕ Adicionar Categoria
+                                    </button>
+                                </div>
                                 
                                 <!-- Experiences -->
                                 <div class="form-group col-12" style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
                                     <h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--accent);">💼 Experiências Profissionais</h3>
-                                    <button type="button" class="btn-secondary" id="btn-add-experience" style="padding: 8px 16px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; font-weight: bold;">
-                                        ➕ Adicionar Experiência
-                                    </button>
                                 </div>
                                 
                                 <div id="cv-experiencias-container" class="col-12" style="display: flex; flex-direction: column; gap: 16px;">
@@ -399,13 +398,15 @@
                                     </div>
                                     {% endfor %}
                                 </div>
+                                <div class="form-group col-12" style="margin-top: 10px;">
+                                    <button type="button" class="btn-secondary" id="btn-add-experience" style="padding: 8px 16px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; font-weight: bold; align-self: flex-start;">
+                                        ➕ Adicionar Experiência
+                                    </button>
+                                </div>
 
                                 <!-- Education -->
                                 <div class="form-group col-12" style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
                                     <h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--accent); margin: 0;">🎓 Formação Académica</h3>
-                                    <button type="button" class="btn-secondary" id="btn-add-education" style="padding: 8px 16px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; font-weight: bold;">
-                                        ➕ Adicionar Formação
-                                    </button>
                                 </div>
                                 
                                 <div id="cv-educacao-container" class="col-12" style="display: flex; flex-direction: column; gap: 16px;">
@@ -432,6 +433,11 @@
                                         </div>
                                     </div>
                                     {% endfor %}
+                                </div>
+                                <div class="form-group col-12" style="margin-top: 10px;">
+                                    <button type="button" class="btn-secondary" id="btn-add-education" style="padding: 8px 16px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; font-weight: bold; align-self: flex-start;">
+                                        ➕ Adicionar Formação
+                                    </button>
                                 </div>
                             </div>
 

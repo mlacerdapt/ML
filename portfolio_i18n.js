@@ -138,16 +138,35 @@
         return nodes;
     }
 
+    // Safe storage helper with in-memory fallback to prevent SecurityError on file:// protocol
+    const storageCache = {};
+    const safeStorage = {
+        getItem(key) {
+            try {
+                return sessionStorage.getItem(key);
+            } catch (e) {
+                return storageCache[key] || null;
+            }
+        },
+        setItem(key, value) {
+            try {
+                sessionStorage.setItem(key, value);
+            } catch (e) {
+                storageCache[key] = value;
+            }
+        }
+    };
+
     // ── Save originals (Portuguese) on first call ─────────────────────────────
     function saveOriginals(nodes) {
-        if (sessionStorage.getItem(ORIGINAL_KEY)) return; // already saved
+        if (safeStorage.getItem(ORIGINAL_KEY)) return; // already saved
         const originals = nodes.map(n => n.textContent);
-        sessionStorage.setItem(ORIGINAL_KEY, JSON.stringify(originals));
+        safeStorage.setItem(ORIGINAL_KEY, JSON.stringify(originals));
     }
 
     // ── Restore original Portuguese text ─────────────────────────────────────
     function restoreOriginals(nodes) {
-        const raw = sessionStorage.getItem(ORIGINAL_KEY);
+        const raw = safeStorage.getItem(ORIGINAL_KEY);
         if (!raw) return;
         const originals = JSON.parse(raw);
         nodes.forEach((node, i) => {
@@ -160,7 +179,7 @@
     // ── Apply cached translation ──────────────────────────────────────────────
     function applyCachedTranslation(nodes, lang) {
         const cacheKey = STORAGE_KEY_PREFIX + lang;
-        const cached = sessionStorage.getItem(cacheKey);
+        const cached = safeStorage.getItem(cacheKey);
         if (!cached) return false;
         const translations = JSON.parse(cached);
         if (translations.length !== nodes.length) return false; // stale cache
@@ -185,7 +204,7 @@
             }));
         }
 
-        sessionStorage.setItem(cacheKey, JSON.stringify(results));
+        safeStorage.setItem(cacheKey, JSON.stringify(results));
     }
 
     // ── Apply instant UI label translations ───────────────────────────────────

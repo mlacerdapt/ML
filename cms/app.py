@@ -295,6 +295,30 @@ def compile_cv_html(cv):
     if _localizacao:
         contact_html += f'<li class="contact-li">📍 <a class="contact-txt contact-link" href="{_maps_url}" target="_blank" rel="noopener">{_localizacao}</a></li>\n'
 
+    # Render dynamic CV social links (redes sociais)
+    for link in cv.get('social_links', []):
+        plataforma = link.get('plataforma', 'Outro')
+        url = link.get('url', '').strip()
+        if not url:
+            continue
+        icon_map = {
+            'linkedin': '💼',
+            'github': '💻',
+            'instagram': '📸',
+            'behance': '🎨',
+            'facebook': '👥',
+            'x': '🐦',
+            'youtube': '📺',
+            'portfolio': '🌐',
+            'outro': '🔗'
+        }
+        icon = icon_map.get(plataforma.lower(), '🔗')
+        href = url if url.startswith(('http://', 'https://')) else f'https://{url}'
+        display_text = url.replace('https://', '').replace('http://', '').replace('www.', '')
+        if len(display_text) > 30:
+            display_text = display_text[:27] + "..."
+        contact_html += f'<li class="contact-li">{icon} <a class="contact-txt contact-link" href="{href}" target="_blank" rel="noopener">{plataforma}: {display_text}</a></li>\n'
+
     cv_html_part2 = f"""                                {contact_html}
                             </ul>
                         </div>
