@@ -426,7 +426,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("tags").value = data.tags || "";
                 document.getElementById("categoria").value = data.categoria || "Impressão 3D";
                 document.getElementById("status").value = data.status || "Em andamento";
-                document.getElementById("visibilidade").checked = data.visibilidade === "Público";
+                document.getElementById("visibilidade").value = data.visibilidade || "Privado";
                 document.getElementById("horas").value = data.horas || 0;
                 
                 document.getElementById("path_references").value = data.path_references || "";
@@ -821,4 +821,43 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
+
+    // Lógica para os botões "📂 Abrir" das pastas locais do projeto
+    const btnOpenFolders = document.querySelectorAll(".btn-open-folder");
+    btnOpenFolders.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const inputId = btn.dataset.inputId;
+            const inputEl = document.getElementById(inputId);
+            const pathVal = inputEl ? inputEl.value.trim() : "";
+            
+            if (!pathVal) {
+                const projectId = document.getElementById("form-id").value;
+                if (!projectId) {
+                    showToast("⚠️ Guarde o projeto primeiro para gerar e abrir as pastas automáticas!", "warning");
+                } else {
+                    showToast("⚠️ O caminho está vazio. Guarde o projeto para preencher e abrir as pastas por defeito.", "warning");
+                }
+                return;
+            }
+            
+            showToast("A abrir pasta...", "info");
+            
+            fetch("/open-folder", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ path: pathVal })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showToast("Pasta aberta com sucesso!", "success");
+                } else {
+                    showToast("Erro ao abrir pasta: " + data.message, "danger");
+                }
+            })
+            .catch(err => {
+                showToast("Erro de rede ao tentar abrir a pasta.", "danger");
+            });
+        });
+    });
 });

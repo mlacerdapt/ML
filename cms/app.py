@@ -822,6 +822,10 @@ def save_project():
                 'url': url.strip()
             })
 
+    path_ref = request.form.get('path_references', '').strip() or f"projetos/{project_id}/referencias"
+    path_mod = request.form.get('path_models', '').strip() or f"projetos/{project_id}/modelos"
+    path_rnd = request.form.get('path_renders', '').strip() or f"projetos/{project_id}/renders"
+
     pdata = {
         'id': project_id,
         'titulo': request.form.get('titulo'),
@@ -831,9 +835,9 @@ def save_project():
         'status': request.form.get('status'),
         'visibilidade': request.form.get('visibilidade', 'Privado'),
         'horas': float(request.form.get('horas', 0.0) or 0.0),
-        'path_references': request.form.get('path_references'),
-        'path_models': request.form.get('path_models'),
-        'path_renders': request.form.get('path_renders'),
+        'path_references': path_ref,
+        'path_models': path_mod,
+        'path_renders': path_rnd,
         'path_capa': request.form.get('path_capa'),
         'path_processo': request.form.get('path_processo'),
         'path_galeria': request.form.get('path_galeria'),
@@ -885,7 +889,10 @@ def save_project():
                 continue
             try:
                 # Expand user symbol (~), normalize path, and create directory tree
-                dir_path = os.path.abspath(os.path.expanduser(path_val_stripped))
+                if not os.path.isabs(path_val_stripped):
+                    dir_path = os.path.abspath(os.path.join(ROOT_DIR, path_val_stripped))
+                else:
+                    dir_path = os.path.abspath(os.path.expanduser(path_val_stripped))
                 os.makedirs(dir_path, exist_ok=True)
                 print(f"Local work directory created/verified: {dir_path}")
             except Exception as e:
@@ -1041,6 +1048,33 @@ def local_image():
     if not mime_type:
         mime_type = 'image/jpeg'
     return send_file(img_path, mimetype=mime_type)
+
+# ROUTE: Safe local folder opener for macOS Finder
+@app.route('/open-folder', methods=['POST'])
+def open_folder():
+    data = request.get_json()
+    if not data or 'path' not in data:
+        return jsonify({'success': False, 'message': 'Caminho não fornecido.'}), 400
+        
+    path_val = data['path'].strip()
+    if not path_val:
+        return jsonify({'success': False, 'message': 'Caminho vazio.'}), 400
+        
+    try:
+        # Resolve path relative to ROOT_DIR if relative
+        if not os.path.isabs(path_val):
+            resolved_path = os.path.abspath(os.path.join(ROOT_DIR, path_val))
+        else:
+            resolved_path = os.path.abspath(os.path.expanduser(path_val))
+            
+        # Ensure it exists
+        os.makedirs(resolved_path, exist_ok=True)
+        
+        # Open in macOS Finder
+        subprocess.run(['open', resolved_path], check=True)
+        return jsonify({'success': True})
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
 
 # ROUTE: Serve root css file for local previews
 @app.route('/portfolio_style.css')

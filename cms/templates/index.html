@@ -104,17 +104,11 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-4">
-                                    <label>Visibilidade Web</label>
-                                    <div class="toggle-group">
-                                        <div class="toggle-label-container">
-                                            <span class="toggle-label">Público / Privado</span>
-                                            <span class="toggle-desc">Ativa publicação online</span>
-                                        </div>
-                                        <label class="switch">
-                                            <input type="checkbox" name="visibilidade" id="visibilidade" value="Público" checked>
-                                            <span class="slider"></span>
-                                        </label>
-                                    </div>
+                                    <label for="visibilidade">Visibilidade Web</label>
+                                    <select name="visibilidade" id="visibilidade">
+                                        <option value="Público">Público</option>
+                                        <option value="Privado" selected>Privado</option>
+                                    </select>
                                 </div>
 
                                 <!-- Dynamic Section Container -->
@@ -219,15 +213,24 @@
                                 </div>
                                 <div class="form-group col-8">
                                     <label for="path_references">Caminho Local da Pasta de Referências</label>
-                                    <input type="text" name="path_references" id="path_references" placeholder="C:\Users\... \Referencias">
+                                    <div class="input-group" style="display: flex; gap: 8px; width: 100%;">
+                                        <input type="text" name="path_references" id="path_references" placeholder="C:\Users\... \Referencias" style="flex: 1;">
+                                        <button type="button" class="btn-secondary btn-open-folder" data-input-id="path_references" style="padding: 12px 14px; font-weight: bold; flex-shrink: 0; line-height: 1;">📂 Abrir</button>
+                                    </div>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="path_models">Caminho Local dos Modelos 3D / Ficheiros</label>
-                                    <input type="text" name="path_models" id="path_models" placeholder="C:\Users\... \Modelos">
+                                    <div class="input-group" style="display: flex; gap: 8px; width: 100%;">
+                                        <input type="text" name="path_models" id="path_models" placeholder="C:\Users\... \Modelos" style="flex: 1;">
+                                        <button type="button" class="btn-secondary btn-open-folder" data-input-id="path_models" style="padding: 12px 14px; font-weight: bold; flex-shrink: 0; line-height: 1;">📂 Abrir</button>
+                                    </div>
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="path_renders">Caminho Local dos Renders / Arte Final</label>
-                                    <input type="text" name="path_renders" id="path_renders" placeholder="C:\Users\... \Renders">
+                                    <div class="input-group" style="display: flex; gap: 8px; width: 100%;">
+                                        <input type="text" name="path_renders" id="path_renders" placeholder="C:\Users\... \Renders" style="flex: 1;">
+                                        <button type="button" class="btn-secondary btn-open-folder" data-input-id="path_renders" style="padding: 12px 14px; font-weight: bold; flex-shrink: 0; line-height: 1;">📂 Abrir</button>
+                                    </div>
                                 </div>
 
                                 <!-- Upload/Selection of Local Images -->
