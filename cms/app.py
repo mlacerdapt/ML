@@ -248,6 +248,7 @@ def compile_cv_html(cv):
         
     cv_html = f"""<div class="cv-print-bar no-print">
                 <button class="cv-print-btn" onclick="printCV()">🖨️ Imprimir / Exportar PDF</button>
+                <span class="cv-print-hint">💡 Nota: Na janela de impressão, marque a opção "Gráficos de fundo" e "Cabeçalhos e rodapés" para ver cores e números de página.</span>
             </div>
             <div class="cv-modern-split">
                 <!-- Left Sidebar Column (Dark/Charcoal Background below photo) -->
@@ -373,7 +374,6 @@ def compile_cv_html(cv):
                         class="cv-qr-image"
                         src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data={qr_url_encoded}&color=0058A3&bgcolor=FFFFFF&margin=6"
                         alt="QR Code – Portfólio e Currículo no GitHub"
-                        loading="lazy"
                     >
                     <div class="cv-qr-text">
                         <p class="cv-qr-label">Portfólio &amp; Currículo Online</p>

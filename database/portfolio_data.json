@@ -224,6 +224,24 @@
                 "role": "Gestão da Produção",
                 "company": "CENFIM - Arcos de Valdevez",
                 "desc": ""
+            },
+            {
+                "date": "2023-2024",
+                "role": "Power BI para tratamentos de dados",
+                "company": "Data Science Academy",
+                "desc": ""
+            },
+            {
+                "date": "2016-2018",
+                "role": "Analise e Desenvolvimento de Software",
+                "company": "Universidade de Franca",
+                "desc": ""
+            },
+            {
+                "date": "2024-2025",
+                "role": "Python Básico ao Avançado + RPA + Criação de Projetos Reais",
+                "company": "UDEMY",
+                "desc": ""
             }
         ],
         "social_links": [
