@@ -1266,6 +1266,8 @@ def serve_i18n_js():
 
 # ROUTE: Serve the compiled master portfolio/curriculum hub
 @app.route('/portfolio')
+@app.route('/index.html')
+@app.route('/hub')
 def serve_portfolio_hub():
     return send_file(os.path.join(ROOT_DIR, 'index.html'))
 
