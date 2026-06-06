@@ -8,7 +8,7 @@
         "localizacao": "Viana do Castelo, Portugal",
         "localizacao_maps_url": "https://www.google.com/maps/place//@41.7051228,-8.8176067,17z?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D",
         "avatar": "uploads/profile_avatar.png",
-        "resumo": "Profissional multidisciplinar com sólida trajetória industrial (Enercon), atuando na intersecção de Planeamento, Qualidade e Automação. Especialista no desenvolvimento de sistemas web (Python/Flask) e soluções de RPA integradas ao SAP, além de inteligência de negócios (Power BI). Paralelamente, atua como desenvolvedor independente de software sob medida e designer 3D (SketchUp, Blender, Impressão 3D), unindo rigor técnico, programação e criatividade para otimizar processos de ponta a ponta.",
+        "resumo": "Profissional multidisciplinar com sólida trajetória em planeamento, qualidade e automação no setor industrial (Enercon) e de construção civil, acumulando ampla experiência na criação de soluções tecnológicas. Especialista no desenvolvimento de sistemas web (Python/Flask), soluções RPA integradas ao SAP, consultoria e formação em sistemas de gestão (ERP Sage e SAP), além de inteligência de negócios (Power BI). Com um forte perfil empreendedor, atua de forma autónoma em desenvolvimento de software sob medida, e-learning, gestão de eventos e design 3D (SketchUp, Blender, Impressão 3D). Destaca-se pela robusta bagagem em garantia da qualidade (ISO 9001 e PBQP-H) e pela capacidade analítica para desenhar, padronizar e otimizar processos de ponta a ponta.",
         "skills": "",
         "skills_by_category": [
             {
@@ -65,8 +65,8 @@
                         "level": 4
                     },
                     {
-                        "name": "Garantia da Qualidade",
-                        "desc": "Inspeção de produto e tratamento de desvios",
+                        "name": "Garantia da Qualidade(ISO 9001 & PBQP-H)",
+                        "desc": "Auditorias, inspeções e tratamento de desvios",
                         "level": 5
                     },
                     {
@@ -88,6 +88,16 @@
                         "name": "Ensaios de Segurança (ANAC)",
                         "desc": "Participação em testes de comissionamento de infraestruturas/ORAT",
                         "level": 3
+                    },
+                    {
+                        "name": "Padronização de Processos",
+                        "desc": "Unificação de documentos pós-fusão e procedimentos operacionais",
+                        "level": 4
+                    },
+                    {
+                        "name": "Gestão de Pós-Venda & Assistência Técnica",
+                        "desc": "Vistoria de patologias, definição de garantias e execução de reparos",
+                        "level": 5
                     }
                 ]
             },
@@ -143,6 +153,11 @@
                         "name": "Gestão Operacional de Eventos",
                         "desc": "Logística, fabrico de mobiliário e design cenográfico",
                         "level": 5
+                    },
+                    {
+                        "name": "Gestão de Fornecedores & Custos",
+                        "desc": "Controlo de materiais, empreiteiros e orçamentos de reparação",
+                        "level": 4
                     }
                 ]
             }
@@ -185,20 +200,7 @@
                 "desc": "Qualificações obtidas no período: Comissário de Bordo e Mecânico de Aeronaves (Estrutura e Motor).\r\n\r\nLiderança na migração do modelo pedagógico presencial para o regime de Educação à Distância (EAD), estruturando a plataforma Moodle, editando recursos audiovisuais e criando manuais didáticos de suporte.\r\n\r\nReestruturação do calendário letivo institucional para sincronizar novos ingressos de estudantes e melhorar o fluxo de tesouraria de forma contínua.\r\n\r\nCoordenador prático e avaliador em treinos obrigatórios de Sobrevivência na Selva e no Mar.\r\n\r\nRepresentante da instituição nos testes reais de segurança e comissionamento de infraestruturas (Processos ORAT exigidos pela ANAC) no Aeroporto Internacional de Viracopos para validação de fluxos de novos terminais."
             }
         ],
-        "educacao": [
-            {
-                "date": "2014 - 2019",
-                "role": "Licenciatura em Engenharia de Computadores",
-                "company": "Universidade do Porto",
-                "desc": "Foco em desenvolvimento de software corporativo, banco de dados relacional e arquitetura de sistemas distribuídos."
-            },
-            {
-                "date": "2020 - 2021",
-                "role": "Curso Livre de Ingles B2",
-                "company": "Faculdade de Letras da Universidade do Porto",
-                "desc": "Foco em conversacao e escrita profissional."
-            }
-        ],
+        "educacao": [],
         "social_links": []
     }
 }
