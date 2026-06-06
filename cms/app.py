@@ -408,10 +408,30 @@ def rebuild_master_hub():
         capa_rel_path = ""
         
         if os.path.exists(img_dir):
-            for file in os.listdir(img_dir):
-                if file.startswith('capa'):
-                    capa_rel_path = f"projetos/{pid}/img/{file}"
-                    break
+            # 1. Use path_capa from project data (updated by auto-rename)
+            path_capa_field = (pdata.get('path_capa') or '').strip()
+            if path_capa_field:
+                # Might be just filename or full path
+                fname = os.path.basename(path_capa_field)
+                candidate = os.path.join(img_dir, fname)
+                if os.path.exists(candidate):
+                    capa_rel_path = f"projetos/{pid}/img/{fname}"
+
+            # 2. Fallback: look for legacy 'capa.*' file
+            if not capa_rel_path:
+                for file in sorted(os.listdir(img_dir)):
+                    if os.path.splitext(file)[0].lower() == 'capa':
+                        capa_rel_path = f"projetos/{pid}/img/{file}"
+                        break
+
+            # 3. Fallback: use the first image file in img/ (alphabetically)
+            if not capa_rel_path:
+                imgs = sorted([
+                    f for f in os.listdir(img_dir)
+                    if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp', '.gif'))
+                ])
+                if imgs:
+                    capa_rel_path = f"projetos/{pid}/img/{imgs[0]}"
                     
         badge_html = ""
         if pdata.get('status') == 'Em andamento':
