@@ -337,7 +337,31 @@ def compile_cv_html(cv):
                     </section>
                 </main>
             </div>"""
-    return cv_html + cv_html_part2
+
+    qr_html = ""
+    if _github:
+        qr_url_encoded = f"https%3A%2F%2Fgithub.com%2F{_github_clean}"
+        qr_html = f"""
+            <!-- QR Code block – visible ONLY in print (last page) -->
+            <div class="cv-print-qr-block" id="cv-print-qr">
+                <div class="cv-print-qr-inner">
+                    <img
+                        class="cv-qr-image"
+                        src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data={qr_url_encoded}&color=0058A3&bgcolor=FFFFFF&margin=6"
+                        alt="QR Code – Portfólio e Currículo no GitHub"
+                        loading="lazy"
+                    >
+                    <div class="cv-qr-text">
+                        <p class="cv-qr-label">Portfólio &amp; Currículo Online</p>
+                        <a class="cv-qr-link" href="https://github.com/{_github_clean}" target="_blank" rel="noopener">
+                            github.com/{_github_clean}
+                        </a>
+                        <p class="cv-qr-caption">Aceda ao meu portfólio completo, projetos e currículo online no GitHub. Aponte a câmara para o QR code ou clique no link acima.</p>
+                    </div>
+                </div>
+            </div>"""
+
+    return cv_html + cv_html_part2 + qr_html
 
 
 # Rebuilds root index.html grid mapping all Public projects and CV
