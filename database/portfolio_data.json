@@ -219,6 +219,15 @@
             }
         ],
         "educacao": [],
-        "social_links": []
+        "social_links": [
+            {
+                "plataforma": "LinkedIn",
+                "url": "https://www.linkedin.com/in/marcelomlacerda"
+            },
+            {
+                "plataforma": "Instagram",
+                "url": "https://www.instagram.com/marcelomlacerda"
+            }
+        ]
     }
 }
