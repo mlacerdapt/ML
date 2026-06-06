@@ -870,4 +870,36 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     });
+
+    // Lógica para o botão "📂 Abrir Pasta Imagens"
+    const btnOpenProjectImages = document.querySelector(".btn-open-project-images");
+    if (btnOpenProjectImages) {
+        btnOpenProjectImages.addEventListener("click", () => {
+            const projectId = document.getElementById("form-id").value;
+            if (!projectId) {
+                showToast("⚠️ Guarde o projeto primeiro para criar a pasta de imagens!", "warning");
+                return;
+            }
+            
+            const pathVal = `projetos/${projectId}/img`;
+            showToast("A abrir pasta de imagens...", "info");
+            
+            fetch("/open-folder", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ path: pathVal })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showToast("Pasta de imagens aberta com sucesso!", "success");
+                } else {
+                    showToast("Erro ao abrir pasta: " + data.message, "danger");
+                }
+            })
+            .catch(err => {
+                showToast("Erro de rede ao tentar abrir a pasta.", "danger");
+            });
+        });
+    }
 });
