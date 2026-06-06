@@ -557,45 +557,45 @@
         "path_references": "projetos/ML-3DP-26002/referencias",
         "path_models": "projetos/ML-3DP-26002/modelos",
         "path_renders": "projetos/ML-3DP-26002/renders",
-        "path_capa": "",
-        "path_processo": "",
+        "path_capa": "ML-3DP-26002_006.jpg",
+        "path_processo": "ML-3DP-26002_017.jpg",
         "path_galeria": "",
         "link_mapa": "https://www.google.com/maps/place//@41.7093239,-8.8252509,15z?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D",
         "social_links": [],
         "milestones": [
             {
                 "title": "CONCEITO & BRIEFING",
-                "image": "",
+                "image": "ML-3DP-26002_022.png",
                 "desc": "Realizada pesquisa de imagens da santa na internet, selecionando referências com alta qualidade para subsidiar a modelagem 3D."
             },
             {
                 "title": "DESENVOLVIMENTO TÉCNICO",
-                "image": "",
+                "image": "ML-3DP-26002_001.jpg",
                 "desc": "Blender para modelagem orgânica e escultura digital. Foco intenso na suavidade do rosto, mãos sobre o ventre e no caimento realista e contínuo do manto para facilitar o trabalho pós-impressão."
             },
             {
                 "title": "PRODUÇÃO & ACABAMENTO",
-                "image": "",
+                "image": "ML-3DP-26002_018.jpg",
                 "desc": "IMáquina: Bambu Lab A1. Material: PLA Basic/Matte (Cinza claro, ideal para receber primer). Peso: ~85g. Tempo: 3.5h (devido à resolução fina)"
             },
             {
                 "title": "EXPOSIÇÃO & ENTREGA",
-                "image": "",
+                "image": "ML-3DP-26002_014.jpg",
                 "desc": "Realizada a validação da qualidade de impressão e a preparação do encarte fotográfico que acompanha o item. A oração da santa foi integrada ao material, seguida pelo registro fotográfico e publicação do projeto no portfólio."
             }
         ],
         "excluded_images": [],
         "milestone1_title": "CONCEITO & BRIEFING",
-        "milestone1_image": "",
+        "milestone1_image": "ML-3DP-26002_022.png",
         "milestone1_desc": "Realizada pesquisa de imagens da santa na internet, selecionando referências com alta qualidade para subsidiar a modelagem 3D.",
         "milestone2_title": "DESENVOLVIMENTO TÉCNICO",
-        "milestone2_image": "",
+        "milestone2_image": "ML-3DP-26002_001.jpg",
         "milestone2_desc": "Blender para modelagem orgânica e escultura digital. Foco intenso na suavidade do rosto, mãos sobre o ventre e no caimento realista e contínuo do manto para facilitar o trabalho pós-impressão.",
         "milestone3_title": "PRODUÇÃO & ACABAMENTO",
-        "milestone3_image": "",
+        "milestone3_image": "ML-3DP-26002_018.jpg",
         "milestone3_desc": "IMáquina: Bambu Lab A1. Material: PLA Basic/Matte (Cinza claro, ideal para receber primer). Peso: ~85g. Tempo: 3.5h (devido à resolução fina)",
         "milestone4_title": "EXPOSIÇÃO & ENTREGA",
-        "milestone4_image": "",
+        "milestone4_image": "ML-3DP-26002_014.jpg",
         "milestone4_desc": "Realizada a validação da qualidade de impressão e a preparação do encarte fotográfico que acompanha o item. A oração da santa foi integrada ao material, seguida pelo registro fotográfico e publicação do projeto no portfólio.",
         "maq_maquina": "Bambu Lab A1",
         "maq_material": "PLA Branco Matte",
