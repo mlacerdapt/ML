@@ -438,12 +438,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Carregar marcos (milestones) de desenvolvimento
                 document.getElementById("milestone1_title").value = data.milestone1_title || "";
+                document.getElementById("milestone1_image").value = data.milestone1_image || "";
                 document.getElementById("milestone1_desc").value = data.milestone1_desc || "";
                 document.getElementById("milestone2_title").value = data.milestone2_title || "";
+                document.getElementById("milestone2_image").value = data.milestone2_image || "";
                 document.getElementById("milestone2_desc").value = data.milestone2_desc || "";
                 document.getElementById("milestone3_title").value = data.milestone3_title || "";
+                document.getElementById("milestone3_image").value = data.milestone3_image || "";
                 document.getElementById("milestone3_desc").value = data.milestone3_desc || "";
                 document.getElementById("milestone4_title").value = data.milestone4_title || "";
+                document.getElementById("milestone4_image").value = data.milestone4_image || "";
                 document.getElementById("milestone4_desc").value = data.milestone4_desc || "";
                 
                 // Carregar mapa e redes sociais
@@ -638,7 +642,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 
                 // Load local thumbnail gallery for this project
-                loadLocalImages(data.id);
+                loadLocalImages(data.id, data.excluded_images || [], data.image_metadata || {});
             })
             .catch(err => {
                 showToast("Erro ao buscar detalhes do projeto: " + err.message, "danger");
@@ -740,7 +744,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Helper to fetch and display thumbnails from the project's local img/ directory
-    function loadLocalImages(projectId) {
+    function loadLocalImages(projectId, excludedImages = [], imageMetadata = {}) {
         const galleryContainer = document.getElementById("local-img-gallery-container");
         const galleryGrid = document.getElementById("local-img-gallery-grid");
         if (!projectId) {
@@ -760,19 +764,44 @@ document.addEventListener("DOMContentLoaded", () => {
                 galleryGrid.innerHTML = "";
                 
                 files.forEach(file => {
+                    const isExcluded = excludedImages.includes(file.name);
+                    const meta = imageMetadata[file.name] || {};
+                    const savedCaption = meta.caption || "";
+                    const savedTag = meta.tag || "";
+
                     const card = document.createElement("div");
-                    card.style.cssText = "display: flex; flex-direction: column; align-items: center; gap: 6px; background: white; border: 1px solid var(--border-color); border-radius: 2px; padding: 8px; width: 140px; position: relative; box-shadow: 0 2px 6px rgba(0,0,0,0.03);";
+                    card.style.cssText = "display: flex; flex-direction: column; align-items: center; gap: 6px; background: white; border: 1px solid var(--border-color); border-radius: 4px; padding: 8px; width: 160px; position: relative; box-shadow: 0 2px 6px rgba(0,0,0,0.05); flex-shrink: 0;";
+                    if (isExcluded) card.style.opacity = "0.45";
                     
                     card.innerHTML = `
-                        <img src="${file.url}" style="width: 120px; height: 80px; object-fit: cover; border-radius: 2px; border: 1px solid var(--border-color);" alt="Thumbnail" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500';">
-                        <span style="font-size: 0.65rem; color: var(--text-primary); text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 120px;" title="${file.name}">${file.name}</span>
+                        <img src="${file.url}" style="width: 144px; height: 90px; object-fit: cover; border-radius: 2px; border: 1px solid var(--border-color);" alt="Thumbnail" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500';">
+                        <span style="font-size: 0.62rem; color: var(--text-primary); text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 144px; font-weight: 600;" title="${file.name}">${file.name}</span>
                         <span style="font-size: 0.55rem; color: var(--text-secondary); margin-top: -4px;">${file.size_mb} MB</span>
-                        <div style="display: flex; gap: 4px; margin-top: 4px; width: 100%;">
-                            <button type="button" class="btn-assign-capa" style="flex: 1; font-size: 0.52rem; padding: 4px 0; background: var(--accent); color: white; border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Definir como Capa">Capa</button>
-                            <button type="button" class="btn-assign-proc" style="flex: 1; font-size: 0.52rem; padding: 4px 0; background: var(--text-secondary); color: white; border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Definir como Processo">Proc.</button>
-                            <button type="button" class="btn-assign-gal" style="flex: 1; font-size: 0.52rem; padding: 4px 0; background: var(--accent-mustard); color: var(--text-primary); border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Definir como Galeria">Gal.</button>
-                            <button type="button" class="btn-assign-ref" style="flex: 1; font-size: 0.52rem; padding: 4px 0; background: #6B7280; color: white; border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Definir como Referência">Ref.</button>
+
+                        <!-- Assign to main image slots -->
+                        <div style="display: flex; gap: 3px; margin-top: 2px; width: 100%;">
+                            <button type="button" class="btn-assign-capa" style="flex: 1; font-size: 0.5rem; padding: 3px 0; background: var(--accent); color: white; border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Definir como Capa">Capa</button>
+                            <button type="button" class="btn-assign-proc" style="flex: 1; font-size: 0.5rem; padding: 3px 0; background: var(--text-secondary); color: white; border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Definir como Processo">Proc.</button>
+                            <button type="button" class="btn-assign-gal" style="flex: 1; font-size: 0.5rem; padding: 3px 0; background: var(--accent-mustard); color: var(--text-primary); border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Definir como Galeria">Gal.</button>
                         </div>
+
+                        <!-- Assign to milestone phase slots -->
+                        <div style="display: flex; gap: 3px; width: 100%;">
+                            <button type="button" class="btn-assign-f1" style="flex: 1; font-size: 0.5rem; padding: 3px 0; background: #7C3AED; color: white; border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Imagem da Fase 1">F1</button>
+                            <button type="button" class="btn-assign-f2" style="flex: 1; font-size: 0.5rem; padding: 3px 0; background: #7C3AED; color: white; border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Imagem da Fase 2">F2</button>
+                            <button type="button" class="btn-assign-f3" style="flex: 1; font-size: 0.5rem; padding: 3px 0; background: #7C3AED; color: white; border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Imagem da Fase 3">F3</button>
+                            <button type="button" class="btn-assign-f4" style="flex: 1; font-size: 0.5rem; padding: 3px 0; background: #7C3AED; color: white; border: none; border-radius: 2px; cursor: pointer; font-weight: bold;" title="Imagem da Fase 4">F4</button>
+                        </div>
+
+                        <!-- Caption and Tag inputs -->
+                        <input type="text" name="image_caption_${file.name}" value="${savedCaption.replace(/"/g, '&quot;')}" placeholder="Legenda..." style="width: 100%; font-size: 0.58rem; padding: 4px 6px; border: 1px solid var(--border-color); border-radius: 2px; box-sizing: border-box;">
+                        <input type="text" name="image_tag_${file.name}" value="${savedTag.replace(/"/g, '&quot;')}" placeholder="Tag / Categoria..." style="width: 100%; font-size: 0.58rem; padding: 4px 6px; border: 1px solid var(--border-color); border-radius: 2px; box-sizing: border-box;">
+
+                        <!-- Hide from gallery checkbox -->
+                        <label style="display: flex; align-items: center; gap: 5px; font-size: 0.58rem; color: var(--text-secondary); width: 100%; cursor: pointer; margin-top: 2px;">
+                            <input type="checkbox" class="cb-exclude" name="excluded_images" value="${file.name}" ${isExcluded ? 'checked' : ''} style="cursor: pointer; accent-color: #DC2626;">
+                            <span>Ocultar na Galeria</span>
+                        </label>
                     `;
                     
                     // Bind button clicks to assign paths using simple filenames
@@ -788,10 +817,29 @@ document.addEventListener("DOMContentLoaded", () => {
                         document.getElementById("path_galeria").value = file.name;
                         showToast(`Definido "${file.name}" como Imagem de Galeria!`, "success");
                     };
-                    card.querySelector(".btn-assign-ref").onclick = () => {
-                        document.getElementById("path_references").value = file.name;
-                        showToast(`Definido "${file.name}" como Referência!`, "success");
+
+                    // Milestone phase buttons
+                    card.querySelector(".btn-assign-f1").onclick = () => {
+                        document.getElementById("milestone1_image").value = file.name;
+                        showToast(`"${file.name}" definido como imagem da Fase 1!`, "success");
                     };
+                    card.querySelector(".btn-assign-f2").onclick = () => {
+                        document.getElementById("milestone2_image").value = file.name;
+                        showToast(`"${file.name}" definido como imagem da Fase 2!`, "success");
+                    };
+                    card.querySelector(".btn-assign-f3").onclick = () => {
+                        document.getElementById("milestone3_image").value = file.name;
+                        showToast(`"${file.name}" definido como imagem da Fase 3!`, "success");
+                    };
+                    card.querySelector(".btn-assign-f4").onclick = () => {
+                        document.getElementById("milestone4_image").value = file.name;
+                        showToast(`"${file.name}" definido como imagem da Fase 4!`, "success");
+                    };
+
+                    // Toggle opacity on exclude checkbox
+                    card.querySelector(".cb-exclude").addEventListener("change", (e) => {
+                        card.style.opacity = e.target.checked ? "0.45" : "1";
+                    });
                     
                     galleryGrid.appendChild(card);
                 });

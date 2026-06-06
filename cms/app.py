@@ -623,13 +623,13 @@ def generate_client_page(project_id, project_data):
         elif cat == "Layout":
             location_text = project_data.get('lay_formato', 'Layout Digital')
             
-        # 2. Determine metrics
+        # 2. Determine metrics (private financial data is NOT included in the public page)
         metrics = []
         if cat == "Impressão 3D":
             metrics = [
                 { "number": f"{project_data.get('maq_peso', 0)}g", "label": "Peso do material consumido" },
                 { "number": f"{project_data.get('maq_tempo', 0)}h", "label": "Tempo de impressão física" },
-                { "number": f"€{project_data.get('maq_custo', 0.0):.2f}", "label": "Custo estimado de fabricação" }
+                { "number": project_data.get('maq_material', 'Material utilizado') or 'Material utilizado', "label": "Material de impressão" }
             ]
         elif cat == "Render":
             metrics = [
@@ -639,9 +639,9 @@ def generate_client_page(project_id, project_data):
             ]
         elif cat == "Venda":
             metrics = [
-                { "number": f"€{project_data.get('vnd_preco', 0.0):.2f}", "label": "Preço final de venda" },
-                { "number": f"€{project_data.get('vnd_custo', 0.0):.2f}", "label": "Custo total de fabricação" },
-                { "number": f"{project_data.get('vnd_margem_pct', 0.0)}%", "label": "Margem de lucro calculada" }
+                { "number": f"€{project_data.get('vnd_preco', 0.0):.2f}", "label": "Preço de venda" },
+                { "number": project_data.get('vnd_plataforma', 'Loja online') or 'Loja online', "label": "Canal de venda" },
+                { "number": str(int(project_data.get('horas', 0))) + "h", "label": "Horas investidas" }
             ]
         elif cat == "Layout":
             metrics = [
@@ -649,59 +649,83 @@ def generate_client_page(project_id, project_data):
                 { "number": "Grelha", "label": project_data.get('lay_grelha', 'N/A') },
                 { "number": "Fontes", "label": project_data.get('lay_tipografias', 'N/A') }
             ]
-            
-        # 3. Determine milestones
+
+        # Helper: resolve milestone image from filename in img/ or fallback to capa
+        def resolve_milestone_img(filename, fallback):
+            if not filename:
+                return fallback
+            candidate = os.path.join(img_dir, filename)
+            if os.path.exists(candidate):
+                return f"img/{filename}"
+            # Try to find by prefix (e.g. "capa" matches "capa.jpg")
+            if os.path.exists(img_dir):
+                for f in os.listdir(img_dir):
+                    if os.path.splitext(f)[0].lower() == filename.lower().replace('img/', ''):
+                        return f"img/{f}"
+            return fallback or "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500"
+
+        fallback_capa = images_mapping.get('capa', '') or "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500"
+
+        # 3. Determine milestones with per-phase image assignment
         m1_title = project_data.get('milestone1_title', '').strip() or "Conceito & Briefing"
         m1_desc = project_data.get('milestone1_desc', '').strip() or "Definição do escopo, recolha de referências e planeamento das especificações do projeto."
+        m1_img = resolve_milestone_img(project_data.get('milestone1_image', ''), images_mapping.get('capa', '') or fallback_capa)
+
         m2_title = project_data.get('milestone2_title', '').strip() or "Desenvolvimento Técnico"
         m2_desc = project_data.get('milestone2_desc', '').strip() or "Execução da modelação 3D, fatiamento, configurações de render ou grelha de layout."
+        m2_img = resolve_milestone_img(project_data.get('milestone2_image', ''), images_mapping.get('processo', '') or fallback_capa)
+
         m3_title = project_data.get('milestone3_title', '').strip() or "Produção & Acabamento"
         m3_desc = project_data.get('milestone3_desc', '').strip() or "Impressão física da peça, pós-processamento, composição ou renderização final."
+        m3_img = resolve_milestone_img(project_data.get('milestone3_image', ''), images_mapping.get('galeria', '') or fallback_capa)
+
         m4_title = project_data.get('milestone4_title', '').strip() or "Exposição & Entrega"
         m4_desc = project_data.get('milestone4_desc', '').strip() or "Validação das métricas de qualidade, registo fotográfico e publicação no portfólio."
+        m4_img = resolve_milestone_img(project_data.get('milestone4_image', ''), fallback_capa)
 
         milestones = [
-            {
-                "num": "01",
-                "title": m1_title,
-                "text": m1_desc,
-                "image": images_mapping.get('capa', '')
-            },
-            {
-                "num": "02",
-                "title": m2_title,
-                "text": m2_desc,
-                "image": images_mapping.get('processo', '')
-            },
-            {
-                "num": "03",
-                "title": m3_title,
-                "text": m3_desc,
-                "image": images_mapping.get('galeria', '')
-            },
-            {
-                "num": "04",
-                "title": m4_title,
-                "text": m4_desc,
-                "image": images_mapping.get('capa', '')
-            }
+            { "num": "01", "title": m1_title, "text": m1_desc, "image": m1_img },
+            { "num": "02", "title": m2_title, "text": m2_desc, "image": m2_img },
+            { "num": "03", "title": m3_title, "text": m3_desc, "image": m3_img },
+            { "num": "04", "title": m4_title, "text": m4_desc, "image": m4_img }
         ]
-        
-        # Filter milestones images - if some image is missing, reuse capa
-        for m in milestones:
-            if not m["image"]:
-                m["image"] = images_mapping.get('capa', '') or "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500"
                 
-        # 4. Gallery mapping
+        # 4. Gallery: include ALL local images in img/ except explicitly excluded ones
+        excluded_images = project_data.get('excluded_images', [])
+        image_metadata = project_data.get('image_metadata', {})
         gallery = []
-        if images_mapping.get('capa'):
-            gallery.append({ "url": images_mapping.get('capa'), "caption": "Imagem de Capa e Apresentação", "tag": "Capa", "spansLarge": True })
-        if images_mapping.get('processo'):
-            gallery.append({ "url": images_mapping.get('processo'), "caption": "Processo de Trabalho e Slicing/Wireframe", "tag": "Processo", "spansLarge": False })
-        if images_mapping.get('galeria'):
-            gallery.append({ "url": images_mapping.get('galeria'), "caption": "Resultado Final e Galeria", "tag": "Resultado Final", "spansLarge": False })
-            
-        # If gallery is empty, place placeholders
+
+        # Default captions/tags for well-known filenames (prefix match)
+        default_meta = {
+            'capa':    {'caption': 'Imagem de Capa e Apresentação', 'tag': 'Capa',           'spansLarge': True},
+            'processo':{'caption': 'Processo de Trabalho',          'tag': 'Processo',        'spansLarge': False},
+            'galeria': {'caption': 'Resultado Final',               'tag': 'Resultado Final', 'spansLarge': False},
+        }
+
+        if os.path.exists(img_dir):
+            # Sort: capa first, then alphabetically
+            all_files = sorted(
+                [f for f in os.listdir(img_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif'))],
+                key=lambda f: (0 if os.path.splitext(f)[0].lower() == 'capa' else 1, f)
+            )
+            is_first = True
+            for fname in all_files:
+                if fname in excluded_images:
+                    continue
+                url = f"img/{fname}"
+                base = os.path.splitext(fname)[0].lower()
+                # Custom metadata takes priority; fallback to default_meta by prefix
+                meta_entry = image_metadata.get(fname, {})
+                custom_caption = meta_entry.get('caption', '').strip()
+                custom_tag = meta_entry.get('tag', '').strip()
+                default = default_meta.get(base, {})
+                caption = custom_caption or default.get('caption', fname)
+                tag = custom_tag or default.get('tag', 'Galeria')
+                spans_large = is_first  # First image always spans large
+                gallery.append({'url': url, 'caption': caption, 'tag': tag, 'spansLarge': spans_large})
+                is_first = False
+
+        # If gallery is still empty, place placeholder
         if not gallery:
             gallery.append({ "url": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200", "caption": "Apresentação Geral do Projeto", "tag": "Projeto", "spansLarge": True })
             
@@ -852,12 +876,17 @@ def save_project():
         'social_links': social_links,
         'milestone1_title': request.form.get('milestone1_title', '').strip(),
         'milestone1_desc': request.form.get('milestone1_desc', '').strip(),
+        'milestone1_image': request.form.get('milestone1_image', '').strip(),
         'milestone2_title': request.form.get('milestone2_title', '').strip(),
         'milestone2_desc': request.form.get('milestone2_desc', '').strip(),
+        'milestone2_image': request.form.get('milestone2_image', '').strip(),
         'milestone3_title': request.form.get('milestone3_title', '').strip(),
         'milestone3_desc': request.form.get('milestone3_desc', '').strip(),
+        'milestone3_image': request.form.get('milestone3_image', '').strip(),
         'milestone4_title': request.form.get('milestone4_title', '').strip(),
-        'milestone4_desc': request.form.get('milestone4_desc', '').strip()
+        'milestone4_desc': request.form.get('milestone4_desc', '').strip(),
+        'milestone4_image': request.form.get('milestone4_image', '').strip(),
+        'excluded_images': request.form.getlist('excluded_images')
     }
     
     # Process dynamic data category details
@@ -894,6 +923,18 @@ def save_project():
             'lay_tipografias': request.form.get('lay_tipografias')
         })
         
+    # Save per-image metadata (caption and tag) for images in the project img/ folder
+    proj_dir_for_meta = os.path.join(PROJETOS_DIR, project_id)
+    img_dir_for_meta = os.path.join(proj_dir_for_meta, 'img')
+    image_metadata = {}
+    if os.path.exists(img_dir_for_meta):
+        for fname in os.listdir(img_dir_for_meta):
+            if fname.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif')):
+                caption = request.form.get(f'image_caption_{fname}', '').strip()
+                tag = request.form.get(f'image_tag_{fname}', '').strip()
+                image_metadata[fname] = {'caption': caption, 'tag': tag}
+    pdata['image_metadata'] = image_metadata
+
     # Automatically create local directories on the filesystem if specified and they don't exist
     for path_key in ['path_references', 'path_models', 'path_renders']:
         path_val = pdata.get(path_key)
