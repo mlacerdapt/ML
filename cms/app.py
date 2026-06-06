@@ -651,29 +651,38 @@ def generate_client_page(project_id, project_data):
             ]
             
         # 3. Determine milestones
+        m1_title = project_data.get('milestone1_title', '').strip() or "Conceito & Briefing"
+        m1_desc = project_data.get('milestone1_desc', '').strip() or "Definição do escopo, recolha de referências e planeamento das especificações do projeto."
+        m2_title = project_data.get('milestone2_title', '').strip() or "Desenvolvimento Técnico"
+        m2_desc = project_data.get('milestone2_desc', '').strip() or "Execução da modelação 3D, fatiamento, configurações de render ou grelha de layout."
+        m3_title = project_data.get('milestone3_title', '').strip() or "Produção & Acabamento"
+        m3_desc = project_data.get('milestone3_desc', '').strip() or "Impressão física da peça, pós-processamento, composição ou renderização final."
+        m4_title = project_data.get('milestone4_title', '').strip() or "Exposição & Entrega"
+        m4_desc = project_data.get('milestone4_desc', '').strip() or "Validação das métricas de qualidade, registo fotográfico e publicação no portfólio."
+
         milestones = [
             {
                 "num": "01",
-                "title": "Conceito & Briefing",
-                "text": "Definição do escopo, recolha de referências e planeamento das especificações do projeto.",
+                "title": m1_title,
+                "text": m1_desc,
                 "image": images_mapping.get('capa', '')
             },
             {
                 "num": "02",
-                "title": "Desenvolvimento Técnico",
-                "text": "Execução da modelação 3D, fatiamento, configurações de render ou grelha de layout.",
+                "title": m2_title,
+                "text": m2_desc,
                 "image": images_mapping.get('processo', '')
             },
             {
                 "num": "03",
-                "title": "Produção & Acabamento",
-                "text": "Impressão física da peça, pós-processamento, composição ou renderização final.",
+                "title": m3_title,
+                "text": m3_desc,
                 "image": images_mapping.get('galeria', '')
             },
             {
                 "num": "04",
-                "title": "Exposição & Entrega",
-                "text": "Validação das métricas de qualidade, registo fotográfico e publicação no portfólio.",
+                "title": m4_title,
+                "text": m4_desc,
                 "image": images_mapping.get('capa', '')
             }
         ]
@@ -842,7 +851,15 @@ def save_project():
         'path_processo': request.form.get('path_processo'),
         'path_galeria': request.form.get('path_galeria'),
         'link_mapa': request.form.get('link_mapa'),
-        'social_links': social_links
+        'social_links': social_links,
+        'milestone1_title': request.form.get('milestone1_title', '').strip(),
+        'milestone1_desc': request.form.get('milestone1_desc', '').strip(),
+        'milestone2_title': request.form.get('milestone2_title', '').strip(),
+        'milestone2_desc': request.form.get('milestone2_desc', '').strip(),
+        'milestone3_title': request.form.get('milestone3_title', '').strip(),
+        'milestone3_desc': request.form.get('milestone3_desc', '').strip(),
+        'milestone4_title': request.form.get('milestone4_title', '').strip(),
+        'milestone4_desc': request.form.get('milestone4_desc', '').strip()
     }
     
     # Process dynamic data category details

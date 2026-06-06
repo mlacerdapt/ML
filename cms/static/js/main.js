@@ -435,6 +435,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("path_capa").value = data.path_capa || "";
                 document.getElementById("path_processo").value = data.path_processo || "";
                 document.getElementById("path_galeria").value = data.path_galeria || "";
+
+                // Carregar marcos (milestones) de desenvolvimento
+                document.getElementById("milestone1_title").value = data.milestone1_title || "";
+                document.getElementById("milestone1_desc").value = data.milestone1_desc || "";
+                document.getElementById("milestone2_title").value = data.milestone2_title || "";
+                document.getElementById("milestone2_desc").value = data.milestone2_desc || "";
+                document.getElementById("milestone3_title").value = data.milestone3_title || "";
+                document.getElementById("milestone3_desc").value = data.milestone3_desc || "";
+                document.getElementById("milestone4_title").value = data.milestone4_title || "";
+                document.getElementById("milestone4_desc").value = data.milestone4_desc || "";
                 
                 // Carregar mapa e redes sociais
                 document.getElementById("link_mapa").value = data.link_mapa || "";
