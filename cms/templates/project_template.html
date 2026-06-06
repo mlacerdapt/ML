@@ -114,17 +114,94 @@
             </div>
         </section>
 
-        <!-- 4. SLIDE GALERIA TÉCNICA E PROCESSO 3D -->
+        <!-- 4. GALERIA — Carrossel horizontal com lightbox -->
         <section id="gallery-section" class="exhibition-card w-full">
             <div>
-                <h2 class="museum-title">Galeria de Imagens & Resultados</h2>
+                <h2 class="museum-title">Galeria de Imagens &amp; Resultados</h2>
                 <div class="smart-divider"></div>
-                
-                <!-- Grid Assimétrico -->
-                <div id="js-gallery-grid" class="gallery-grid-custom mt-6">
-                    <!-- Os cards da galeria serão gerados dinamicamente -->
+
+                <!-- Carrossel -->
+                <div class="gallery-carousel-outer mt-6" id="js-carousel-outer">
+                    <div id="js-gallery-track" class="gallery-carousel-track"></div>
+                    <button id="js-carousel-prev" class="carousel-nav-btn carousel-nav-left" aria-label="Anterior">&#10094;</button>
+                    <button id="js-carousel-next" class="carousel-nav-btn carousel-nav-right" aria-label="Próxima">&#10095;</button>
+                    <div id="js-carousel-counter" class="carousel-counter-badge"></div>
                 </div>
+                <!-- Dots -->
+                <div id="js-carousel-dots" class="carousel-dots-row"></div>
             </div>
+
+            <!-- Estilos do carrossel (inline para auto-suficiência) -->
+            <style>
+                .gallery-carousel-outer {
+                    position: relative;
+                    overflow: hidden;
+                    border-radius: 6px;
+                    background: #111;
+                    aspect-ratio: 16/9;
+                    max-height: 520px;
+                    user-select: none;
+                }
+                .gallery-carousel-track {
+                    display: flex;
+                    height: 100%;
+                    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+                    will-change: transform;
+                }
+                .carousel-slide {
+                    min-width: 100%;
+                    position: relative;
+                    cursor: pointer;
+                    overflow: hidden;
+                }
+                .carousel-slide img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: block;
+                    transition: transform 0.4s ease;
+                }
+                .carousel-slide:hover img { transform: scale(1.03); }
+                .carousel-slide-caption {
+                    position: absolute;
+                    bottom: 0; left: 0; right: 0;
+                    background: linear-gradient(transparent, rgba(0,0,0,0.72));
+                    color: #fff;
+                    padding: 36px 20px 16px;
+                    pointer-events: none;
+                }
+                .carousel-slide-caption-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 2px; }
+                .carousel-slide-caption-tag { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.8; }
+                .carousel-nav-btn {
+                    position: absolute; top: 50%; transform: translateY(-50%);
+                    background: rgba(255,255,255,0.18); backdrop-filter: blur(8px);
+                    border: 1px solid rgba(255,255,255,0.25);
+                    color: #fff; width: 44px; height: 44px;
+                    border-radius: 50%; font-size: 1.1rem;
+                    cursor: pointer; z-index: 10;
+                    transition: background 0.2s, transform 0.15s;
+                    display: flex; align-items: center; justify-content: center;
+                }
+                .carousel-nav-btn:hover { background: rgba(255,255,255,0.35); transform: translateY(-50%) scale(1.1); }
+                .carousel-nav-left { left: 14px; }
+                .carousel-nav-right { right: 14px; }
+                .carousel-counter-badge {
+                    position: absolute; top: 12px; right: 14px;
+                    background: rgba(0,0,0,0.5); color: #fff;
+                    font-size: 0.7rem; font-family: 'Lato', sans-serif;
+                    padding: 3px 10px; border-radius: 100px; letter-spacing: 0.05em;
+                }
+                .carousel-dots-row {
+                    display: flex; justify-content: center; flex-wrap: wrap;
+                    gap: 6px; padding: 12px 0 4px;
+                }
+                .carousel-dot-btn {
+                    width: 8px; height: 8px; border-radius: 50%;
+                    background: #d1d5db; border: none; cursor: pointer; padding: 0;
+                    transition: background 0.25s, transform 0.2s;
+                }
+                .carousel-dot-btn.dot-active { background: #0058A3; transform: scale(1.4); }
+            </style>
         </section>
 
         <!-- 5. SLIDE LOCALIZAÇÃO E REDES SOCIAIS -->
@@ -135,8 +212,8 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-5 gap-8 mt-6">
                     
-                    <!-- Mapa Embutido -->
-                    <div class="md:col-span-3 flex flex-col justify-between">
+                    <!-- Mapa Embutido (OpenStreetMap) -->
+                    <div id="js-map-column" class="md:col-span-3 flex flex-col justify-between">
                         <div class="map-outer-container relative w-full h-80 overflow-hidden">
                             <iframe 
                                 id="js-map-iframe"
@@ -145,17 +222,17 @@
                                 height="100%" 
                                 style="border:0;" 
                                 allowfullscreen="" 
-                                loading="lazy" 
-                                referrerpolicy="no-referrer-when-downgrade">
+                                loading="lazy"
+                                title="Localização do projeto">
                             </iframe>
                         </div>
                         <p class="font-sans italic text-xs text-center text-textMuted mt-4">
-                            Referência cartográfica do local do monumento / projeto
+                            Referência cartográfica do local do projeto
                         </p>
                     </div>
 
                     <!-- Lateral: Instagram Post Simulado -->
-                    <div class="md:col-span-2 flex flex-col">
+                    <div id="js-social-column" class="md:col-span-2 flex flex-col">
                         <h3 class="font-title font-bold text-xs text-brandBlue uppercase tracking-widest mb-3">
                             📍 Origem do Projeto
                         </h3>
@@ -297,37 +374,82 @@
                 milestonesGrid.appendChild(card);
             });
 
-            // Slide 4: Galeria Assimétrica
-            const galleryGrid = document.getElementById("js-gallery-grid");
-            galleryGrid.innerHTML = "";
+            // Slide 4: Carrossel de Galeria
+            (function() {
+                const track = document.getElementById("js-gallery-track");
+                const dotsRow = document.getElementById("js-carousel-dots");
+                const counter = document.getElementById("js-carousel-counter");
+                const btnP = document.getElementById("js-carousel-prev");
+                const btnN = document.getElementById("js-carousel-next");
+                const gallery = MONUMENT_CONFIG.gallery || [];
+                let idx = 0;
 
-            MONUMENT_CONFIG.gallery.forEach((item, index) => {
-                const card = document.createElement("div");
-                card.className = `gallery-card ${item.spansLarge ? 'gallery-card-large' : ''}`;
-                card.setAttribute("data-index", index);
+                if (gallery.length === 0) {
+                    document.getElementById("gallery-section").style.display = "none";
+                    return;
+                }
 
-                card.innerHTML = `
-                    <div class="gallery-image-wrapper">
-                        <img src="${item.url}" alt="${item.caption}">
-                    </div>
-                    <div class="gallery-info">
-                        <div class="gallery-title">${item.caption}</div>
-                        <div class="gallery-category">${item.tag}</div>
-                    </div>
-                `;
+                gallery.forEach((item, i) => {
+                    // Slide
+                    const slide = document.createElement("div");
+                    slide.className = "carousel-slide";
+                    slide.dataset.index = i;
+                    slide.innerHTML = `
+                        <img src="${item.url}" alt="${item.caption}" loading="${i === 0 ? 'eager' : 'lazy'}" onerror="this.style.opacity='0.3'">
+                        <div class="carousel-slide-caption">
+                            <div class="carousel-slide-caption-title">${item.caption}</div>
+                            <div class="carousel-slide-caption-tag">${item.tag}</div>
+                        </div>
+                    `;
+                    slide.addEventListener("click", () => openLightbox(i));
+                    track.appendChild(slide);
 
-                // Clique para abrir o Lightbox
-                card.addEventListener("click", () => {
-                    openLightbox(index);
+                    // Dot (max 30 dots to avoid overflow)
+                    if (gallery.length <= 30) {
+                        const dot = document.createElement("button");
+                        dot.className = "carousel-dot-btn" + (i === 0 ? " dot-active" : "");
+                        dot.setAttribute("aria-label", `Foto ${i + 1}`);
+                        dot.addEventListener("click", () => goTo(i));
+                        dotsRow.appendChild(dot);
+                    }
                 });
 
-                galleryGrid.appendChild(card);
-            });
+                function goTo(n) {
+                    idx = ((n % gallery.length) + gallery.length) % gallery.length;
+                    track.style.transform = `translateX(-${idx * 100}%)`;
+                    counter.textContent = `${idx + 1} / ${gallery.length}`;
+                    dotsRow.querySelectorAll(".carousel-dot-btn").forEach((d, i) => {
+                        d.classList.toggle("dot-active", i === idx);
+                    });
+                }
 
-            // Slide 5: Google Maps & Redes Sociais
+                counter.textContent = `1 / ${gallery.length}`;
+                btnP.addEventListener("click", () => goTo(idx - 1));
+                btnN.addEventListener("click", () => goTo(idx + 1));
+
+                // Swipe/touch support
+                let tx = 0;
+                const outer = document.getElementById("js-carousel-outer");
+                outer.addEventListener("touchstart", e => { tx = e.touches[0].clientX; }, { passive: true });
+                outer.addEventListener("touchend", e => {
+                    const diff = tx - e.changedTouches[0].clientX;
+                    if (Math.abs(diff) > 50) goTo(diff > 0 ? idx + 1 : idx - 1);
+                });
+
+                // Keyboard arrows when hovered
+                outer.addEventListener("keydown", e => {
+                    if (e.key === "ArrowRight") goTo(idx + 1);
+                    if (e.key === "ArrowLeft") goTo(idx - 1);
+                });
+
+                window._carouselGoTo = goTo;
+            })();
+
+            // Slide 5: Mapa (OpenStreetMap) e Redes Sociais
+            // Use getElementById with explicit IDs — avoids CSS selector issues with Tailwind class names
             const mapIframe = document.getElementById("js-map-iframe");
-            const mapColumn = mapIframe.closest(".md:col-span-3");
-            const socialColumn = document.getElementById("js-ig-post-link").closest(".md:col-span-2");
+            const mapColumn = document.getElementById("js-map-column");
+            const socialColumn = document.getElementById("js-social-column");
             const igCard = document.getElementById("js-ig-post-link");
             const additionalLinksContainer = document.getElementById("js-social-links-container");
             const mainSection = document.getElementById("location-social-section");
@@ -336,7 +458,7 @@
             let hasIg = false;
             let hasAdditional = false;
 
-            // 1. Verificar Mapa
+            // 1. Mapa
             if (MONUMENT_CONFIG.mapsIframeUrl && MONUMENT_CONFIG.mapsIframeUrl.trim()) {
                 mapIframe.src = MONUMENT_CONFIG.mapsIframeUrl;
                 mapColumn.style.display = "flex";
@@ -345,19 +467,24 @@
                 mapColumn.style.display = "none";
             }
 
-            // 2. Verificar Instagram Simulado
+            // 2. Instagram
             const igConfig = MONUMENT_CONFIG.instagramPost;
-            if (igConfig.postUrl && igConfig.postUrl.trim()) {
-                document.getElementById("js-ig-avatar").src = igConfig.authorAvatar;
+            if (igConfig && igConfig.postUrl && igConfig.postUrl.trim()) {
+                const igAvatar = document.getElementById("js-ig-avatar");
+                igAvatar.src = igConfig.authorAvatar;
+                igAvatar.onerror = function() { this.style.display = 'none'; };
                 document.getElementById("js-ig-handle").textContent = igConfig.authorHandle;
                 document.getElementById("js-ig-caption-handle").textContent = igConfig.authorHandle;
                 document.getElementById("js-ig-likes").textContent = igConfig.likesCount;
                 document.getElementById("js-ig-caption-text").textContent = igConfig.captionText;
                 document.getElementById("js-ig-tags").textContent = igConfig.tags;
                 document.getElementById("js-ig-date").textContent = igConfig.date;
-                
+
+                // Use first gallery image as Instagram photo
+                const igImg = document.getElementById("js-ig-image");
                 if (MONUMENT_CONFIG.gallery && MONUMENT_CONFIG.gallery.length > 0) {
-                    document.getElementById("js-ig-image").src = MONUMENT_CONFIG.gallery[0].url;
+                    igImg.src = MONUMENT_CONFIG.gallery[0].url;
+                    igImg.onerror = function() { this.parentElement.style.background = '#eee'; this.style.display='none'; };
                 }
                 igCard.href = igConfig.postUrl;
                 igCard.style.display = "block";
@@ -366,43 +493,25 @@
                 igCard.style.display = "none";
             }
 
-            // 3. Verificar Redes Sociais Adicionais
+            // 3. Links adicionais
             const socialLinksList = document.getElementById("js-social-links-list");
             socialLinksList.innerHTML = "";
             const links = MONUMENT_CONFIG.socialLinks || [];
-            const validLinks = links.filter(link => link.url && link.url.trim());
-            
+            const validLinks = links.filter(l => l.url && l.url.trim());
+
             if (validLinks.length > 0) {
                 validLinks.forEach(link => {
                     const a = document.createElement("a");
                     a.href = link.url;
                     a.target = "_blank";
-                    
-                    let icon = "🔗";
-                    let colorClass = "bg-charcoal text-white";
-                    if (link.plataforma === "Instagram") {
-                        icon = "📷";
-                        colorClass = "bg-[#E1306C] text-white";
-                    } else if (link.plataforma === "Facebook") {
-                        icon = "📘";
-                        colorClass = "bg-[#1877F2] text-white";
-                    } else if (link.plataforma === "X") {
-                        icon = "𝕏";
-                        colorClass = "bg-black text-white font-bold";
-                    } else if (link.plataforma === "Behance") {
-                        icon = "🎨";
-                        colorClass = "bg-[#0057ff] text-white";
-                    } else if (link.plataforma === "Pinterest") {
-                        icon = "📌";
-                        colorClass = "bg-[#BD081C] text-white";
-                    } else if (link.plataforma === "YouTube") {
-                        icon = "🎥";
-                        colorClass = "bg-[#FF0000] text-white";
-                    } else if (link.plataforma === "LinkedIn") {
-                        icon = "💼";
-                        colorClass = "bg-[#0077B5] text-white";
-                    }
-                    
+                    let icon = "🔗", colorClass = "bg-charcoal text-white";
+                    if (link.plataforma === "Instagram") { icon = "📷"; colorClass = "bg-[#E1306C] text-white"; }
+                    else if (link.plataforma === "Facebook") { icon = "📘"; colorClass = "bg-[#1877F2] text-white"; }
+                    else if (link.plataforma === "X") { icon = "𝕏"; colorClass = "bg-black text-white font-bold"; }
+                    else if (link.plataforma === "Behance") { icon = "🎨"; colorClass = "bg-[#0057ff] text-white"; }
+                    else if (link.plataforma === "Pinterest") { icon = "📌"; colorClass = "bg-[#BD081C] text-white"; }
+                    else if (link.plataforma === "YouTube") { icon = "🎥"; colorClass = "bg-[#FF0000] text-white"; }
+                    else if (link.plataforma === "LinkedIn") { icon = "💼"; colorClass = "bg-[#0077B5] text-white"; }
                     a.className = `inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm text-[10px] font-title font-bold uppercase tracking-widest transition-all hover:opacity-90 hover:scale-105 ${colorClass}`;
                     a.innerHTML = `<span>${icon}</span> <span>${link.plataforma}</span>`;
                     socialLinksList.appendChild(a);
@@ -413,19 +522,19 @@
                 additionalLinksContainer.style.display = "none";
             }
 
-            // 4. Ajustar Grid de acordo com visibilidade
+            // 4. Ajustar visibilidade da secção
             const hasSocials = hasIg || hasAdditional;
             if (hasMap && hasSocials) {
-                mapColumn.className = "md:col-span-3 flex flex-col justify-between";
-                socialColumn.className = "md:col-span-2 flex flex-col";
+                mapColumn.style.display = "flex";
                 socialColumn.style.display = "flex";
                 mainSection.style.display = "block";
-            } else if (hasMap && !hasSocials) {
-                mapColumn.className = "md:col-span-5 flex flex-col justify-between";
+            } else if (hasMap) {
+                mapColumn.className = "col-span-full flex flex-col justify-between";
                 socialColumn.style.display = "none";
                 mainSection.style.display = "block";
-            } else if (!hasMap && hasSocials) {
-                socialColumn.className = "md:col-span-5 flex flex-col";
+            } else if (hasSocials) {
+                mapColumn.style.display = "none";
+                socialColumn.className = "col-span-full flex flex-col";
                 socialColumn.style.display = "flex";
                 mainSection.style.display = "block";
             } else {

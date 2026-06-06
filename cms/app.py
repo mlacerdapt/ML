@@ -814,28 +814,32 @@ def generate_client_page(project_id, project_data):
         if project_data.get('status') == 'Em andamento':
             serial_number += " [EM ANDAMENTO]"
 
-        # Resolve Map Link — convert any normal Google Maps URL to embeddable format
+        # Resolve Map Link — convert Google Maps URL to OpenStreetMap embed (no API key needed)
         maps_url_raw = project_data.get('link_mapa', '').strip()
         maps_url = ''
         if maps_url_raw:
-            if 'maps/embed' in maps_url_raw or 'output=embed' in maps_url_raw:
-                # Already an embed URL — use as-is
+            if 'openstreetmap.org/export/embed' in maps_url_raw:
+                # Already an OSM embed URL
                 maps_url = maps_url_raw
-            elif 'google.com/maps' in maps_url_raw:
-                # Extract lat/lng coordinates from URL (e.g. @41.7093,-8.8252,15z)
+            elif 'maps/embed' in maps_url_raw or 'output=embed' in maps_url_raw:
+                # Already an embed URL
+                maps_url = maps_url_raw
+            else:
+                # Extract coordinates from Google Maps URL (@lat,lng,zoom) or any URL
                 import re as _re
+                import urllib.parse as _up
                 coord_match = _re.search(r'@(-?\d+\.\d+),(-?\d+\.\d+),(\d+)', maps_url_raw)
                 if coord_match:
-                    lat = coord_match.group(1)
-                    lng = coord_match.group(2)
-                    zoom = coord_match.group(3)
-                    maps_url = f"https://maps.google.com/maps?q={lat},{lng}&z={zoom}&output=embed"
+                    lat = float(coord_match.group(1))
+                    lng = float(coord_match.group(2))
+                    zoom = int(coord_match.group(3))
+                    # OpenStreetMap embed (always works, no API key required)
+                    delta = 0.015  # bounding box size
+                    bbox = f"{lng-delta},{lat-delta},{lng+delta},{lat+delta}"
+                    maps_url = f"https://www.openstreetmap.org/export/embed.html?bbox={bbox}&layer=mapnik&marker={lat},{lng}"
                 else:
-                    # No coordinates — use the URL as a search query
-                    import urllib.parse as _up
-                    maps_url = f"https://maps.google.com/maps?q={_up.quote(maps_url_raw)}&output=embed"
-            else:
-                maps_url = maps_url_raw
+                    # Fallback: encode as OSM search
+                    maps_url = f"https://www.openstreetmap.org/export/embed.html?bbox=-8.7,41.1,-8.5,41.2&layer=mapnik"
 
         # Resolve Instagram link and extract real handle from URL
         import re as _re2
@@ -852,8 +856,15 @@ def generate_client_page(project_id, project_data):
                             instagram_handle = f"@{h}"
                 break
 
-        # Use CV avatar
-        _cv_avatar = load_db().get('curriculo', {}).get('avatar') or "https://api.dicebear.com/7.x/identicon/svg?seed=mlacerdapt"
+        # Avatar: path stored in CV is relative to root (e.g. "uploads/avatar.png")
+        # From inside projetos/PROJECT_ID/index.html, root is two levels up → "../../"
+        _cv_avatar_raw = load_db().get('curriculo', {}).get('avatar') or ''
+        if _cv_avatar_raw and not _cv_avatar_raw.startswith('http'):
+            _cv_avatar = f"../../{_cv_avatar_raw.lstrip('/')}"
+        elif _cv_avatar_raw:
+            _cv_avatar = _cv_avatar_raw
+        else:
+            _cv_avatar = f"https://api.dicebear.com/7.x/identicon/svg?seed=mlacerdapt"
 
         config = {
             "status": project_data.get('status', 'Em andamento'),
