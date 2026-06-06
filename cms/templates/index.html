@@ -401,42 +401,37 @@
                                 </div>
 
                                 <!-- Education -->
-                                <div class="form-group col-12" style="margin-top: 16px;"><h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--accent);">🎓 Formação Académica</h3></div>
+                                <div class="form-group col-12" style="margin-top: 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+                                    <h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--accent); margin: 0;">🎓 Formação Académica</h3>
+                                    <button type="button" class="btn-secondary" id="btn-add-education" style="padding: 8px 16px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; font-weight: bold;">
+                                        ➕ Adicionar Formação
+                                    </button>
+                                </div>
                                 
-                                <!-- Edu 1 -->
-                                <div class="form-group col-4">
-                                    <label>Edu 1: Período</label>
-                                    <input type="text" name="edu1_date" value="{{ curriculo.educacao[0].date if curriculo.educacao|length > 0 else '' }}" placeholder="Ex: 2014 - 2019">
-                                </div>
-                                <div class="form-group col-8">
-                                    <label>Instituição</label>
-                                    <input type="text" name="edu1_company" value="{{ curriculo.educacao[0].company if curriculo.educacao|length > 0 else '' }}" placeholder="Ex: Universidade do Porto">
-                                </div>
-                                <div class="form-group col-12">
-                                    <label>Curso / Grau</label>
-                                    <input type="text" name="edu1_role" value="{{ curriculo.educacao[0].role if curriculo.educacao|length > 0 else '' }}" placeholder="Ex: Licenciatura em Engenharia">
-                                </div>
-                                <div class="form-group col-12" style="margin-bottom: 12px;">
-                                    <label>Detalhes</label>
-                                    <textarea name="edu1_desc" style="min-height: 70px;">{{ curriculo.educacao[0].desc if curriculo.educacao|length > 0 else '' }}</textarea>
-                                </div>
-
-                                <!-- Edu 2 -->
-                                <div class="form-group col-4">
-                                    <label>Edu 2: Período</label>
-                                    <input type="text" name="edu2_date" value="{{ curriculo.educacao[1].date if curriculo.educacao|length > 1 else '' }}" placeholder="Ex: 2019 - 2020">
-                                </div>
-                                <div class="form-group col-8">
-                                    <label>Instituição</label>
-                                    <input type="text" name="edu2_company" value="{{ curriculo.educacao[1].company if curriculo.educacao|length > 1 else '' }}">
-                                </div>
-                                <div class="form-group col-12">
-                                    <label>Curso / Grau</label>
-                                    <input type="text" name="edu2_role" value="{{ curriculo.educacao[1].role if curriculo.educacao|length > 1 else '' }}">
-                                </div>
-                                <div class="form-group col-12">
-                                    <label>Detalhes</label>
-                                    <textarea name="edu2_desc" style="min-height: 70px;">{{ curriculo.educacao[1].desc if curriculo.educacao|length > 1 else '' }}</textarea>
+                                <div id="cv-educacao-container" class="col-12" style="display: flex; flex-direction: column; gap: 16px;">
+                                    {% for edu in curriculo.educacao %}
+                                    <div class="cv-education-row" style="background: var(--bg-base); border: 1px solid var(--border-color); border-radius: 4px; padding: 20px; position: relative;">
+                                        <button type="button" class="btn-remove-education" style="position: absolute; right: 10px; top: 10px; background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 2px; cursor: pointer; font-size: 0.75rem; font-weight: bold; transition: var(--transition-smart);">Remover</button>
+                                        <div class="form-grid">
+                                            <div class="form-group col-4">
+                                                <label>Período</label>
+                                                <input type="text" name="edu_date[]" value="{{ edu.date }}" placeholder="Ex: 2014 - 2019">
+                                            </div>
+                                            <div class="form-group col-8">
+                                                <label>Instituição</label>
+                                                <input type="text" name="edu_company[]" value="{{ edu.company }}" placeholder="Ex: Universidade do Porto">
+                                            </div>
+                                            <div class="form-group col-12">
+                                                <label>Curso / Grau</label>
+                                                <input type="text" name="edu_role[]" value="{{ edu.role }}" placeholder="Ex: Licenciatura em Engenharia">
+                                            </div>
+                                            <div class="form-group col-12">
+                                                <label>Detalhes</label>
+                                                <textarea name="edu_desc[]" style="min-height: 70px;">{{ edu.desc }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
 

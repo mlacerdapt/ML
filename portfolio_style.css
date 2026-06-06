@@ -963,7 +963,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top center;
+    object-position: center 15%;
 }
 
 .cv-sidebar-dark-content {
@@ -1512,6 +1512,13 @@ body {
         height: 160pt !important;
         width: 100% !important;
         background-color: #ffffff !important;
+        clip-path: none !important;
+        -webkit-clip-path: none !important;
+    }
+
+    .cv-photo-img {
+        object-fit: cover !important;
+        object-position: center 15% !important;
     }
 
     .cv-sidebar-dark-content {
@@ -1534,7 +1541,7 @@ body {
     /* --- Main content area ------------------------------------------------- */
     .cv-split-main {
         margin-left: 172pt !important;
-        padding: 0 0 0 1.5rem !important;
+        padding: 1.5rem 0 0 1.5rem !important;
         gap: 1.5rem !important;
         background: transparent !important;
     }
@@ -1589,8 +1596,13 @@ body {
     /* --- Page break rules -------------------------------------------------- */
     /* Keep each main CV section together; allow breaks BETWEEN sections */
     .cv-main-section {
-        break-inside: avoid;
-        page-break-inside: avoid;
+        break-inside: auto !important;
+        page-break-inside: auto !important;
+    }
+
+    .timeline-row-item {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
     }
 
     .cv-skills-radial-wrapper {
@@ -1601,12 +1613,6 @@ body {
     .timeline-right-content {
         break-inside: avoid;
         page-break-inside: avoid;
-    }
-
-    /* Force a page break before the Skills section so it starts fresh */
-    .cv-main-section:nth-child(3) {
-        break-before: page;
-        page-break-before: always;
     }
 
     /* --- QR Code block on last page --------------------------------------- */

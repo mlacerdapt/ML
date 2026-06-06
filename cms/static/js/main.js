@@ -122,6 +122,53 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     });
 
+    // Lógica para Educação Dinâmica no Currículo
+    window.addEducationRow = function(date = "", role = "", company = "", desc = "") {
+        const container = document.getElementById("cv-educacao-container");
+        if (!container) return;
+        const row = document.createElement("div");
+        row.className = "cv-education-row";
+        row.style.cssText = "background: var(--bg-base); border: 1px solid var(--border-color); border-radius: 4px; padding: 20px; position: relative;";
+        row.innerHTML = `
+            <button type="button" class="btn-remove-education" style="position: absolute; right: 10px; top: 10px; background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 2px; cursor: pointer; font-size: 0.75rem; font-weight: bold; transition: var(--transition-smart);">Remover</button>
+            <div class="form-grid">
+                <div class="form-group col-4">
+                    <label>Período</label>
+                    <input type="text" name="edu_date[]" value="${date}" placeholder="Ex: 2014 - 2019">
+                </div>
+                <div class="form-group col-8">
+                    <label>Instituição</label>
+                    <input type="text" name="edu_company[]" value="${company}" placeholder="Ex: Universidade do Porto">
+                </div>
+                <div class="form-group col-12">
+                    <label>Curso / Grau</label>
+                    <input type="text" name="edu_role[]" value="${role}" placeholder="Ex: Licenciatura em Engenharia de Computadores">
+                </div>
+                <div class="form-group col-12">
+                    <label>Detalhes</label>
+                    <textarea name="edu_desc[]" style="min-height: 70px;">${desc}</textarea>
+                </div>
+            </div>
+        `;
+        row.querySelector(".btn-remove-education").onclick = () => row.remove();
+        container.appendChild(row);
+    };
+
+    const btnAddEducation = document.getElementById("btn-add-education");
+    if (btnAddEducation) {
+        btnAddEducation.addEventListener("click", () => {
+            addEducationRow();
+        });
+    }
+
+    // Associar eventos aos botões de remoção da educação já existente (gerada pelo Jinja)
+    const existingEduRemoveBtns = document.querySelectorAll("#cv-educacao-container .btn-remove-education");
+    existingEduRemoveBtns.forEach(btn => {
+        btn.onclick = (e) => {
+            e.target.closest(".cv-education-row").remove();
+        };
+    });
+
     // ==========================================================================
     // GESTOR DINÂMICO DE COMPETÊNCIAS POR CATEGORIA (CLASSIFICAÇÃO 0 A 5)
     // ==========================================================================

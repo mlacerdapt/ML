@@ -303,14 +303,14 @@ def compile_cv_html(cv):
                 
                 <!-- Right Main Column (Light background) -->
                 <main class="cv-split-main">
-                    <!-- Education Section -->
+                    <!-- Skills Section -->
                     <section class="cv-main-section">
                         <div class="cv-section-header-styled">
-                            <h3 class="cv-section-title-text">Educação</h3>
+                            <h3 class="cv-section-title-text">Competências</h3>
                             <div class="cv-section-header-line"></div>
                         </div>
-                        <div class="cv-timeline-vertical-styled">
-                            {edu_html}
+                        <div class="cv-skills-radial-wrapper">
+                            {skills_html}
                         </div>
                     </section>
                     
@@ -325,14 +325,14 @@ def compile_cv_html(cv):
                         </div>
                     </section>
                     
-                    <!-- Skills Section -->
+                    <!-- Education Section -->
                     <section class="cv-main-section">
                         <div class="cv-section-header-styled">
-                            <h3 class="cv-section-title-text">Competências</h3>
+                            <h3 class="cv-section-title-text">Educação</h3>
                             <div class="cv-section-header-line"></div>
                         </div>
-                        <div class="cv-skills-radial-wrapper">
-                            {skills_html}
+                        <div class="cv-timeline-vertical-styled">
+                            {edu_html}
                         </div>
                     </section>
                 </main>
@@ -919,6 +919,22 @@ def save_cv():
                 'desc': desc.strip()
             })
     
+    # Handle dynamic education
+    edu_dates = request.form.getlist('edu_date[]')
+    edu_roles = request.form.getlist('edu_role[]')
+    edu_companies = request.form.getlist('edu_company[]')
+    edu_descs = request.form.getlist('edu_desc[]')
+    
+    educacao = []
+    for date, role, company, desc in zip(edu_dates, edu_roles, edu_companies, edu_descs):
+        if date.strip() or role.strip() or company.strip() or desc.strip():
+            educacao.append({
+                'date': date.strip(),
+                'role': role.strip(),
+                'company': company.strip(),
+                'desc': desc.strip()
+            })
+    
     # Parse structured skills from hidden JSON field
     skills_json_str = request.form.get('skills_json')
     skills_by_category = []
@@ -941,20 +957,7 @@ def save_cv():
         'skills': request.form.get('skills') or "",
         'skills_by_category': skills_by_category,
         'experiencias': experiencias,
-        'educacao': [
-            {
-                'date': request.form.get('edu1_date'),
-                'role': request.form.get('edu1_role'),
-                'company': request.form.get('edu1_company'),
-                'desc': request.form.get('edu1_desc')
-            },
-            {
-                'date': request.form.get('edu2_date'),
-                'role': request.form.get('edu2_role'),
-                'company': request.form.get('edu2_company'),
-                'desc': request.form.get('edu2_desc')
-            }
-        ]
+        'educacao': educacao
     }
     
     # Parse CV social links (redes sociais do currículo)
@@ -965,10 +968,6 @@ def save_cv():
         if url.strip():
             cv_social_links.append({'plataforma': plataforma.strip(), 'url': url.strip()})
     curriculo['social_links'] = cv_social_links
-
-    # Filter empty rows for education (experiences already handled dynamically)
-    curriculo['educacao'] = [ed for ed in curriculo['educacao'] if ed['date'] or ed['role'] or ed['company']]
-
     
     db['curriculo'] = curriculo
     save_db(db)

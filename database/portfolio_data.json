@@ -191,6 +191,12 @@
                 "role": "Licenciatura em Engenharia de Computadores",
                 "company": "Universidade do Porto",
                 "desc": "Foco em desenvolvimento de software corporativo, banco de dados relacional e arquitetura de sistemas distribuídos."
+            },
+            {
+                "date": "2020 - 2021",
+                "role": "Curso Livre de Ingles B2",
+                "company": "Faculdade de Letras da Universidade do Porto",
+                "desc": "Foco em conversacao e escrita profissional."
             }
         ],
         "social_links": []
