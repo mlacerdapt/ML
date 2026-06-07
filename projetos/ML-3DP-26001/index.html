@@ -580,7 +580,7 @@
                     </div>
                 </div>
                 
-                <div class="about-image-frame aspect-[4/3] overflow-hidden">
+                <div class="about-image-frame overflow-hidden">
                     <img id="js-about-image" src="" alt="Representação Digital">
                 </div>
             </div>
@@ -592,8 +592,8 @@
                 <h2 class="museum-title">Fases & Processo de Desenvolvimento</h2>
                 <div class="smart-divider"></div>
                 
-                <!-- Grade 4 colunas simétricas -->
-                <div id="js-milestones-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+                <!-- Lista de fases estilo briefing e foto -->
+                <div id="js-milestones-list" class="flex flex-col gap-12 mt-8">
                     <!-- Marcos históricos gerados via JS -->
                 </div>
             </div>
@@ -642,7 +642,7 @@
                 .carousel-slide img {
                     width: 100%;
                     height: 100%;
-                    object-fit: cover;
+                    object-fit: contain;
                     display: block;
                     transition: transform 0.4s ease;
                 }
@@ -843,21 +843,33 @@
             });
 
             // Slide 3: Marcos Históricos (Timeline)
-            const milestonesGrid = document.getElementById("js-milestones-grid");
-            milestonesGrid.innerHTML = "";
-            MONUMENT_CONFIG.milestones.forEach(m => {
-                const card = document.createElement("div");
-                card.className = "milestone-card";
-                card.innerHTML = `
-                    <div class="milestone-image-wrapper">
-                        <span class="milestone-badge">${m.num}</span>
-                        <img src="${m.image}" alt="${m.title}">
-                    </div>
-                    <h4 class="milestone-title">${m.title}</h4>
-                    <p class="milestone-text">${m.text}</p>
-                `;
-                milestonesGrid.appendChild(card);
-            });
+            const milestonesList = document.getElementById("js-milestones-list");
+            if (milestonesList) {
+                milestonesList.innerHTML = "";
+                MONUMENT_CONFIG.milestones.forEach((m, index) => {
+                    const row = document.createElement("div");
+                    row.className = "grid grid-cols-1 md:grid-cols-2 gap-10 items-center border-b border-borderColor/30 pb-8 last:border-b-0 last:pb-0";
+                    
+                    // Alternating layout for a premium feel
+                    const contentOrder = index % 2 === 0 ? "" : "md:order-last";
+                    const imageOrder = index % 2 === 0 ? "" : "md:order-first";
+                    
+                    row.innerHTML = `
+                        <div class="flex flex-col ${contentOrder}">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="bg-brandBlue text-white font-title font-bold text-xs px-2.5 py-1 rounded-sm uppercase tracking-widest">${m.num}</span>
+                                <h3 class="font-title font-bold text-base text-charcoal tracking-tight">${m.title}</h3>
+                            </div>
+                            <div class="smart-divider my-2"></div>
+                            <p class="text-charcoal text-sm leading-relaxed">${m.text}</p>
+                        </div>
+                        <div class="about-image-frame overflow-hidden ${imageOrder}">
+                            <img src="${m.image}" alt="${m.title}">
+                        </div>
+                    `;
+                    milestonesList.appendChild(row);
+                });
+            }
 
             // Slide 4: Carrossel de Galeria
             (function() {
@@ -882,7 +894,7 @@
                     
                     const isVideo = item.type === 'video' || (item.url && (item.url.endsWith('.mp4') || item.url.endsWith('.webm') || item.url.endsWith('.ogg') || item.url.endsWith('.mov')));
                     const mediaHtml = isVideo 
-                        ? `<video src="${item.url}" muted loop playsinline autoplay style="width:100%; height:100%; object-fit:cover;"></video>` 
+                        ? `<video src="${item.url}" muted loop playsinline autoplay style="width:100%; height:100%; object-fit:contain;"></video>` 
                         : `<img src="${item.url}" alt="${item.caption}" loading="${i === 0 ? 'eager' : 'lazy'}" onerror="this.style.opacity='0.3'">`;
 
                     slide.innerHTML = `

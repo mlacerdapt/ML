@@ -1,0 +1,13 @@
+# Ignorar a pasta do Gestor de Projetos (CMS)
+cms/
+
+# Ignorar o Banco de Dados local do portfólio/currículo
+database/
+
+# Ignorar os uploads feitos através do gestor
+uploads/
+
+# Ficheiros do sistema operativo
+.DS_Store
+Thumbs.db
+projetos/**/.DS_Store
