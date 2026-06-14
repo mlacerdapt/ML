@@ -5,7 +5,8 @@ cms/
 database/
 
 # Ignorar os uploads feitos através do gestor
-uploads/
+uploads/*
+!uploads/profile_avatar.*
 
 # Ficheiros do sistema operativo
 .DS_Store
